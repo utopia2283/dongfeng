@@ -3,38 +3,85 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>東風 DONG FENG · 張良引擎 Demo</title>
+<title>東風 DONG FENG · by SyncBuddy</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
+
+<!-- Hero CTA banner (prominent, sticky top) -->
+<div class="hero-banner">
+  <div class="hero-banner-inner">
+    <div class="hero-text">
+      <a href="index.html" class="brand-link">
+        <img src="assets/logo.png" alt="SyncBuddy" class="brand-logo"/>
+        <span class="hero-cn">東風</span>
+      </a>
+      <span class="hero-tag">主動式 AI 商業決策引擎 · 風起之前, 預判先機</span>
+    </div>
+    <a href="compare.html" class="hero-cta-btn">
+      <span class="cta-icon">⚔️</span>
+      <span class="cta-text">vs ChatGPT &nbsp;·&nbsp; Perplexity 三方對決</span>
+      <span class="cta-arrow">→</span>
+    </a>
+  </div>
+</div>
+
 <div class="app-shell">
 
   <!-- LEFT: Pitch panel -->
   <aside class="pitch">
-    <div class="logo">
-      <span class="logo-cn">東風</span>
-      <span class="logo-en">DONG FENG</span>
-    </div>
-    <p class="tagline">「風起之前，預判先機。」</p>
-
-    <div class="card">
+    <div class="card scenario-card">
       <h3>選擇場景 (Scenario)</h3>
       <div class="scenario-list" id="scenarioList">
         <button class="scenario active" data-scenario="insurance">
-          <div class="s-title">保險經紀 · 客戶流失預警</div>
-          <div class="s-sub">高維時序感知 (TimesFM) + DAG 因果鏈</div>
+          <div class="s-emoji">🛡️</div>
+          <div class="s-info">
+            <div class="s-title">保險經紀 · 客戶流失預警</div>
+            <div class="s-sub">TimesFM + DAG · 提前 18 天</div>
+          </div>
         </button>
         <button class="scenario" data-scenario="sme_cafe">
-          <div class="s-title">SME · 連鎖咖啡店銷量異常</div>
-          <div class="s-sub">排除天氣干擾，鎖定真實元兇</div>
+          <div class="s-emoji">☕</div>
+          <div class="s-info">
+            <div class="s-title">SME · 咖啡店銷量異常</div>
+            <div class="s-sub">法醫式真因鎖定</div>
+          </div>
         </button>
         <button class="scenario" data-scenario="insurance_close">
-          <div class="s-title">保險經紀 · 完美狙擊逼單時點</div>
-          <div class="s-sub">提前 2-4 週預判轉折點</div>
+          <div class="s-emoji">🎯</div>
+          <div class="s-info">
+            <div class="s-title">保險經紀 · 完美狙擊逼單</div>
+            <div class="s-sub">時序轉折點 T+21</div>
+          </div>
         </button>
         <button class="scenario" data-scenario="sme_beauty">
-          <div class="s-title">SME · 美容院避開紅海競爭</div>
-          <div class="s-sub">母親節廣告競價飆升 300%</div>
+          <div class="s-emoji">💄</div>
+          <div class="s-info">
+            <div class="s-title">SME · 美容院避紅海</div>
+            <div class="s-sub">CPM 飆升 +300% 預警</div>
+          </div>
+        </button>
+        <button class="scenario new" data-scenario="fitness">
+          <div class="s-emoji">🏋️</div>
+          <div class="s-info">
+            <div class="s-title">健身教練 · 會員續會預警 <span class="new-tag">NEW</span></div>
+            <div class="s-sub">流失前 3 週個性化挽留</div>
+          </div>
+        </button>
+        <button class="scenario new" data-scenario="real_estate">
+          <div class="s-emoji">🏠</div>
+          <div class="s-info">
+            <div class="s-title">地產代理 · 帶看轉化序列 <span class="new-tag">NEW</span></div>
+            <div class="s-sub">最佳 follow-up 時點預測</div>
+          </div>
+        </button>
+        <button class="scenario new" data-scenario="restaurant">
+          <div class="s-emoji">🍴</div>
+          <div class="s-info">
+            <div class="s-title">餐廳 · 下午茶空台優化 <span class="new-tag">NEW</span></div>
+            <div class="s-sub">翻台率 +47% 動態定價</div>
+          </div>
         </button>
       </div>
     </div>
@@ -42,7 +89,23 @@
     <div class="card engine-card">
       <h3>🧠 張良引擎 · 推理過程</h3>
       <div id="engineTrace" class="trace">
-        <div class="trace-empty">點擊右側「啟動主動預警」開始</div>
+        <div class="trace-empty">點擊「啟動主動預警」開始</div>
+      </div>
+      <div class="confidence-block" id="confidenceBlock">
+        <div class="conf-label">因果鏈推理信賴度</div>
+        <svg class="conf-gauge" viewBox="0 0 140 80">
+          <defs>
+            <linearGradient id="confGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#ff5a5f"/>
+              <stop offset="50%" stop-color="#ffb37a"/>
+              <stop offset="100%" stop-color="#28d49a"/>
+            </linearGradient>
+          </defs>
+          <path d="M 15 70 A 55 55 0 0 1 125 70" stroke="#1d2c4a" stroke-width="11" fill="none" stroke-linecap="round"/>
+          <path id="confArc" d="M 15 70 A 55 55 0 0 1 125 70" stroke="url(#confGrad)" stroke-width="11" fill="none" stroke-linecap="round"
+                stroke-dasharray="173" stroke-dashoffset="173"/>
+        </svg>
+        <div class="conf-value" id="confValue">0%</div>
       </div>
     </div>
 
@@ -56,14 +119,10 @@
       </div>
     </div>
 
-    <a href="compare.html" style="display:block; padding:12px; margin-top:6px; text-align:center;
-       background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0b1220;
-       border-radius:10px; text-decoration:none; font-weight:700; font-size:13px;
-       box-shadow:0 8px 22px rgba(255,122,46,0.3);">
-       ⚔️ vs ChatGPT / Perplexity 對決
-    </a>
-
-    <div class="footer-mini">Sync Buddy Technology · 2026</div>
+    <div class="footer-mini">
+      <img src="assets/logo.png" alt="SyncBuddy" class="footer-logo"/>
+      <span>Sync Buddy Technology · 2026</span>
+    </div>
   </aside>
 
   <!-- CENTER: WhatsApp phone -->
@@ -75,7 +134,7 @@
           <div class="avatar">東</div>
           <div>
             <div class="name">東風 · 張良軍師</div>
-            <div class="status">在線 · 主動預警中</div>
+            <div class="status">● 在線 · 主動預警中</div>
           </div>
         </div>
         <div class="actions">📞 ⋮</div>
@@ -95,7 +154,7 @@
     </div>
   </main>
 
-  <!-- RIGHT: Back-factory console -->
+  <!-- RIGHT: SEXY DAG console -->
   <aside class="console">
     <h3>🏭 後廠 · 戰略管理控制台</h3>
     <p class="sub">95% 高頻決策在 WhatsApp · 5% 深度管理在這裡</p>
@@ -107,19 +166,29 @@
       <div class="kpi"><div class="k-num">2-4w</div><div class="k-lbl">提前預判</div></div>
     </div>
 
-    <h4>🔗 因果圖譜 (DAG)</h4>
-    <svg id="dagSvg" viewBox="0 0 360 240" class="dag"></svg>
+    <div class="dag-block">
+      <div class="dag-head">
+        <h4>🔗 因果圖譜 (DAG · do-calculus)</h4>
+        <span class="dag-status" id="dagStatus">待機中</span>
+      </div>
+      <svg id="dagSvg" viewBox="0 0 420 320" class="dag-sexy"></svg>
 
-    <h4>📡 數據源接入</h4>
+      <div class="counterfactual-block" id="counterfactual">
+        <div class="cf-title">⊘ 反事實檢驗 · 已排除假性相關</div>
+        <ul class="cf-list" id="cfList"></ul>
+      </div>
+    </div>
+
+    <h4>📡 數據源接入 (OAuth Secured)</h4>
     <ul class="sources">
       <li><span class="src-dot ok"></span>WhatsApp Business API</li>
       <li><span class="src-dot ok"></span>Meta Ads (IG / FB)</li>
       <li><span class="src-dot ok"></span>客戶 CRM (私域)</li>
       <li><span class="src-dot ok"></span>灣區實戰案例庫 (RAG)</li>
-      <li><span class="src-dot warn"></span>TimesFM 預測引擎</li>
+      <li><span class="src-dot ok"></span>TimesFM 預測引擎</li>
     </ul>
 
-    <h4>🎯 一鍵閉環</h4>
+    <h4>🎯 一鍵閉環 · 執行日誌</h4>
     <div class="exec-log" id="execLog">
       <div class="log-item muted">尚未執行任何動作</div>
     </div>

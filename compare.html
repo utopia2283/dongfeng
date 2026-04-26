@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>東風 vs ChatGPT vs Perplexity · 三方對決</title>
+<title>東風 vs ChatGPT vs Perplexity · 三方對決 | SyncBuddy</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
 <link rel="stylesheet" href="assets/styles.css" />
 <link rel="stylesheet" href="assets/compare.css" />
 </head>
@@ -11,8 +12,11 @@
 
 <header class="cmp-header">
   <div class="cmp-brand">
-    <span class="logo-cn">東風</span>
-    <span class="logo-en">DONG FENG</span>
+    <a href="index.html" class="brand-link">
+      <img src="assets/logo.png" alt="SyncBuddy" class="brand-logo"/>
+      <span class="logo-cn">東風</span>
+      <span class="logo-en">DONG FENG</span>
+    </a>
     <span class="cmp-badge">三方對決 · Side-by-Side Battle</span>
   </div>
   <div class="cmp-nav">
@@ -28,6 +32,9 @@
     <button class="task-tab" data-task="cafe">SME · 咖啡店訂單暴跌診斷</button>
     <button class="task-tab" data-task="beauty">SME · 美容院母親節促銷</button>
     <button class="task-tab" data-task="close">保險經紀 · 何時逼單?</button>
+    <button class="task-tab tab-new" data-task="fitness">健身教練 · 會員續會 <span class="new-tag-mini">NEW</span></button>
+    <button class="task-tab tab-new" data-task="estate">地產代理 · 帶看轉化 <span class="new-tag-mini">NEW</span></button>
+    <button class="task-tab tab-new" data-task="restaurant">餐廳 · 翻台優化 <span class="new-tag-mini">NEW</span></button>
   </div>
   <button class="run-btn" id="runBtn">▶ 同時運行三方</button>
 </section>
@@ -117,6 +124,91 @@
   <div class="v-card">
     <div class="v-title">⚔️ 對決結論</div>
     <div class="v-body" id="verdictBody">先運行測試，再看結論。</div>
+  </div>
+</section>
+
+<!-- OAuth Data Connection Flow -->
+<section class="oauth-section">
+  <h2>🔐 安全數據接入 · OAuth Flow Animation</h2>
+  <p class="ds-sub">東風使用 <strong>Meta 官方 OAuth 2.0</strong>, 用戶<strong>30 秒授權</strong>後即可開始 24/7 雷達監控。所有數據加密儲存於用戶私域, 東風只做計算, 不留存敏感資料。</p>
+
+  <div class="oauth-flow">
+    <!-- Step 1: User device -->
+    <div class="oauth-stage" id="oauthStage1">
+      <div class="oauth-step-num">1</div>
+      <div class="oauth-step-title">用戶 Mac/手機</div>
+      <div class="oauth-device">
+        <div class="device-icon">📱</div>
+        <button class="oauth-connect-btn" id="oauthBtn">
+          <span>🔗</span> Connect with Meta
+        </button>
+      </div>
+      <div class="oauth-hint">用戶點一下 = 完成接入</div>
+    </div>
+
+    <!-- arrow -->
+    <div class="oauth-arrow" id="oauthArrow1">
+      <svg viewBox="0 0 100 30"><path d="M5 15 L90 15" class="oauth-line"/><path d="M85 8 L95 15 L85 22" class="oauth-arrow-head"/></svg>
+    </div>
+
+    <!-- Step 2: OAuth window -->
+    <div class="oauth-stage" id="oauthStage2">
+      <div class="oauth-step-num">2</div>
+      <div class="oauth-step-title">Meta OAuth Gate</div>
+      <div class="oauth-window">
+        <div class="oauth-window-head">
+          <span class="oauth-dot red"></span>
+          <span class="oauth-dot yellow"></span>
+          <span class="oauth-dot green"></span>
+          <div class="oauth-window-title">facebook.com/oauth</div>
+        </div>
+        <div class="oauth-window-body">
+          <div class="oauth-app-name">「東風 DONG FENG」想要存取:</div>
+          <ul class="oauth-scopes" id="oauthScopes">
+            <li><span class="scope-check">✓</span> 你的粉專洞察 (read_insights)</li>
+            <li><span class="scope-check">✓</span> 廣告帳戶數據 (ads_read)</li>
+            <li><span class="scope-check">✓</span> Instagram 商業帳戶 (ig_basic)</li>
+            <li><span class="scope-check">✓</span> WhatsApp 商業 API (whatsapp_business)</li>
+          </ul>
+          <div class="oauth-confirm-btn" id="oauthConfirm">允許 (Allow)</div>
+        </div>
+      </div>
+      <div class="oauth-hint">標準 Meta 授權 · 全程加密</div>
+    </div>
+
+    <!-- arrow -->
+    <div class="oauth-arrow" id="oauthArrow2">
+      <svg viewBox="0 0 100 30"><path d="M5 15 L90 15" class="oauth-line"/><path d="M85 8 L95 15 L85 22" class="oauth-arrow-head"/></svg>
+    </div>
+
+    <!-- Step 3: DongFeng Engine -->
+    <div class="oauth-stage" id="oauthStage3">
+      <div class="oauth-step-num">3</div>
+      <div class="oauth-step-title">東風 · 張良引擎</div>
+      <div class="oauth-engine">
+        <div class="engine-core">
+          <div class="engine-pulse"></div>
+          <div class="engine-emoji">🧠</div>
+          <div class="engine-label">張良 DAG</div>
+        </div>
+        <div class="data-streams" id="dataStreams">
+          <div class="stream stream-1"><span class="s-icon">📘</span> Facebook Insights</div>
+          <div class="stream stream-2"><span class="s-icon">📸</span> Instagram</div>
+          <div class="stream stream-3"><span class="s-icon">💬</span> WhatsApp</div>
+          <div class="stream stream-4"><span class="s-icon">💰</span> Meta Ads</div>
+          <div class="stream stream-5"><span class="s-icon">📊</span> Pixel + CRM</div>
+        </div>
+      </div>
+      <div class="oauth-hint" id="oauthFinalHint">啟動雷達中...</div>
+    </div>
+  </div>
+
+  <div class="oauth-actions">
+    <button class="run-btn" id="oauthReplayBtn">▶ 播放接入動畫</button>
+    <div class="oauth-trust">
+      🔒 <strong>加密 / 透明 / 可撤銷</strong> &nbsp;·&nbsp;
+      用戶可隨時在 Meta Settings 撤銷授權, 數據立即停止流入。
+    </div>
   </div>
 </section>
 
@@ -217,8 +309,11 @@
 </section>
 
 <footer class="cmp-footer">
-  <div>
-    <strong>Sync Buddy Technology</strong> · 風起之前, 預判先機。
+  <div class="footer-brand">
+    <img src="assets/logo.png" alt="SyncBuddy" class="footer-logo"/>
+    <div>
+      <strong>Sync Buddy Technology</strong> · 風起之前, 預判先機。
+    </div>
   </div>
   <div class="cmp-cta">
     <a href="index.html">▶ 回主 Demo</a>

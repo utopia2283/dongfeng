@@ -170,7 +170,128 @@ const TASKS = {
       ["good", "⚡ 排程已寫入 Meta + WhatsApp Business API"]
     ],
     verdict: "ChatGPT 教你「BANT 框架」 — Match 看完還是不知道現在該不該打。Perplexity 給 Salesforce 教科書答案。<strong>只有東風</strong>用 TimesFM 結合陳Sir 個人 IG 軌跡 + 10 年加息週期, 算出 <em>3 週後週四 15:00</em> 才是 <strong>85% 簽單峰值</strong>。這是公網 AI 永遠做不到的 — 因為它們看不見你的客戶。"
-  }
+  },
+
+  // ----------------------------------------------------------
+  fitness: {
+    label: "健身教練 · 會員續會預警",
+    gptPrompt: "我的會員最近不怎麼來了, 怎麼挽留她?",
+    pplxPrompt: "健身房 會員流失 挽留 策略",
+    gpt: [
+      ["bad", "📚 一般建議:"],
+      ["", "1. 發訊息問候: 「最近怎麼沒來呀, 要不要約個時間?」"],
+      ["", "2. 提供折扣或免費課程吸引回來。"],
+      ["", "3. 推薦新課程或私教方案。"],
+      ["bad", "⚠ 缺陷: 完全不知道會員為什麼不來, 通用挽留 90% 沒效。"]
+    ],
+    pplx: [
+      ["meh", "🌐 來源: ihrsa.org / fitnessbusiness.com"],
+      ["", "健身房會員流失通用解方:"],
+      ["", "① 個人化關心訊息 ② 凍結會籍方案"],
+      ["", "③ 引入 group class ④ 推薦補品/裝備"],
+      ["meh", "⚠ 缺陷: 不認識會員的真實狀態與興趣轉變。"]
+    ],
+    df: [
+      ["good", "🚨 主動預警 (流失前 3 週)"],
+      ["", "<strong>用戶: Kenny, 對象: Sandra (會員 8 個月)</strong>"],
+      ["", "📡 接入數據:"],
+      ["", "  • <strong>Apple Health (授權): 步數 +35%, 心率區間正常</strong>"],
+      ["", "  • <strong>IG: 馬拉松訓練內容停留 +340%</strong>"],
+      ["", "  • <strong>FB: 加入「香港跑友會」社團</strong>"],
+      ["", "  • 出席記錄: 月課時 12 → 2"],
+      ["good", "🧠 張良 DAG 反事實檢驗:"],
+      ["", "  ✗ 排除: 身體不適 (健康數據正常)"],
+      ["", "  ✗ 排除: 工作太忙 (步數反而上升)"],
+      ["", "  ✓ 鎖定: 運動偏好從健身轉向跑步"],
+      ["good", "🎯 偏好對齊挽留方案:"],
+      ["", "  ① 推「跑者專屬肌力訓練」(她痛點對中)"],
+      ["", "  ② WhatsApp: 「下個月渣馬訓練營」"],
+      ["", "  📈 預測續會率: 21% → <strong>74%</strong>"],
+      ["good", "⚡ 一鍵發送個性化訊息"]
+    ],
+    verdict: "ChatGPT 教 Kenny 發「最近怎麼沒來呀」 — 90% 會被讀不回。Perplexity 給 IHRSA 教科書答案。<strong>只有東風</strong>看見 Sandra 在 IG 看馬拉松、加入跑步社團, 並用 Apple Health 數據反事實檢驗排除「身體不適」「太忙」, 最後給出 <strong>偏好對齊挽留方案</strong> — 續會率 21% → 74%。"
+  },
+
+  // ----------------------------------------------------------
+  estate: {
+    label: "地產代理 · 帶看後何時 follow-up?",
+    gptPrompt: "我帶完客戶看樓, 什麼時候跟進最好?",
+    pplxPrompt: "地產 帶看後 follow-up 最佳時機",
+    gpt: [
+      ["bad", "📚 銷售標準作業:"],
+      ["", "① 24 小時黃金 follow-up 法則"],
+      ["", "② 發感謝訊息 + 房屋資料"],
+      ["", "③ 3 天內再致電確認意向"],
+      ["bad", "⚠ 缺陷: 24h follow-up 對「已看 7 套」的觀望客戶反而會嚇跑。"]
+    ],
+    pplx: [
+      ["meh", "🌐 來源: NAR.realtor / inman.com"],
+      ["", "地產經紀 follow-up 最佳實踐:"],
+      ["", "① 24h 內發送 thank you note + 物件資料"],
+      ["", "② 1 週內提供市場走勢分析"],
+      ["", "③ 客戶反對議題 (objections) 提前處理"],
+      ["meh", "⚠ 缺陷: 給的是 SOP, 不是針對「Mr. Wong」這位具體客戶。"]
+    ],
+    df: [
+      ["good", "🚨 個人化時序狙擊"],
+      ["", "<strong>用戶: David, 對象: Mr. Wong (已看 7 套樓)</strong>"],
+      ["", "📡 接入數據:"],
+      ["", "  • <strong>IG: 收藏「裝修風格」內容 +210%</strong>"],
+      ["", "  • <strong>網站埋點: 按揭計算器訪問 3 次</strong>"],
+      ["", "  • 帶看記錄: 已看 7 套 (已過比較期)"],
+      ["", "  • CRM: 客戶心理階段 = 「擁有想像」"],
+      ["good", "🧠 TimesFM 預測簽約意願曲線:"],
+      ["", "  T+1: 25% (24h follow-up = 警戒)"],
+      ["", "  T+3: 58%"],
+      ["", "  <strong>T+5 週四 18:00: 91% ★ 峰值</strong>"],
+      ["good", "🎯 個人化 5 日 sequence:"],
+      ["", "  T+0~T+3: 不打擾, 只發成交價走勢圖"],
+      ["", "  T+4: 推送他偏好的裝修風格案例"],
+      ["", "  <strong>T+5 週四 18:00: 約看樓書 + 限期優惠</strong>"],
+      ["good", "⚡ 排程已寫入 Meta + WhatsApp API"]
+    ],
+    verdict: "ChatGPT/Perplexity 給的「24h 黃金法則」對 Mr. Wong 是<strong>毒藥</strong> — 他已看 7 套樓, 24h 推銷會被 block (block 率 68%)。<strong>東風</strong>用 IG 收藏 + 按揭計算器訪問 + 帶看歷史, 算出 <strong>T+5 週四 18:00 才是 91% 簽約峰值</strong>。這就是「公網 SOP」與「個人化時序狙擊」的差距。"
+  },
+
+  // ----------------------------------------------------------
+  restaurant: {
+    label: "餐廳 · 下午茶空台優化",
+    gptPrompt: "下午茶時段沒人, 怎麼增加生意?",
+    pplxPrompt: "餐廳 空閒時段 promotion 案例",
+    gpt: [
+      ["bad", "📚 通用方案:"],
+      ["", "① 推下午茶套餐 8 折"],
+      ["", "② 發 IG 貼文宣傳"],
+      ["", "③ 加入 Open Rice / foodpanda 推廣"],
+      ["bad", "⚠ 缺陷: 全面降價會傷淨利, 通用宣傳沒目標客群。"]
+    ],
+    pplx: [
+      ["meh", "🌐 來源: restaurantbusiness.com / 7 篇案例"],
+      ["", "F&B off-peak 經典套路:"],
+      ["", "① Happy Hour 定價 ② Loyalty 累積點數"],
+      ["", "③ Co-working 空間轉換 ④ 主題日活動"],
+      ["meh", "⚠ 缺陷: 不知道你周邊有什麼客群, 也沒分時策略。"]
+    ],
+    df: [
+      ["good", "🚨 私域 + 地理 + 動態定價"],
+      ["", "<strong>用戶: Ivy (港式茶餐廳)</strong>"],
+      ["", "📡 接入數據:"],
+      ["", "  • <strong>POS: 15-17 點翻台率僅 28% (其他時段 90%)</strong>"],
+      ["", "  • <strong>FB Geo-data: 1.5km 內 4,300 名 OL</strong>"],
+      ["", "  • <strong>IG hashtag「下午茶」搜尋 +180%</strong>"],
+      ["", "  • 對照組: 同區 3 家分時定價店翻台 +47%"],
+      ["good", "🧠 張良 DAG 反事實:"],
+      ["", "  ✗ 排除: 「下午茶就是冷時段」"],
+      ["", "  ✗ 排除: 全面降價 (淨利率 -12%)"],
+      ["", "  ✓ 鎖定: 動態定價 + 精準 OL 觸達"],
+      ["good", "🎯 3 步落地方案:"],
+      ["", "  ① 15-17 點蛋撻買一送半 + WiFi 升速"],
+      ["", "  ② IG Story 廣告 (1.5km Geo + OL 興趣)"],
+      ["", "  ③ Loyalty 加 WhatsApp 鎖回頭客"],
+      ["", "  📈 預估 21 天: 翻台 28% → <strong>75%</strong>, 月增 HK$28,000"]
+    ],
+    verdict: "ChatGPT 給「下午茶 8 折」 — 全面降價傷淨利。Perplexity 給 Happy Hour 範本 — 不認識你周邊的人。<strong>東風</strong>看見你 1.5km 內有 4,300 OL, 而且她們在 IG 搜「下午茶 hashtag」+180%, 並用對照組驗證「動態定價 + 精準 Geo 觸達」 — 翻台率 28% → 75%, 月增 HK$28,000。"
+  },
 };
 
 const $ = (s) => document.querySelector(s);
@@ -265,3 +386,95 @@ if (acc) {
   }, {threshold: 0.3});
   obs.observe(acc);
 }
+
+/* ============================================================
+ *  OAuth flow animation
+ *  - Auto-plays when section scrolls into view
+ *  - Replayable via "▶ 播放接入動畫" button
+ * ============================================================ */
+async function playOAuthFlow() {
+  const stage1 = $("#oauthStage1");
+  const stage2 = $("#oauthStage2");
+  const stage3 = $("#oauthStage3");
+  const arrow1 = $("#oauthArrow1");
+  const arrow2 = $("#oauthArrow2");
+  const btn = $("#oauthBtn");
+  const scopes = document.querySelectorAll("#oauthScopes li");
+  const confirm = $("#oauthConfirm");
+  const streams = document.querySelectorAll("#dataStreams .stream");
+  const finalHint = $("#oauthFinalHint");
+
+  if (!stage1) return;
+
+  // reset
+  [stage1, stage2, stage3].forEach(s => s.classList.remove("active"));
+  [arrow1, arrow2].forEach(a => a.classList.remove("flowing"));
+  btn?.classList.remove("clicked");
+  confirm?.classList.remove("ready", "clicked");
+  scopes.forEach(s => s.classList.remove("shown"));
+  streams.forEach(s => s.classList.remove("streaming"));
+  if (finalHint) finalHint.textContent = "等待授權...";
+
+  await sleep(400);
+
+  // Step 1: user device
+  stage1.classList.add("active");
+  await sleep(900);
+
+  // user clicks Connect
+  btn?.classList.add("clicked");
+  await sleep(500);
+
+  // arrow 1 flows
+  arrow1.classList.add("flowing");
+  await sleep(700);
+
+  // Step 2: OAuth window
+  stage2.classList.add("active");
+  await sleep(500);
+
+  // scopes appear one by one
+  for (let i = 0; i < scopes.length; i++) {
+    scopes[i].classList.add("shown");
+    await sleep(280);
+  }
+  await sleep(300);
+  confirm?.classList.add("ready");
+  await sleep(700);
+
+  // user allows
+  confirm?.classList.add("clicked");
+  await sleep(600);
+
+  // arrow 2 flows
+  arrow2.classList.add("flowing");
+  await sleep(700);
+
+  // Step 3: engine + data streams
+  stage3.classList.add("active");
+  if (finalHint) finalHint.textContent = "🟢 雷達啟動 · 24/7 監控中";
+  await sleep(400);
+  for (let i = 0; i < streams.length; i++) {
+    streams[i].classList.add("streaming");
+    await sleep(220);
+  }
+}
+
+const oauthReplayBtn = $("#oauthReplayBtn");
+if (oauthReplayBtn) oauthReplayBtn.addEventListener("click", playOAuthFlow);
+
+// auto-play when scrolled into view (once)
+const oauthSection = document.querySelector(".oauth-section");
+if (oauthSection) {
+  let played = false;
+  const oauthObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !played) {
+        played = true;
+        playOAuthFlow();
+      }
+    });
+  }, {threshold: 0.35});
+  oauthObs.observe(oauthSection);
+}
+
