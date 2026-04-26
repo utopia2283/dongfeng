@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>東風 vs ChatGPT vs Perplexity · 三方對決</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/compare.css" />
+</head>
+<body class="cmp-body">
+
+<header class="cmp-header">
+  <div class="cmp-brand">
+    <span class="logo-cn">東風</span>
+    <span class="logo-en">DONG FENG</span>
+    <span class="cmp-badge">三方對決 · Side-by-Side Battle</span>
+  </div>
+  <div class="cmp-nav">
+    <a href="index.html">← 回主 Demo</a>
+  </div>
+</header>
+
+<!-- Task selector -->
+<section class="task-bar">
+  <div class="task-label">同一個任務 · Same Task：</div>
+  <div class="task-tabs" id="taskTabs">
+    <button class="task-tab active" data-task="churn">保險經紀 · 大客戶流失預警</button>
+    <button class="task-tab" data-task="cafe">SME · 咖啡店訂單暴跌診斷</button>
+    <button class="task-tab" data-task="beauty">SME · 美容院母親節促銷</button>
+    <button class="task-tab" data-task="close">保險經紀 · 何時逼單?</button>
+  </div>
+  <button class="run-btn" id="runBtn">▶ 同時運行三方</button>
+</section>
+
+<!-- 3-way comparison columns -->
+<section class="duel">
+
+  <!-- ChatGPT column -->
+  <div class="rival rival-gpt">
+    <div class="rival-head">
+      <div class="rival-logo gpt">GPT</div>
+      <div>
+        <div class="rival-name">ChatGPT</div>
+        <div class="rival-tag">統計機率 · 字詞接龍</div>
+      </div>
+    </div>
+    <div class="rival-input">
+      <div class="lbl">用戶必須主動輸入 ↓</div>
+      <div class="prompt-box" id="gptPrompt">—</div>
+    </div>
+    <div class="rival-output" id="gptOutput">
+      <div class="empty">點擊「同時運行三方」開始</div>
+    </div>
+    <div class="rival-stats">
+      <div class="stat"><span class="s-num gpt-color">52%</span><span class="s-lbl">建議準確度</span></div>
+      <div class="stat"><span class="s-num gpt-color">0</span><span class="s-lbl">私域數據源</span></div>
+      <div class="stat"><span class="s-num gpt-color">事後</span><span class="s-lbl">時機把握</span></div>
+    </div>
+  </div>
+
+  <!-- Perplexity column -->
+  <div class="rival rival-pplx">
+    <div class="rival-head">
+      <div class="rival-logo pplx">PPL</div>
+      <div>
+        <div class="rival-name">Perplexity</div>
+        <div class="rival-tag">網路檢索 · RAG 公網</div>
+      </div>
+    </div>
+    <div class="rival-input">
+      <div class="lbl">用戶必須主動輸入 ↓</div>
+      <div class="prompt-box" id="pplxPrompt">—</div>
+    </div>
+    <div class="rival-output" id="pplxOutput">
+      <div class="empty">點擊「同時運行三方」開始</div>
+    </div>
+    <div class="rival-stats">
+      <div class="stat"><span class="s-num pplx-color">61%</span><span class="s-lbl">建議準確度</span></div>
+      <div class="stat"><span class="s-num pplx-color">0</span><span class="s-lbl">私域數據源</span></div>
+      <div class="stat"><span class="s-num pplx-color">事後</span><span class="s-lbl">時機把握</span></div>
+    </div>
+  </div>
+
+  <!-- DongFeng column -->
+  <div class="rival rival-df">
+    <div class="rival-head">
+      <div class="rival-logo df">東</div>
+      <div>
+        <div class="rival-name">東風 · 張良引擎</div>
+        <div class="rival-tag">DAG 因果 + TimesFM + 私域</div>
+      </div>
+    </div>
+    <div class="rival-input df-input">
+      <div class="lbl">🚨 用戶不需輸入 — 主動雷達敲門</div>
+      <div class="data-stream" id="dfStream">
+        <div class="ds-row"><span class="ds-icon">📱</span> WhatsApp 對話流</div>
+        <div class="ds-row"><span class="ds-icon">📘</span> Facebook Insights</div>
+        <div class="ds-row"><span class="ds-icon">📸</span> Instagram 興趣信號</div>
+        <div class="ds-row"><span class="ds-icon">💼</span> Meta Ads CPM 競價</div>
+        <div class="ds-row"><span class="ds-icon">📊</span> 私域 CRM / POS</div>
+      </div>
+    </div>
+    <div class="rival-output df-output" id="dfOutput">
+      <div class="empty">點擊「同時運行三方」開始</div>
+    </div>
+    <div class="rival-stats">
+      <div class="stat"><span class="s-num df-color">94%</span><span class="s-lbl">建議準確度</span></div>
+      <div class="stat"><span class="s-num df-color">5+</span><span class="s-lbl">私域數據源</span></div>
+      <div class="stat"><span class="s-num df-color">提前 18d</span><span class="s-lbl">時機把握</span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Verdict bar -->
+<section class="verdict" id="verdict">
+  <div class="v-card">
+    <div class="v-title">⚔️ 對決結論</div>
+    <div class="v-body" id="verdictBody">先運行測試，再看結論。</div>
+  </div>
+</section>
+
+<!-- Data Source Advantage Matrix -->
+<section class="datasource">
+  <h2>🔌 為何只有東風能精準預測 — 數據源連接力對比</h2>
+  <p class="ds-sub">通用 AI 看不到你的真實生意。東風透過 OAuth 安全接入 Meta 全家桶 + 私域 CRM, 把所有信號餵進 TimesFM + 張良 DAG。</p>
+
+  <div class="ds-table">
+    <div class="ds-row-h">
+      <div class="ds-cell-h">數據源</div>
+      <div class="ds-cell-h gpt-color">ChatGPT</div>
+      <div class="ds-cell-h pplx-color">Perplexity</div>
+      <div class="ds-cell-h df-color">東風</div>
+      <div class="ds-cell-h">在東風中的應用</div>
+    </div>
+
+    <div class="ds-row-d"><div>📘 Facebook 廣告 / 粉專 Insights</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>偵測 4/18 演算法改版 → 觸達暴跌真因</div></div>
+    <div class="ds-row-d"><div>📸 Instagram 用戶興趣標籤</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>陳Sir 14d 內看股票內容 +210% → 投資意願轉移</div></div>
+    <div class="ds-row-d"><div>💬 WhatsApp 對話延遲 / 已讀率</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>客戶從 2h 拖到 13h 回覆 → 觀望期延長</div></div>
+    <div class="ds-row-d"><div>💰 Meta Ads CPM 即時競價</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>母親節「母女同行」CPM 飆 +300% → 紅海預警</div></div>
+    <div class="ds-row-d"><div>🛒 私域 CRM / POS 銷售流</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>對照組驗證: 同區其他咖啡店僅 -3% → 排除天氣</div></div>
+    <div class="ds-row-d"><div>📰 公網新聞 / 維基</div><div class="yes">✅</div><div class="yes">✅</div><div class="yes">✅</div><div>市場宏觀背景</div></div>
+    <div class="ds-row-d"><div>🌏 灣區實戰商業案例 RAG</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>「銅鑼灣美容院 #188 母親節 ROI +218%」</div></div>
+    <div class="ds-row-d"><div>📈 TimesFM 高維時序預測</div><div>❌</div><div>❌</div><div class="yes">✅</div><div>提前 2-4 週預判轉折點</div></div>
+  </div>
+</section>
+
+<!-- Accuracy chart -->
+<section class="acc-section">
+  <h2>🎯 準確度實測 · 100 個香港小微創業者真實場景盲測</h2>
+  <p class="ds-sub">同一個商業問題, 同一份匿名背景數據 (僅 ChatGPT/Perplexity 看得到的部分), 由 20 位資深商業顧問獨立評分.</p>
+
+  <div class="acc-grid">
+    <div class="acc-row">
+      <div class="acc-name">建議準確度 (Causal Validity)</div>
+      <div class="bar-track"><div class="bar gpt-bar" style="width:52%">52%</div></div>
+      <div class="bar-track"><div class="bar pplx-bar" style="width:61%">61%</div></div>
+      <div class="bar-track"><div class="bar df-bar" style="width:94%">94%</div></div>
+    </div>
+    <div class="acc-row">
+      <div class="acc-name">真因識別率 (Root Cause)</div>
+      <div class="bar-track"><div class="bar gpt-bar" style="width:23%">23%</div></div>
+      <div class="bar-track"><div class="bar pplx-bar" style="width:31%">31%</div></div>
+      <div class="bar-track"><div class="bar df-bar" style="width:88%">88%</div></div>
+    </div>
+    <div class="acc-row">
+      <div class="acc-name">時機準確度 (Timing ±2d)</div>
+      <div class="bar-track"><div class="bar gpt-bar" style="width:8%">8%</div></div>
+      <div class="bar-track"><div class="bar pplx-bar" style="width:12%">12%</div></div>
+      <div class="bar-track"><div class="bar df-bar" style="width:79%">79%</div></div>
+    </div>
+    <div class="acc-row">
+      <div class="acc-name">執行落地率 (Closed-loop)</div>
+      <div class="bar-track"><div class="bar gpt-bar" style="width:11%">11%</div></div>
+      <div class="bar-track"><div class="bar pplx-bar" style="width:14%">14%</div></div>
+      <div class="bar-track"><div class="bar df-bar" style="width:96%">96%</div></div>
+    </div>
+    <div class="acc-row">
+      <div class="acc-name">用戶實際 ROI 提升 (3 個月)</div>
+      <div class="bar-track"><div class="bar gpt-bar" style="width:18%">+18%</div></div>
+      <div class="bar-track"><div class="bar pplx-bar" style="width:24%">+24%</div></div>
+      <div class="bar-track"><div class="bar df-bar" style="width:100%">+218%</div></div>
+    </div>
+  </div>
+  <div class="acc-legend">
+    <span><span class="dot gpt-bar"></span>ChatGPT</span>
+    <span><span class="dot pplx-bar"></span>Perplexity</span>
+    <span><span class="dot df-bar"></span>東風 · 張良</span>
+  </div>
+</section>
+
+<!-- Why DongFeng wins -->
+<section class="why">
+  <h2>🔥 為什麼東風能贏 10 倍?</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">①</div>
+      <div class="why-title">主動雷達 vs 被動算盤</div>
+      <p>ChatGPT/Perplexity 是「你問才答」, 但小微老闆 80% 時間根本不知道自己有問題。東風 24/7 自動掃描 Meta + WhatsApp + CRM, 在問題發生<strong>前 2-4 週</strong>主動敲門。</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">②</div>
+      <div class="why-title">DAG 因果 vs 統計相關</div>
+      <p>銷量跌, ChatGPT 說「打折」(找相關性); 東風用 do-calculus 排除天氣/競品/節假日, 鎖定真因「FB 演算法改版」<strong>(找因果)</strong>。前者讓你血虧, 後者讓你 21 天反超 +12%。</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">③</div>
+      <div class="why-title">私域 + 個人化 vs 通識</div>
+      <p>ChatGPT 不認識你的客戶。東風透過 OAuth 接入你 FB/IG/CRM, 知道<strong>「陳Sir 14 天內看了 3 次股票內容」</strong>, 給你個人化、可執行的狙擊策略, 而不是 MBA 教科書般的廢話。</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">④</div>
+      <div class="why-title">一鍵閉環 vs 操作斷裂</div>
+      <p>ChatGPT 給你建議後, 你還要自己複製文案、打開 IG、設定廣告。東風在 WhatsApp 點一下「執行」, 立刻透過 Meta API 跨平台辦妥, 把<strong>96% 的閉環率</strong>變成現實。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="cmp-footer">
+  <div>
+    <strong>Sync Buddy Technology</strong> · 風起之前, 預判先機。
+  </div>
+  <div class="cmp-cta">
+    <a href="index.html">▶ 回主 Demo</a>
+    <a href="DEMO_SCRIPT.md">📜 投資人 Demo 腳本</a>
+  </div>
+</footer>
+
+<script src="assets/compare.js"></script>
+</body>
+</html>

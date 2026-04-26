@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>東風 DONG FENG · 張良引擎 Demo</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- LEFT: Pitch panel -->
+  <aside class="pitch">
+    <div class="logo">
+      <span class="logo-cn">東風</span>
+      <span class="logo-en">DONG FENG</span>
+    </div>
+    <p class="tagline">「風起之前，預判先機。」</p>
+
+    <div class="card">
+      <h3>選擇場景 (Scenario)</h3>
+      <div class="scenario-list" id="scenarioList">
+        <button class="scenario active" data-scenario="insurance">
+          <div class="s-title">保險經紀 · 客戶流失預警</div>
+          <div class="s-sub">高維時序感知 (TimesFM) + DAG 因果鏈</div>
+        </button>
+        <button class="scenario" data-scenario="sme_cafe">
+          <div class="s-title">SME · 連鎖咖啡店銷量異常</div>
+          <div class="s-sub">排除天氣干擾，鎖定真實元兇</div>
+        </button>
+        <button class="scenario" data-scenario="insurance_close">
+          <div class="s-title">保險經紀 · 完美狙擊逼單時點</div>
+          <div class="s-sub">提前 2-4 週預判轉折點</div>
+        </button>
+        <button class="scenario" data-scenario="sme_beauty">
+          <div class="s-title">SME · 美容院避開紅海競爭</div>
+          <div class="s-sub">母親節廣告競價飆升 300%</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="card engine-card">
+      <h3>🧠 張良引擎 · 推理過程</h3>
+      <div id="engineTrace" class="trace">
+        <div class="trace-empty">點擊右側「啟動主動預警」開始</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 TimesFM 預測曲線</h3>
+      <canvas id="forecastChart" width="380" height="160"></canvas>
+      <div class="legend">
+        <span class="dot dot-history"></span>歷史
+        <span class="dot dot-forecast"></span>TimesFM 預測
+        <span class="dot dot-turn"></span>轉折點
+      </div>
+    </div>
+
+    <a href="compare.html" style="display:block; padding:12px; margin-top:6px; text-align:center;
+       background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0b1220;
+       border-radius:10px; text-decoration:none; font-weight:700; font-size:13px;
+       box-shadow:0 8px 22px rgba(255,122,46,0.3);">
+       ⚔️ vs ChatGPT / Perplexity 對決
+    </a>
+
+    <div class="footer-mini">Sync Buddy Technology · 2026</div>
+  </aside>
+
+  <!-- CENTER: WhatsApp phone -->
+  <main class="phone-stage">
+    <div class="phone">
+      <div class="phone-header">
+        <div class="back">‹</div>
+        <div class="contact">
+          <div class="avatar">東</div>
+          <div>
+            <div class="name">東風 · 張良軍師</div>
+            <div class="status">在線 · 主動預警中</div>
+          </div>
+        </div>
+        <div class="actions">📞 ⋮</div>
+      </div>
+
+      <div class="chat" id="chat"></div>
+
+      <div class="composer">
+        <button class="btn-primary" id="triggerBtn">⚡ 啟動主動預警</button>
+        <button class="btn-secondary" id="resetBtn">↺ 重置</button>
+      </div>
+    </div>
+
+    <div class="phone-caption">
+      <strong>前店 (Front-Shop)</strong> · Zero-UI 智能軍師<br/>
+      用戶不需要寫 Prompt — 東風主動敲門。
+    </div>
+  </main>
+
+  <!-- RIGHT: Back-factory console -->
+  <aside class="console">
+    <h3>🏭 後廠 · 戰略管理控制台</h3>
+    <p class="sub">95% 高頻決策在 WhatsApp · 5% 深度管理在這裡</p>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-num" id="kpiClients">128</div><div class="k-lbl">監控客戶數</div></div>
+      <div class="kpi"><div class="k-num" id="kpiSignals">7</div><div class="k-lbl">本週預警</div></div>
+      <div class="kpi"><div class="k-num" id="kpiROI">+340%</div><div class="k-lbl">平均 ROI</div></div>
+      <div class="kpi"><div class="k-num">2-4w</div><div class="k-lbl">提前預判</div></div>
+    </div>
+
+    <h4>🔗 因果圖譜 (DAG)</h4>
+    <svg id="dagSvg" viewBox="0 0 360 240" class="dag"></svg>
+
+    <h4>📡 數據源接入</h4>
+    <ul class="sources">
+      <li><span class="src-dot ok"></span>WhatsApp Business API</li>
+      <li><span class="src-dot ok"></span>Meta Ads (IG / FB)</li>
+      <li><span class="src-dot ok"></span>客戶 CRM (私域)</li>
+      <li><span class="src-dot ok"></span>灣區實戰案例庫 (RAG)</li>
+      <li><span class="src-dot warn"></span>TimesFM 預測引擎</li>
+    </ul>
+
+    <h4>🎯 一鍵閉環</h4>
+    <div class="exec-log" id="execLog">
+      <div class="log-item muted">尚未執行任何動作</div>
+    </div>
+  </aside>
+
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
