@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>東風 DONG FENG · AI 商業決策引擎</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<link rel="stylesheet" href="style.css">
+<style>
+:root {
+  --accent: #ff7a2e;
+  --accent-2: #ffb37a;
+  --accent-3: #ffd9b8;
+  --grad: linear-gradient(135deg, #ff7a2e, #ffb37a);
+  --grad-soft: linear-gradient(135deg, rgba(255,122,46,0.15), rgba(255,179,122,0.1));
+  --surface: #0e1624;
+  --surface-2: #16223c;
+  --text-1: #f0f4ff;
+  --text-2: #a8b8d8;
+  --text-3: #6b87a8;
+  --bg: #080d17;
+  --bg-soft: #0b1220;
+  --border: rgba(255,122,46,0.2);
+  --good: #28d49a;
+  --warn: #ffb37a;
+  --bad: #ff5a5f;
+}
+body { background: var(--bg); font-family: 'PingFang HK', 'Microsoft JhengHei', system-ui, sans-serif; }
+.gradient-text { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.pill-accent { background: rgba(255,122,46,0.15); color: #ff7a2e; border: 1px solid rgba(255,122,46,0.3); }
+.card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.card h4 { color: var(--text-1); margin-bottom: 8px; font-size: 16px; }
+.card p { color: var(--text-2); font-size: 13px; line-height: 1.5; }
+.metric { text-align: center; padding: 20px; }
+.metric .n { font-size: 42px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.metric .l { color: var(--text-2); font-size: 13px; margin-top: 6px; }
+.kicker { color: var(--text-2); font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+.section-num { font-size: 72px; font-weight: 900; color: rgba(255,122,46,0.12); line-height: 1; }
+.num-tag { color: #ff7a2e; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.h1 { font-size: 42px; font-weight: 800; color: var(--text-1); line-height: 1.2; margin: 16px 0; }
+.h2 { font-size: 28px; font-weight: 800; color: var(--text-1); line-height: 1.3; }
+.lede { color: var(--text-2); font-size: 16px; line-height: 1.6; }
+.mt-s { margin-top: 12px; }
+.mt-m { margin-top: 20px; }
+.mt-l { margin-top: 32px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid { gap: 16px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.cover-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(255,122,46,0.08) 0%, transparent 60%), var(--bg); }
+.cover-blob { position: absolute; right: -100px; top: -80px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(255,122,46,0.06) 0%, transparent 70%); pointer-events: none; }
+.deck-footer { position: absolute; bottom: 24px; left: 0; right: 0; display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); padding: 0 48px; }
+.deck-header { position: absolute; top: 24px; left: 48px; right: 48px; display: flex; justify-content: space-between; align-items: center; }
+.brand { font-size: 18px; font-weight: 800; color: #ff7a2e; letter-spacing: 2px; }
+.brand-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ff7a2e; margin-right: 8px; }
+.footer-logo { height: 18px; vertical-align: middle; opacity: 0.6; }
+table.comparison { width: 100%; border-collapse: collapse; }
+table.comparison th { color: #ff7a2e; font-size: 12px; text-align: center; padding: 10px 8px; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; }
+table.comparison td { padding: 12px 8px; font-size: 13px; color: var(--text-2); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+table.comparison td:first-child { color: var(--text-1); font-weight: 600; }
+table.comparison .winner { color: #28d49a; font-weight: 700; }
+table.comparison .loser { color: var(--text-3); }
+.highlight-row { background: rgba(255,122,46,0.05); }
+</style>
+</head>
+<body class="tpl-pitch-deck">
+<div class="deck">
+
+  <!-- 1. Cover -->
+  <section class="slide" data-title="Cover">
+    <div class="cover-bg"></div>
+    <div class="cover-blob"></div>
+    <div class="deck-header">
+      <div><span class="brand-dot"></span><span class="brand">東風 DONG FENG</span></div>
+      <div style="color:var(--text-3);font-size:13px">張良引擎 · 因果 AI 決策雷達</div>
+    </div>
+    <p class="kicker" style="position:absolute;top:56px;left:112px">Investor Deck · 2026</p>
+    <h1 class="h1 anim-fade-up" data-anim="fade-up" style="position:absolute;top:120px;left:112px;right:112px">
+      風起之前<br><span class="gradient-text">預判先機</span>
+    </h1>
+    <p class="lede" style="position:absolute;top:300px;left:112px;right:200px">
+      香港中小企的 AI 商業決策引擎——主動感知信號、因果推理、WhatsApp Zero-UI 觸達教練/地產/餐廳/保險/美容五大垂直行業
+    </p>
+    <div style="position:absolute;bottom:80px;left:112px;display:flex;gap:12px;align-items:center">
+      <span class="pill pill-accent">因果 AI 推理</span>
+      <span class="pill pill-accent">WhatsApp Zero-UI</span>
+      <span class="pill pill-accent">TimesFM 時序預測</span>
+      <span class="pill pill-accent">灣區實戰案例庫 RAG</span>
+    </div>
+    <div class="deck-footer"><span>SyncBuddy Technology · HK$2M Seed · HK$12M 估值</span><span class="slide-number" data-current="1" data-total="10"></span></div>
+  </section>
+
+  <!-- 2. Problem -->
+  <section class="slide" data-title="Problem">
+    <span class="section-num">01</span>
+    <p class="num-tag">PROBLEM 痛點</p>
+    <h2 class="h2 mt-s">香港中小企老闆<br>每天在盲選中做決策</h2>
+    <div class="grid g3 mt-l">
+      <div class="card"><h4>📉 信號太碎片</h4><p>Facebook、Instagram、WhatsApp、CRM——數據散落各處，沒有統一的因、果視角</p></div>
+      <div class="card"><h4>⏰ 時點全靠估</h4><p>何時跟進客戶？何時推活動？何時做促銷？95% 的決策靠「感覺」而非數據</p></div>
+      <div class="card"><h4>🤖 AI 工具太複雜</h4><p>現有 AI 工具需要學習曲線，老闆們要的是結論，不是Prompt Engineering</p></div>
+    </div>
+    <div class="grid g3 mt-l">
+      <div class="card"><h4>💸 機會嚴重流失</h4><p>美容院的母親節紅海、保險客戶流失前的黃金挽留期——全都錯過了才知</p></div>
+      <div class="card"><h4>🌊 競爭資訊差</h4><p>同行在做什麼？什麼策略適合自己？沒有可信的本地同行 Benchmark</p></div>
+      <div class="card"><h4>📊 工具一堆不會用</h4><p>Google Analytics、Meta Business、CRM——開了帳號，數據依然沉睡</p></div>
+    </div>
+  </section>
+
+  <!-- 3. Solution -->
+  <section class="slide" data-title="Solution">
+    <span class="section-num">02</span>
+    <p class="num-tag">SOLUTION 解決方案</p>
+    <h2 class="h2 mt-s">東風：<span class="gradient-text">教練 + 雷達 + 槍</span><br>三合一 AI 決策夥伴</h2>
+    <p class="lede mt-m">不是另一個 Chatbot——是會主動出擊的商業決策引擎。張良引擎因果推理 + 張良雷達時序預測 + WhatsApp Zero-UI 觸達</p>
+    <div class="row mt-l">
+      <span class="pill pill-accent">🎯 因果推理引擎（張良引擎）</span>
+      <span class="pill pill-accent">📡 時序預測雷達（張良雷達）</span>
+      <span class="pill pill-accent">💬 WhatsApp 主動推送</span>
+      <span class="pill pill-accent">🔄灣區實戰案例 RAG</span>
+    </div>
+    <div class="grid g3 mt-l">
+      <div class="card" style="border-left:3px solid #ff7a2e">
+        <h4>教練模式</h4>
+        <p>主動告訴你「現在做什麼」——不是問你問題，是直接給行動建議</p>
+      </div>
+      <div class="card" style="border-left:3px solid #4ea1ff">
+        <h4>雷達模式</h4>
+        <p>7×24 小時監控信號，提前 N 天預警——在問題爆發前就告訴你</p>
+      </div>
+      <div class="card" style="border-left:3px solid #28d49a">
+        <h4>槓桿模式</h4>
+        <p>因果鏈告訴你什麼有效、什麼要排除——對症下藥不做無用功</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Product Demo -->
+  <section class="slide" data-title="Product">
+    <span class="section-num">03</span>
+    <p class="num-tag">PRODUCT 產品</p>
+    <h2 class="h2 mt-s">WhatsApp 即開即用——<br>零學習曲線的 AI 教練</h2>
+    <div class="grid g2 mt-l">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <p style="color:#ff7a2e;font-size:12px;font-weight:700;margin-bottom:8px">📱 場景：保險經紀</p>
+          <p style="color:var(--text-1);font-size:14px;font-weight:600;margin-bottom:6px">陳Sir 大客戶流失預警</p>
+          <p style="color:var(--text-2);font-size:13px">「IG 收藏夾出現定存利率內容」+ 「WhatsApp 已讀不回 13 小時」+ 「HKD Prime 上調 0.5%」= 流失機率 68%，提前 18 天預警</p>
+          <div style="margin-top:10px;padding:8px 12px;background:rgba(40,212,154,0.1);border-radius:8px;color:#28d49a;font-size:12px">✓ 已執行：發送《加息環境下儲蓄險 vs 定存對比表》</div>
+        </div>
+        <div class="card">
+          <p style="color:#ffb37a;font-size:12px;font-weight:700;margin-bottom:8px">🏋️ 場景：健身教練</p>
+          <p style="color:var(--text-1);font-size:14px;font-weight:600;margin-bottom:6px">Sandra 會員續會預警</p>
+          <p style="color:var(--text-2);font-size:13px">IG 軌跡顯示跑步內容 +210%、健身內容 -30% → 偏好遷移，續會率 21% → 自動化挽留序列觸發</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <p style="color:#4ea1ff;font-size:12px;font-weight:700;margin-bottom:8px">🏠 場景：地產代理</p>
+          <p style="color:var(--text-1);font-size:14px;font-weight:600;margin-bottom:6px">Mr. Wong 簽約峰值預測</p>
+          <p style="color:var(--text-2);font-size:13px">IG 收藏 + 按揭計算器 ×3 → T+5 週四 18:00 為簽約峰值，預測成功率 91%</p>
+          <div style="margin-top:10px;padding:8px 12px;background:rgba(78,161,255,0.1);border-radius:8px;color:#4ea1ff;font-size:12px">📍 建議：週四 15:00 最後跟進，18:00 前到場</div>
+        </div>
+        <div class="card">
+          <p style="color:#28d49a;font-size:12px;font-weight:700;margin-bottom:8px">☕ 場景：餐廳</p>
+          <p style="color:var(--text-1);font-size:14px;font-weight:600;margin-bottom:6px">Ivy 茶餐廳翻台優化</p>
+          <p style="color:var(--text-2);font-size:13px">地理圍欄 4,300 OL 目標用戶、1.5km 範圍 → 動態定價 + 排隊預測 → 翻台率 28% → 75%</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Technology -->
+  <section class="slide" data-title="Technology">
+    <span class="section-num">04</span>
+    <p class="num-tag">TECHNOLOGY 技術架構</p>
+    <h2 class="h2 mt-s">張良引擎核心：<br><span class="gradient-text">因果 AI 推理</span></h2>
+    <div class="grid g2 mt-l">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <h4 style="color:#ff7a2e;margin-bottom:10px">🧠 因果 DAG 圖譜</h4>
+          <p style="color:var(--text-2);font-size:13px;margin-bottom:10px">Do-Calculus 反事實推理：判斷「如果不做 X，結果 Y 會怎樣」</p>
+          <p style="color:var(--text-2);font-size:13px">排除混淆變量、鎖定真正因果鏈——不是相關性，是因果關係</p>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <h4 style="color:#4ea1ff;margin-bottom:10px">📡 張良雷達（TimesFM）</h4>
+          <p style="color:var(--text-2);font-size:13px;margin-bottom:10px">Google 高維時序預測引擎，Zero-Shot 無需訓練</p>
+          <p style="color:var(--text-2);font-size:13px">對微、小企常見的稀疏數據同樣有效——7×24 小時信號監控</p>
+        </div>
+        <div class="card">
+          <h4 style="color:#28d49a;margin-bottom:10px">🔄 灣區實戰案例庫 RAG</h4>
+          <p style="color:var(--text-2);font-size:13px;margin-bottom:10px">灣區創業者實戰經驗為基礎知識庫</p>
+          <p style="color:var(--text-2);font-size:13px">本地化、接地氣的策略建議，來自真實香港 / 灣區中小企案例</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="height:100%">
+          <h4 style="color:#ffb37a;margin-bottom:12px">📊 東風因果推理流程</h4>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="background:#ff7a2e;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0">1</span>
+              <span style="color:var(--text-1);font-size:13px">多源信號攝取（FB/IG/WhatsApp/CRM）</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="background:#ff7a2e;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0">2</span>
+              <span style="color:var(--text-1);font-size:13px">TimesFM 時序異常檢測</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="background:#ff7a2e;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0">3</span>
+              <span style="color:var(--text-1);font-size:13px">DAG 因果圖構建 + Do-Calculus</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="background:#ff7a2e;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0">4</span>
+              <span style="color:var(--text-1);font-size:13px">Counterfactual 排除無效策略</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="background:#ff7a2e;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0">5</span>
+              <span style="color:var(--text-1);font-size:13px">RAG 灣區實戰案例匹配</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="background:#4ea1ff;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0">6</span>
+              <span style="color:#4ea1ff;font-size:13px;font-weight:600">WhatsApp Zero-UI 主動觸達</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;padding:10px;background:rgba(40,212,154,0.08);border-radius:8px;border-left:3px solid #28d49a">
+            <p style="color:#28d49a;font-size:12px;font-weight:600">平均 ROI：+340%</p>
+            <p style="color:var(--text-2);font-size:12px;margin-top:4px">行业基准 8.2x · 客戶閉環週期 18 天</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Market -->
+  <section class="slide" data-title="Market">
+    <span class="section-num">05</span>
+    <p class="num-tag">MARKET 市場</p>
+    <h2 class="h2 mt-s">香港中小企：被 AI 工具遺忘的<br><span class="gradient-text">340 萬人</span></h2>
+    <div class="grid g3 mt-l">
+      <div class="metric"><div class="n">340K</div><div class="l">香港中小企（員工 &lt;50）</div></div>
+      <div class="metric"><div class="n">92%</div><div class="l">從未使用任何 AI 工具做決策</div></div>
+      <div class="metric"><div class="n">HK$48B</div><div class="l">商業決策支援工具 TAM（香港）</div></div>
+    </div>
+    <div class="grid g3 mt-l">
+      <div class="card"><h4>🛡️ 保險經紀</h4><p>香港持牌保險代理 12 萬人，大客戶管理是核心剛需</p></div>
+      <div class="card"><h4>🏠 地產代理</h4><p>地產營業員 4 萬人，帶看轉化是最大痛點</p></div>
+      <div class="card"><h4>☕ F&amp;B 餐廳</h4><p>香港餐廳 1.7 萬間，翻台率決定生死</p></div>
+    </div>
+    <div class="grid g3 mt-l" style="margin-top:8px">
+      <div class="card"><h4>💄 美容院 / 美容業</h4><p>母親節 / 聖誕檔期競爭激烈，紅海預警剛需</p></div>
+      <div class="card"><h4>🏋️ 健身教練</h4><p>續會率 21% 行業平均，自動化挽留價值高</p></div>
+      <div class="card"><h4>🏪 零售 / 電商</h4><p>促銷時點預測、庫存優化——下一個擴展方向</p></div>
+    </div>
+  </section>
+
+  <!-- 7. Competition -->
+  <section class="slide" data-title="Competition">
+    <span class="section-num">06</span>
+    <p class="num-tag">COMPETITION 競爭分析</p>
+    <h2 class="h2 mt-s">東風 vs ChatGPT vs Perplexity<br>為什麼<span class="gradient-text">我們不一樣</span></h2>
+    <table class="comparison mt-l">
+      <thead>
+        <tr>
+          <th style="text-align:left">維度</th>
+          <th>東風 ✨</th>
+          <th>ChatGPT</th>
+          <th>Perplexity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>核心能力</td>
+          <td class="winner">因果 AI 推理 + 時序預測</td>
+          <td class="loser">通用對話 + 文字生成</td>
+          <td class="loser">互聯網搜尋 + 事實問答</td>
+        </tr>
+        <tr>
+          <td>商業垂直場景</td>
+          <td class="winner">5 大行業實戰案例 RAG</td>
+          <td class="loser">通用，無本地化案例</td>
+          <td class="loser">通用，無商業垂直優化</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>觸達方式</td>
+          <td class="winner">WhatsApp Zero-UI · 主動推送</td>
+          <td class="loser">被動提問</td>
+          <td class="loser">被動搜尋</td>
+        </tr>
+        <tr>
+          <td>預測時序能力</td>
+          <td class="winner">TimesFM Zero-Shot 時序引擎</td>
+          <td class="loser">無</td>
+          <td class="loser">無</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>因果推理</td>
+          <td class="winner">DAG + Do-Calculus + Counterfactual</td>
+          <td class="loser">Prompt 模擬，無真正因果</td>
+          <td class="loser">Prompt 模擬，無真正因果</td>
+        </tr>
+        <tr>
+          <td>中小企適配度</td>
+          <td class="winner">零學習曲線，WhatsApp 即開</td>
+          <td class="loser">需要 Prompt 技巧</td>
+          <td class="loser">需要提問能力</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:20px;color:var(--text-2);font-size:13px">東風的核心差異：<strong style="color:#ff7a2e">不是另一個 AI 聊天機器人——是會主動出擊、幫老闆賺錢的商業決策教練</strong></p>
+  </section>
+
+  <!-- 8. Business Model -->
+  <section class="slide" data-title="Business Model">
+    <span class="section-num">07</span>
+    <p class="num-tag">BUSINESS MODEL 商業模式</p>
+    <h2 class="h2 mt-s">SaaS 訂閱 + 成效收費<br>雙重變現引擎</h2>
+    <div class="grid g2 mt-l">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <h4 style="color:#ff7a2e">💰 訂閱收入</h4>
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="color:var(--text-2);font-size:13px">Pro 版（單商戶）</span>
+              <span style="color:var(--text-1);font-size:13px;font-weight:700">HK$980 / 月</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="color:var(--text-2);font-size:13px">Team 版（3-10 用戶）</span>
+              <span style="color:var(--text-1);font-size:13px;font-weight:700">HK$1,980 / 月</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0">
+              <span style="color:var(--text-2);font-size:13px">Enterprise（定制）</span>
+              <span style="color:var(--text-1);font-size:13px;font-weight:700">另議</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h4 style="color:#4ea1ff">📈 成效收費（下一階段）</h4>
+          <p style="color:var(--text-2);font-size:13px;margin-top:8px">當客戶從東風的建議獲得可量化 ROI 時，收取成果分享費用（通常是增量收入的 5-15%）</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <h4 style="color:#28d49a;margin-bottom:12px">🎯 已驗證指標</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="text-align:center;padding:12px;background:rgba(40,212,154,0.08);border-radius:8px">
+              <div style="font-size:28px;font-weight:800;color:#28d49a">340%</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:4px">平均 ROI</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:rgba(78,161,255,0.08);border-radius:8px">
+              <div style="font-size:28px;font-weight:800;color:#4ea1ff">18天</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:4px">閉環週期</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:rgba(255,122,46,0.08);border-radius:8px">
+              <div style="font-size:28px;font-weight:800;color:#ff7a2e">128</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:4px">監控客戶數</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:rgba(255,179,122,0.08);border-radius:8px">
+              <div style="font-size:28px;font-weight:800;color:#ffb37a">78%</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:4px">客戶有反應</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h4 style="color:#ffb37a;margin-bottom:8px">🗺️ 擴張路徑</h4>
+          <p style="color:var(--text-2);font-size:13px">香港 → 灣區（深圳/廣州） → 東南亞華人市場</p>
+          <p style="color:var(--text-3);font-size:12px;margin-top:6px">粵語 + 普通話雙語，灣區文化認同</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Traction & Roadmap -->
+  <section class="slide" data-title="Traction">
+    <span class="section-num">08</span>
+    <p class="num-tag">TRACTION &amp; ROADMAP 進展</p>
+    <h2 class="h2 mt-s">已啟動：MVP 投資者 Demo<br><span class="gradient-text">即將進入 Beta</span></h2>
+    <div class="grid g2 mt-l">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <h4 style="color:#ff7a2e;margin-bottom:12px">✅ 已完成</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-1);font-size:13px"><span style="color:#28d49a">✓</span> MVP 功能完整（因果引擎 + 時序雷達 + WhatsApp 觸達）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-1);font-size:13px"><span style="color:#28d49a">✓</span> 7 個行業場景 Demo 完成</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-1);font-size:13px"><span style="color:#28d49a">✓</span> 3-way Comparison vs ChatGPT/Perplexity 完成</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-1);font-size:13px"><span style="color:#28d49a">✓</span> 後廠 SaaS 控制台 Demo 完成</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-1);font-size:13px"><span style="color:#28d49a">✓</span> TimesFM 因果引擎整合完成</div>
+          </div>
+        </div>
+        <div class="card">
+          <h4 style="color:#4ea1ff;margin-bottom:12px">📅 Q2 2026 目標</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#4ea1ff">→</span> 種子輪 HK$2M close（目標 2026 Q2）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#4ea1ff">→</span> 3-5 間 Beta 企業客戶（免費）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#4ea1ff">→</span> WhatsApp Business Cloud API 正式版</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#4ea1ff">→</span> 灣區 RAG 案例庫 2.0</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h4 style="color:#28d49a;margin-bottom:12px">💡 願景：東風 2.0</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#28d49a">★</span> 多租戶 SaaS 平台（2026 Q3）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#28d49a">★</span> OAuth 數據源全面接入（FB/IG/CRM）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#28d49a">★</span> 灣區複製（深圳/廣州）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#28d49a">★</span> 東南亞華人市場（新加坡/馬來西亞）</div>
+            <div style="display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:13px"><span style="color:#28d49a">★</span> A 輪 HK$15M（預計 2027 Q1）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. The Ask -->
+  <section class="slide" data-title="The Ask">
+    <span class="section-num">09</span>
+    <p class="num-tag">THE ASK 融資需求</p>
+    <h2 class="h2 mt-s">HK$2M 種子輪<br><span class="gradient-text">構建香港最大中小企 AI 決策網絡</span></h2>
+    <div class="grid g3 mt-l">
+      <div class="card" style="text-align:center;border-top:3px solid #ff7a2e">
+        <h4 style="color:#ff7a2e;font-size:14px;margin-bottom:12px">估值</h4>
+        <div style="font-size:36px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">HK$12M</div>
+        <p style="color:var(--text-2);font-size:12px;margin-top:6px">Pre-money Valuation</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:3px solid #4ea1ff">
+        <h4 style="color:#4ea1ff;font-size:14px;margin-bottom:12px">融资额</h4>
+        <div style="font-size:36px;font-weight:800;color:#4ea1ff">HK$2M</div>
+        <p style="color:var(--text-2);font-size:12px;margin-top:6px">Seed Round</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:3px solid #28d49a">
+        <h4 style="color:#28d49a;font-size:14px;margin-bottom:12px">稀釋</h4>
+        <div style="font-size:36px;font-weight:800;color:#28d49a">14.3%</div>
+        <p style="color:var(--text-2);font-size:12px;margin-top:6px">Post-money 16.7%</p>
+      </div>
+    </div>
+    <div class="grid g2 mt-l">
+      <div class="card">
+        <h4 style="color:#ff7a2e;margin-bottom:10px">💡 資金用途</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:13px">產品開發（因果引擎 + RAG）</span><span style="color:var(--text-1);font-size:13px;font-weight:700">HK$800K</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:13px">市場拓展（香港中小企）</span><span style="color:var(--text-1);font-size:13px;font-weight:700">HK$600K</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:13px">Beta 客戶獲取</span><span style="color:var(--text-1);font-size:13px;font-weight:700">HK$400K</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:13px">灣區市場研究</span><span style="color:var(--text-1);font-size:13px;font-weight:700">HK$200K</span></div>
+        </div>
+      </div>
+      <div class="card" style="background:rgba(255,122,46,0.06);border-color:rgba(255,122,46,0.3)">
+        <h4 style="color:#ff7a2e;margin-bottom:10px">🤝 我們在找</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <p style="color:var(--text-1);font-size:13px">• 對 Hong Kong / 灣區 AI 赛道有認知的天使 / VC</p>
+          <p style="color:var(--text-1);font-size:13px">• 能帶來中小企客戶資源的合作夥伴</p>
+          <p style="color:var(--text-1);font-size:13px">• 對保險 / 地產 / F&amp;B 行業有深度經驗的導師</p>
+          <p style="color:var(--text-2);font-size:12px;margin-top:8px">聯絡：match@syncbuddy.ai</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script src="assets/runtime.js"></script>
+</body>
+</html>
