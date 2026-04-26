@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>東風 · 戰略管理控制台 (後廠) | SyncBuddy</title>
+<link rel="icon" type="image/png" href="assets/logo.png"/>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="stylesheet" href="assets/console.css" />
+</head>
+<body class="cn-body">
+
+<!-- Top header -->
+<header class="cn-topbar">
+  <div class="cn-brand">
+    <a href="index.html" class="brand-link">
+      <img src="assets/logo.png" alt="SyncBuddy" class="brand-logo"/>
+      <span class="cn-brand-cn">東風</span>
+      <span class="cn-brand-sub">戰略管理控制台</span>
+    </a>
+  </div>
+  <div class="cn-search">
+    <input type="text" placeholder="🔍 搜尋客戶 / 預警 / 序列..." />
+  </div>
+  <div class="cn-user">
+    <div class="cn-status"><span class="cn-status-dot"></span>雷達運行中</div>
+    <div class="cn-avatar">M</div>
+    <div class="cn-name">Match · Pro 版</div>
+  </div>
+</header>
+
+<div class="cn-shell">
+
+  <!-- Sidebar -->
+  <aside class="cn-sidebar">
+    <div class="cn-nav">
+      <button class="cn-tab active" data-tab="dashboard"><span class="ic">🎯</span> 雷達總覽</button>
+      <button class="cn-tab" data-tab="customers"><span class="ic">👤</span> 客戶 360°</button>
+      <button class="cn-tab" data-tab="campaigns"><span class="ic">📡</span> 序列管理</button>
+      <button class="cn-tab" data-tab="forecast"><span class="ic">🔬</span> 預測實驗室</button>
+      <button class="cn-tab" data-tab="dag"><span class="ic">🧬</span> DAG 工坊</button>
+      <button class="cn-tab" data-tab="settings"><span class="ic">⚙️</span> 數據與授權</button>
+    </div>
+
+    <div class="cn-quickstats">
+      <div class="qs-title">本月閉環</div>
+      <div class="qs-num">487</div>
+      <div class="qs-trend">↗ +18% vs 上月</div>
+    </div>
+
+    <a href="index.html" class="cn-back-cta">← 回主 Demo</a>
+  </aside>
+
+  <!-- Main content -->
+  <main class="cn-main">
+
+    <!-- ========================================================
+         TAB 1: 雷達總覽 Dashboard
+         ======================================================== -->
+    <section class="cn-page active" data-page="dashboard">
+      <div class="cn-page-head">
+        <div>
+          <h1>🎯 雷達總覽</h1>
+          <div class="cn-breadcrumb">後廠 · 戰略管理控制台 / 雷達總覽</div>
+        </div>
+        <div class="cn-date">2026-04-26 (週日) · 即時更新</div>
+      </div>
+
+      <!-- KPI cards row -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-icon">📡</div>
+          <div class="kpi-num">128</div>
+          <div class="kpi-lbl">監控客戶</div>
+          <svg class="kpi-spark" viewBox="0 0 80 24" preserveAspectRatio="none">
+            <polyline points="0,18 10,15 20,16 30,12 40,11 50,9 60,7 70,5 80,3" fill="none" stroke="#4ea1ff" stroke-width="1.5"/>
+          </svg>
+          <div class="kpi-delta up">+12 本週</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-icon">⚠️</div>
+          <div class="kpi-num">7</div>
+          <div class="kpi-lbl">高優先預警</div>
+          <svg class="kpi-spark" viewBox="0 0 80 24" preserveAspectRatio="none">
+            <polyline points="0,15 10,18 20,12 30,14 40,10 50,8 60,11 70,7 80,5" fill="none" stroke="#ff7a2e" stroke-width="1.5"/>
+          </svg>
+          <div class="kpi-delta up">+3 vs 昨日</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon">⚡</div>
+          <div class="kpi-num">487</div>
+          <div class="kpi-lbl">本月一鍵閉環</div>
+          <svg class="kpi-spark" viewBox="0 0 80 24" preserveAspectRatio="none">
+            <polyline points="0,20 10,18 20,16 30,12 40,9 50,11 60,7 70,5 80,3" fill="none" stroke="#28d49a" stroke-width="1.5"/>
+          </svg>
+          <div class="kpi-delta up">+18% MoM</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon">💰</div>
+          <div class="kpi-num">+340%</div>
+          <div class="kpi-lbl">平均 ROI</div>
+          <svg class="kpi-spark" viewBox="0 0 80 24" preserveAspectRatio="none">
+            <polyline points="0,20 10,16 20,18 30,14 40,11 50,8 60,6 70,4 80,3" fill="none" stroke="#ffb37a" stroke-width="1.5"/>
+          </svg>
+          <div class="kpi-delta up">行業 8.2x</div>
+        </div>
+      </div>
+
+      <!-- 2-column row: Active alerts + 24/7 heatmap -->
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🚨 即時雷達預警 (Top 5)</h3>
+            <span class="cn-badge live"><span class="ld"></span>LIVE</span>
+          </div>
+          <ul class="alert-list">
+            <li class="prio-high">
+              <span class="al-prio">P1</span>
+              <div class="al-body">
+                <div class="al-title"><strong>陳Sir</strong> · 大客戶流失預警</div>
+                <div class="al-meta">流失機率 68% · 提前 18 天 · 信賴 91%</div>
+              </div>
+              <button class="al-btn">處理</button>
+            </li>
+            <li class="prio-high">
+              <span class="al-prio">P1</span>
+              <div class="al-body">
+                <div class="al-title"><strong>Annie 咖啡店</strong> · 訂單暴跌 -38%</div>
+                <div class="al-meta">真因鎖定: FB 演算法改版 · 信賴 88%</div>
+              </div>
+              <button class="al-btn">處理</button>
+            </li>
+            <li class="prio-mid">
+              <span class="al-prio">P2</span>
+              <div class="al-body">
+                <div class="al-title"><strong>Lily 美容院</strong> · 母親節紅海預警</div>
+                <div class="al-meta">CPM 飆升 +300% · 建議切藍海</div>
+              </div>
+              <button class="al-btn">處理</button>
+            </li>
+            <li class="prio-mid">
+              <span class="al-prio">P2</span>
+              <div class="al-body">
+                <div class="al-title"><strong>Sandra (健身)</strong> · 偏好遷移</div>
+                <div class="al-meta">續會率 21% · IG 軌跡顯示轉跑步</div>
+              </div>
+              <button class="al-btn">處理</button>
+            </li>
+            <li class="prio-low">
+              <span class="al-prio">P3</span>
+              <div class="al-body">
+                <div class="al-title"><strong>Mr. Wong</strong> · 簽約峰值倒數</div>
+                <div class="al-meta">T+5 週四 18:00 · 預測 91%</div>
+              </div>
+              <button class="al-btn">處理</button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🌡️ 24/7 雷達掃描熱力圖 (本週)</h3>
+            <span class="cn-card-sub">深色 = 高活躍度</span>
+          </div>
+          <div class="heatmap" id="heatmap"></div>
+          <div class="hm-legend">
+            <span>少</span>
+            <span class="hm-cell hm-0"></span>
+            <span class="hm-cell hm-1"></span>
+            <span class="hm-cell hm-2"></span>
+            <span class="hm-cell hm-3"></span>
+            <span class="hm-cell hm-4"></span>
+            <span>多</span>
+          </div>
+          <div class="hm-insight">📊 <strong>洞察:</strong> 客戶活躍度集中在 <strong>週一 / 週四下午 14-17 點</strong> — 系統將自動安排此時段觸發推送以提升回覆率 +43%。</div>
+        </div>
+      </div>
+
+      <!-- Customer pipeline funnel + ROI by vertical -->
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🎯 客戶生命週期漏斗</h3>
+          </div>
+          <div class="funnel">
+            <div class="fn-row" style="--pct:100">
+              <div class="fn-label">監控中</div>
+              <div class="fn-bar"><span>128</span></div>
+              <div class="fn-pct">100%</div>
+            </div>
+            <div class="fn-row" style="--pct:62">
+              <div class="fn-label">已觸發預警</div>
+              <div class="fn-bar"><span>79</span></div>
+              <div class="fn-pct">62%</div>
+            </div>
+            <div class="fn-row" style="--pct:48">
+              <div class="fn-label">已執行閉環</div>
+              <div class="fn-bar"><span>62</span></div>
+              <div class="fn-pct">48%</div>
+            </div>
+            <div class="fn-row" style="--pct:36">
+              <div class="fn-label">客戶有反應</div>
+              <div class="fn-bar"><span>46</span></div>
+              <div class="fn-pct">36%</div>
+            </div>
+            <div class="fn-row" style="--pct:24">
+              <div class="fn-label">轉化成單 ✓</div>
+              <div class="fn-bar success"><span>31</span></div>
+              <div class="fn-pct">24%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>💰 各垂直行業 ROI 分布</h3>
+          </div>
+          <ul class="vertical-list">
+            <li><span class="vl-icon">🛡️</span><span class="vl-name">保險經紀</span><div class="vl-bar"><span style="width:88%">+342%</span></div></li>
+            <li><span class="vl-icon">🏠</span><span class="vl-name">地產代理</span><div class="vl-bar"><span style="width:75%">+278%</span></div></li>
+            <li><span class="vl-icon">💄</span><span class="vl-name">美容業</span><div class="vl-bar"><span style="width:82%">+218%</span></div></li>
+            <li><span class="vl-icon">🏋️</span><span class="vl-name">健身教練</span><div class="vl-bar"><span style="width:60%">+165%</span></div></li>
+            <li><span class="vl-icon">☕</span><span class="vl-name">F&B (餐廳)</span><div class="vl-bar"><span style="width:55%">+148%</span></div></li>
+          </ul>
+          <div class="vl-foot">總平均 ROI: <strong>+340%</strong> (行業基準 +42%)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 2: 客戶 360°
+         ======================================================== -->
+    <section class="cn-page" data-page="customers">
+      <div class="cn-page-head">
+        <div>
+          <h1>👤 客戶 360°</h1>
+          <div class="cn-breadcrumb">後廠 / 客戶 / 陳Sir (大客戶)</div>
+        </div>
+        <div>
+          <select class="cn-select" id="customerPicker">
+            <option>陳Sir (保險 · 大客戶)</option>
+            <option>Annie (連鎖咖啡店店主)</option>
+            <option>Sandra (健身會員 · 8 個月)</option>
+            <option>Mr. Wong (地產買家)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Customer profile header -->
+      <div class="customer-header">
+        <div class="ch-avatar">陳</div>
+        <div class="ch-info">
+          <div class="ch-name">陳Sir <span class="ch-tag">VIP · 高淨值</span></div>
+          <div class="ch-meta">保險客戶 · 4 年 · 累積保費 HK$4.2M · 最近接觸 13 小時前</div>
+          <div class="ch-tags">
+            <span class="ch-chip">🏦 銀行業</span>
+            <span class="ch-chip">📈 投資型</span>
+            <span class="ch-chip">🏠 業主</span>
+            <span class="ch-chip warn">⚠️ 流失風險</span>
+          </div>
+        </div>
+        <div class="ch-score">
+          <div class="ch-score-num">68%</div>
+          <div class="ch-score-lbl">流失風險 · 提前 18 天</div>
+        </div>
+      </div>
+
+      <!-- Multi-source signals + activity timeline -->
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>📡 多源信號 (近 14 天)</h3>
+          </div>
+          <ul class="signal-list">
+            <li>
+              <span class="sg-icon">📸</span>
+              <div class="sg-body">
+                <div class="sg-title">Instagram 興趣轉移</div>
+                <div class="sg-bar"><span style="width:92%; background:#ff5a5f"></span></div>
+                <div class="sg-detail">股票/債券內容瀏覽 +210% · 14 天累積 47 次</div>
+              </div>
+            </li>
+            <li>
+              <span class="sg-icon">💬</span>
+              <div class="sg-body">
+                <div class="sg-title">WhatsApp 回覆延遲</div>
+                <div class="sg-bar"><span style="width:78%; background:#ff7a2e"></span></div>
+                <div class="sg-detail">2 小時 → 13 小時 (+550%)</div>
+              </div>
+            </li>
+            <li>
+              <span class="sg-icon">📘</span>
+              <div class="sg-body">
+                <div class="sg-title">Facebook 互動</div>
+                <div class="sg-bar"><span style="width:18%; background:#8aa0c4"></span></div>
+                <div class="sg-detail">14 天 0 次 (基線 2.1 次/週)</div>
+              </div>
+            </li>
+            <li>
+              <span class="sg-icon">📊</span>
+              <div class="sg-body">
+                <div class="sg-title">CRM 互動</div>
+                <div class="sg-bar"><span style="width:32%; background:#8aa0c4"></span></div>
+                <div class="sg-detail">本季僅 1 次主動聯絡</div>
+              </div>
+            </li>
+            <li>
+              <span class="sg-icon">🌐</span>
+              <div class="sg-body">
+                <div class="sg-title">公網事件 (HKD Prime +0.5%)</div>
+                <div class="sg-bar"><span style="width:65%; background:#4ea1ff"></span></div>
+                <div class="sg-detail">加息週期啟動, 對高淨值客戶顯著相關</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>📜 客戶軌跡時間軸</h3>
+          </div>
+          <ul class="timeline">
+            <li class="tl-now">
+              <div class="tl-time">現在</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">⚠️ 雷達觸發預警 · 流失機率 68%</div>
+            </li>
+            <li>
+              <div class="tl-time">-2h</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">📸 IG 收藏 1 篇「定存利率」內容</div>
+            </li>
+            <li>
+              <div class="tl-time">昨日</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">💬 WhatsApp 已讀未回 13 小時</div>
+            </li>
+            <li>
+              <div class="tl-time">-3d</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">🏦 HSBC 加息新聞 (HKD +0.5%)</div>
+            </li>
+            <li>
+              <div class="tl-time">-7d</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">📈 IG 瀏覽股票內容停留 +210%</div>
+            </li>
+            <li>
+              <div class="tl-time">-14d</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">✓ 上次面談 (季度檢視)</div>
+            </li>
+            <li>
+              <div class="tl-time">-90d</div>
+              <div class="tl-dot"></div>
+              <div class="tl-content">🛡️ 續保儲蓄險 (HK$200K)</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Recommended action + customer DAG -->
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🎯 張良引擎建議行動</h3>
+          </div>
+          <div class="action-plan">
+            <div class="ap-step ap-now">
+              <div class="ap-time">T+0 (今晚 21:15)</div>
+              <div class="ap-text">發送《加息環境下儲蓄險 vs 定存對比表》</div>
+              <button class="ap-btn">⚡ 立即執行</button>
+            </div>
+            <div class="ap-step">
+              <div class="ap-time">T+7 天</div>
+              <div class="ap-text">邀請陳Sir 參加「家族財富傳承」線下小聚</div>
+              <button class="ap-btn ap-btn-sec">✏️ 微調</button>
+            </div>
+            <div class="ap-step">
+              <div class="ap-time">T+14 天 (轉折窗口)</div>
+              <div class="ap-text">Follow-up · 預測簽單機率 73%</div>
+              <button class="ap-btn ap-btn-sec">✏️ 微調</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>💼 客戶價值與忠誠度</h3>
+          </div>
+          <div class="cv-grid">
+            <div class="cv-cell">
+              <div class="cv-num">HK$4.2M</div>
+              <div class="cv-lbl">累積保費</div>
+            </div>
+            <div class="cv-cell">
+              <div class="cv-num">HK$840K</div>
+              <div class="cv-lbl">年化貢獻</div>
+            </div>
+            <div class="cv-cell">
+              <div class="cv-num">8.6/10</div>
+              <div class="cv-lbl">忠誠度分數</div>
+            </div>
+            <div class="cv-cell warn">
+              <div class="cv-num">HK$280K</div>
+              <div class="cv-lbl">若流失 12 月損失</div>
+            </div>
+          </div>
+          <div class="cv-network">
+            <div class="cv-net-title">🕸️ 關係網絡 (家庭/業務)</div>
+            <div class="cv-net-graph">
+              <span class="cv-node">陳太</span>
+              <span class="cv-node">陳子 (大學)</span>
+              <span class="cv-node">公司 4 員工</span>
+              <span class="cv-node-self">陳Sir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 3: 序列管理 Campaigns
+         ======================================================== -->
+    <section class="cn-page" data-page="campaigns">
+      <div class="cn-page-head">
+        <div>
+          <h1>📡 序列管理</h1>
+          <div class="cn-breadcrumb">後廠 / 已排程的跨平台行動</div>
+        </div>
+        <button class="cn-cta">+ 新增序列</button>
+      </div>
+
+      <div class="campaign-stats">
+        <div class="cs-cell"><strong>23</strong>個進行中</div>
+        <div class="cs-cell"><strong>89</strong>個已完成 (本月)</div>
+        <div class="cs-cell"><strong>78%</strong>客戶有反應</div>
+        <div class="cs-cell"><strong>42%</strong>轉化成單</div>
+      </div>
+
+      <div class="cn-card">
+        <div class="cn-card-head">
+          <h3>🗓️ 未來 7 日排程時間軸</h3>
+        </div>
+        <div class="schedule-grid">
+          <div class="sg-day"><div class="sg-day-lbl">今日 04/26</div><div class="sg-day-actions">
+            <div class="sg-action high">21:15 陳Sir · 加息對比表</div>
+            <div class="sg-action">15:00 Annie · IG Reels #1</div>
+            <div class="sg-action">17:30 Lily · VIP 邀請函 (×8)</div>
+          </div></div>
+          <div class="sg-day"><div class="sg-day-lbl">04/27</div><div class="sg-day-actions">
+            <div class="sg-action">10:00 Annie · IG Reels #2</div>
+            <div class="sg-action">19:00 Sandra · 跑者課程介紹</div>
+          </div></div>
+          <div class="sg-day"><div class="sg-day-lbl">04/28</div><div class="sg-day-actions">
+            <div class="sg-action">09:30 Lily · VIP 邀請函 (×12)</div>
+            <div class="sg-action">14:00 Mr.Wong · 走勢圖</div>
+          </div></div>
+          <div class="sg-day"><div class="sg-day-lbl">04/29</div><div class="sg-day-actions">
+            <div class="sg-action high">15:00 Mr.Wong · 簽約狙擊 ★</div>
+          </div></div>
+          <div class="sg-day"><div class="sg-day-lbl">04/30</div><div class="sg-day-actions">
+            <div class="sg-action">11:00 Ivy · 動態定價啟動</div>
+          </div></div>
+          <div class="sg-day"><div class="sg-day-lbl">05/01</div><div class="sg-day-actions">
+            <div class="sg-action">--空檔--</div>
+          </div></div>
+          <div class="sg-day"><div class="sg-day-lbl">05/02</div><div class="sg-day-actions">
+            <div class="sg-action high">21:15 陳Sir · 線下小聚</div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="cn-card">
+        <div class="cn-card-head">
+          <h3>🔁 進行中的多步序列 (Active)</h3>
+        </div>
+        <ul class="seq-list">
+          <li>
+            <div class="sq-info">
+              <div class="sq-name"><strong>陳Sir 流失挽回</strong> <span class="sq-status running">running</span></div>
+              <div class="sq-prog-track"><div class="sq-prog" style="width:33%"></div></div>
+              <div class="sq-step">T+0 已發送 · T+7 排程中 · T+14 等待</div>
+            </div>
+            <div class="sq-meta">
+              <div>WhatsApp + Email</div>
+              <div class="sq-roi">ROI 預測 +280%</div>
+            </div>
+          </li>
+          <li>
+            <div class="sq-info">
+              <div class="sq-name"><strong>Annie 觸達修復</strong> <span class="sq-status running">running</span></div>
+              <div class="sq-prog-track"><div class="sq-prog" style="width:50%"></div></div>
+              <div class="sq-step">Reels #1 已發 · Reels #2 排程 · WhatsApp Broadcast 等待</div>
+            </div>
+            <div class="sq-meta">
+              <div>IG + WhatsApp + FB Ads</div>
+              <div class="sq-roi">ROI 預測 +148%</div>
+            </div>
+          </li>
+          <li>
+            <div class="sq-info">
+              <div class="sq-name"><strong>Lily 母親節藍海</strong> <span class="sq-status pending">pending</span></div>
+              <div class="sq-prog-track"><div class="sq-prog" style="width:8%"></div></div>
+              <div class="sq-step">32 份個性化邀請函 草稿完成 · 待你確認啟動</div>
+            </div>
+            <div class="sq-meta">
+              <div>WhatsApp Broadcast</div>
+              <div class="sq-roi">ROI 預測 +218%</div>
+            </div>
+          </li>
+          <li>
+            <div class="sq-info">
+              <div class="sq-name"><strong>Mr. Wong 簽約狙擊</strong> <span class="sq-status running">running</span></div>
+              <div class="sq-prog-track"><div class="sq-prog" style="width:25%"></div></div>
+              <div class="sq-step">T+0 完成 · T+4 排程 · <strong>T+5 週四 15:00 簽約峰值 ★</strong></div>
+            </div>
+            <div class="sq-meta">
+              <div>WhatsApp + Email</div>
+              <div class="sq-roi">ROI 預測 +278%</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 4: 預測實驗室 Forecast Lab
+         ======================================================== -->
+    <section class="cn-page" data-page="forecast">
+      <div class="cn-page-head">
+        <div>
+          <h1>🔬 預測實驗室</h1>
+          <div class="cn-breadcrumb">後廠 / What-If 模擬器 + 多場景預測</div>
+        </div>
+      </div>
+
+      <div class="cn-card">
+        <div class="cn-card-head">
+          <h3>🧪 What-If 模擬器</h3>
+        </div>
+        <div class="lab-grid">
+          <div class="lab-controls">
+            <div class="lab-row">
+              <label>客戶: <select><option>陳Sir</option><option>Annie</option></select></label>
+            </div>
+            <div class="lab-row">
+              <label>動作: <select><option>不動作 (按兵不動)</option><option>立即 Cold Call</option><option>3 步保溫方案</option><option>分享教育文章</option></select></label>
+            </div>
+            <div class="lab-row">
+              <label>時點: <input type="range" min="0" max="30" value="14"/> <span>T+14 天</span></label>
+            </div>
+            <div class="lab-row">
+              <label>外部變量: <select><option>加息持續</option><option>加息見頂</option><option>降息週期</option></select></label>
+            </div>
+            <button class="lab-run">▶ 模擬</button>
+          </div>
+          <div class="lab-result">
+            <div class="lab-result-title">🎯 模擬預測結果</div>
+            <div class="lab-result-num">73%</div>
+            <div class="lab-result-lbl">簽單機率 (信賴 87%)</div>
+            <div class="lab-result-detail">基線 (不動作): 32% · 提升 <strong>+41pp</strong></div>
+            <div class="lab-result-detail">預估營收影響: <strong>+HK$280K / 年</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>📈 多客戶預測曲線 (next 21 days)</h3>
+          </div>
+          <svg class="multi-fc" viewBox="0 0 360 180" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ea1ff" stop-opacity="0.3"/><stop offset="100%" stop-color="#4ea1ff" stop-opacity="0"/></linearGradient>
+            </defs>
+            <!-- gridlines -->
+            <line x1="0" y1="45" x2="360" y2="45" stroke="rgba(255,255,255,0.04)"/>
+            <line x1="0" y1="90" x2="360" y2="90" stroke="rgba(255,255,255,0.04)"/>
+            <line x1="0" y1="135" x2="360" y2="135" stroke="rgba(255,255,255,0.04)"/>
+            <!-- 陳Sir line -->
+            <polyline points="0,40 30,42 60,48 90,55 120,68 150,80 180,75 210,60 240,45 270,30 300,22 330,18 360,15" fill="none" stroke="#4ea1ff" stroke-width="2"/>
+            <!-- Annie -->
+            <polyline points="0,90 30,100 60,118 90,135 120,150 150,140 180,118 210,90 240,68 270,52 300,40 330,32 360,28" fill="none" stroke="#28d49a" stroke-width="2" stroke-dasharray="4,3"/>
+            <!-- Sandra -->
+            <polyline points="0,60 30,75 60,95 90,118 120,140 150,155 180,160 210,155 240,148 270,140 300,135 330,130 360,128" fill="none" stroke="#ffb37a" stroke-width="2" stroke-dasharray="2,2"/>
+          </svg>
+          <div class="multi-fc-legend">
+            <span><span class="lg-line lg-blue"></span>陳Sir (預測簽單)</span>
+            <span><span class="lg-line lg-green"></span>Annie (訂單恢復)</span>
+            <span><span class="lg-line lg-orange"></span>Sandra (續會率)</span>
+          </div>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🌪️ 黑天鵝事件壓力測試</h3>
+          </div>
+          <ul class="bs-list">
+            <li><span class="bs-event">📉 港股暴跌 -15%</span><span class="bs-impact bad">高淨值客戶流失風險 +28pp</span></li>
+            <li><span class="bs-event">🏦 加息再 +1%</span><span class="bs-impact bad">儲蓄險吸引力 -12pp</span></li>
+            <li><span class="bs-event">📱 IG 演算法改版</span><span class="bs-impact warn">有機觸達 -35% (建議轉 Reels)</span></li>
+            <li><span class="bs-event">🌧️ 颱風 8 號</span><span class="bs-impact good">F&B 外賣 +210% (動態擴容)</span></li>
+            <li><span class="bs-event">🎉 政府消費券</span><span class="bs-impact good">零售 +180% (建議提前備貨)</span></li>
+          </ul>
+          <div class="bs-foot">已對所有 128 客戶執行壓測, 並預先準備 5 套應變方案。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 5: DAG 工坊
+         ======================================================== -->
+    <section class="cn-page" data-page="dag">
+      <div class="cn-page-head">
+        <div>
+          <h1>🧬 DAG 工坊</h1>
+          <div class="cn-breadcrumb">後廠 / 視覺化因果模型編輯器</div>
+        </div>
+        <button class="cn-cta">+ 新建 DAG 模型</button>
+      </div>
+
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🗂️ 已部署因果模型 (12)</h3>
+          </div>
+          <ul class="dag-model-list">
+            <li><span class="dm-name">🛡️ 保險客戶流失模型 v3.1</span><span class="dm-status active">active</span><span class="dm-acc">準確 91%</span></li>
+            <li><span class="dm-name">☕ F&B 銷量異常診斷 v2.0</span><span class="dm-status active">active</span><span class="dm-acc">準確 88%</span></li>
+            <li><span class="dm-name">💄 美容業紅海預警 v1.4</span><span class="dm-status active">active</span><span class="dm-acc">準確 86%</span></li>
+            <li><span class="dm-name">🏋️ 健身會員續會 v1.0</span><span class="dm-status active">active</span><span class="dm-acc">準確 89%</span></li>
+            <li><span class="dm-name">🏠 地產帶看轉化 v1.2</span><span class="dm-status active">active</span><span class="dm-acc">準確 87%</span></li>
+            <li><span class="dm-name">🍴 餐廳翻台優化 v0.9</span><span class="dm-status beta">beta</span><span class="dm-acc">準確 84%</span></li>
+            <li><span class="dm-name">📱 SaaS 流失早期預警 v0.5</span><span class="dm-status beta">beta</span><span class="dm-acc">準確 79%</span></li>
+            <li><span class="dm-name">🎓 教育機構續報 v0.3</span><span class="dm-status draft">draft</span><span class="dm-acc">訓練中</span></li>
+          </ul>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🛠️ 模型編輯器預覽</h3>
+            <span class="cn-card-sub">drag-drop 構建因果鏈</span>
+          </div>
+          <div class="dag-editor-preview">
+            <div class="dep-node dep-cause">⚡ 原因節點</div>
+            <div class="dep-node dep-evidence">📡 證據節點</div>
+            <div class="dep-node dep-effect">🎯 效果節點</div>
+            <div class="dep-node dep-alert">🚨 告警節點</div>
+            <div class="dep-arrow">→</div>
+            <div class="dep-arrow">→</div>
+            <div class="dep-hint">拖拉節點到工作區, 雙擊編輯權重 / mechanism / 反事實規則。系統會自動執行 do-calculus 並 fine-tune 灣區私域數據。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 6: 數據與授權
+         ======================================================== -->
+    <section class="cn-page" data-page="settings">
+      <div class="cn-page-head">
+        <div>
+          <h1>⚙️ 數據與授權</h1>
+          <div class="cn-breadcrumb">後廠 / OAuth 連接 + 團隊 + API</div>
+        </div>
+      </div>
+
+      <div class="cn-grid-2">
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>🔐 已連接數據源</h3>
+          </div>
+          <ul class="ds-list">
+            <li class="connected">
+              <span class="ds-icon">📘</span>
+              <div class="ds-body">
+                <div class="ds-name">Facebook Pages & Insights</div>
+                <div class="ds-meta">read_insights, ads_read · 30 日後自動續期</div>
+              </div>
+              <span class="ds-status">✓ 已連接</span>
+            </li>
+            <li class="connected">
+              <span class="ds-icon">📸</span>
+              <div class="ds-body">
+                <div class="ds-name">Instagram Business</div>
+                <div class="ds-meta">ig_basic, ig_content_publish</div>
+              </div>
+              <span class="ds-status">✓ 已連接</span>
+            </li>
+            <li class="connected">
+              <span class="ds-icon">💬</span>
+              <div class="ds-body">
+                <div class="ds-name">WhatsApp Business Cloud API</div>
+                <div class="ds-meta">whatsapp_business_messaging · Verified Business</div>
+              </div>
+              <span class="ds-status">✓ 已連接</span>
+            </li>
+            <li class="connected">
+              <span class="ds-icon">💼</span>
+              <div class="ds-body">
+                <div class="ds-name">Meta Ads Manager</div>
+                <div class="ds-meta">ads_management · 即時 CPM 監控</div>
+              </div>
+              <span class="ds-status">✓ 已連接</span>
+            </li>
+            <li>
+              <span class="ds-icon">🛒</span>
+              <div class="ds-body">
+                <div class="ds-name">Shopify / WooCommerce</div>
+                <div class="ds-meta">尚未連接 (建議: 接入後可預警銷量)</div>
+              </div>
+              <span class="ds-status warn">+ 連接</span>
+            </li>
+            <li>
+              <span class="ds-icon">📊</span>
+              <div class="ds-body">
+                <div class="ds-name">Salesforce / HubSpot CRM</div>
+                <div class="ds-meta">尚未連接 (建議: 強化客戶 360°)</div>
+              </div>
+              <span class="ds-status warn">+ 連接</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-head">
+            <h3>👥 團隊與權限</h3>
+          </div>
+          <ul class="team-list">
+            <li><div class="tm-avatar">M</div><div><strong>Match (你)</strong><br/><small>Owner · 全權限</small></div></li>
+            <li><div class="tm-avatar a2">A</div><div>Annie Lo<br/><small>Manager · 客戶 360 + 序列</small></div></li>
+            <li><div class="tm-avatar a3">K</div><div>Kenny Cheung<br/><small>Analyst · 唯讀</small></div></li>
+            <li><div class="tm-add">+</div><div>邀請新成員</div></li>
+          </ul>
+          <h3 class="mt-section">🔑 API 金鑰</h3>
+          <div class="api-key-row">
+            <code>df_live_••••••••••••a8f3</code>
+            <button class="api-btn">複製</button>
+            <button class="api-btn">輪換</button>
+          </div>
+          <div class="api-meta">建立於 2025-12-01 · 最近使用: 13 分鐘前 · 本月呼叫 47,392 次</div>
+        </div>
+      </div>
+
+      <div class="cn-card">
+        <div class="cn-card-head">
+          <h3>🛡️ 合規與資料安全</h3>
+        </div>
+        <div class="compliance-grid">
+          <div class="cp-item">
+            <div class="cp-icon">🔒</div>
+            <div class="cp-name">GDPR / PIPL Ready</div>
+            <div class="cp-detail">資料於用戶私域加密儲存, 東風只計算不留存</div>
+          </div>
+          <div class="cp-item">
+            <div class="cp-icon">🇭🇰</div>
+            <div class="cp-name">PDPO 香港私隱條例</div>
+            <div class="cp-detail">完整符合, 有 DPO 監督</div>
+          </div>
+          <div class="cp-item">
+            <div class="cp-icon">📜</div>
+            <div class="cp-name">SOC 2 Type II</div>
+            <div class="cp-detail">已通過, 年度審計</div>
+          </div>
+          <div class="cp-item">
+            <div class="cp-icon">🔄</div>
+            <div class="cp-name">即時撤銷</div>
+            <div class="cp-detail">用戶可隨時 OAuth 撤回, 數據 30 秒內停流</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="assets/console.js"></script>
+</body>
+</html>

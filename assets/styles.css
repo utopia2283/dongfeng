@@ -81,6 +81,28 @@
 .cta-arrow { font-size: 16px; transition: transform 0.25s; }
 .hero-cta-btn:hover .cta-arrow { transform: translateX(4px); }
 
+/* Secondary CTA: console dashboard link */
+.console-cta {
+  background: linear-gradient(135deg, #1a3a6e 0%, #1e4a8a 60%, #2a5fa8 100%) !important;
+  box-shadow: 0 8px 24px rgba(30,74,138,0.45), 0 0 0 1px rgba(78,161,255,0.2) inset !important;
+}
+.console-cta:hover { box-shadow: 0 12px 32px rgba(30,100,180,0.65) !important; }
+.console-cta .cta-icon { font-size: 16px; }
+
+/* Compare page console link */
+.cmp-console-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px;
+  background: rgba(30,74,138,0.6);
+  border: 1px solid rgba(78,161,255,0.3);
+  border-radius: 20px;
+  color: #4ea1ff !important;
+  text-decoration: none;
+  font-size: 13px; font-weight: 600;
+  transition: background 0.2s, border-color 0.2s;
+}
+.cmp-console-link:hover { background: rgba(30,100,180,0.7); border-color: rgba(78,161,255,0.5); }
+
 @media (max-width: 720px) {
   .hero-banner-inner { flex-direction: column; gap: 12px; padding: 12px 16px; }
   .hero-tag { display: none; }
