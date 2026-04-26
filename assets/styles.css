@@ -83,10 +83,10 @@
 
 /* Secondary CTA: console dashboard link */
 .console-cta {
-  background: linear-gradient(135deg, #1a3a6e 0%, #1e4a8a 60%, #2a5fa8 100%) !important;
-  box-shadow: 0 8px 24px rgba(30,74,138,0.45), 0 0 0 1px rgba(78,161,255,0.2) inset !important;
+  background: linear-gradient(135deg, #0f766e 0%, #14b8a6 60%, #2dd4bf 100%) !important;
+  box-shadow: 0 8px 24px rgba(13,118,110,0.4), 0 0 0 1px rgba(45,212,191,0.2) inset !important;
 }
-.console-cta:hover { box-shadow: 0 12px 32px rgba(30,100,180,0.65) !important; }
+.console-cta:hover { box-shadow: 0 12px 32px rgba(20,184,166,0.55) !important; }
 .console-cta .cta-icon { font-size: 16px; }
 
 /* Compare page console link */

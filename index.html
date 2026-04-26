@@ -37,55 +37,55 @@
   <!-- LEFT: Pitch panel -->
   <aside class="pitch">
     <div class="card scenario-card">
-      <h3>選擇場景 (Scenario)</h3>
+      <h3>揀場景 (Scenario)</h3>
       <div class="scenario-list" id="scenarioList">
         <button class="scenario active" data-scenario="insurance">
           <div class="s-emoji">🛡️</div>
           <div class="s-info">
-            <div class="s-title">保險經紀 · 客戶流失預警</div>
-            <div class="s-sub">張良雷達 + DAG · 提前 18 天</div>
+            <div class="s-title">保險經紀 · 客路流失預警</div>
+            <div class="s-sub">張良雷達 + DAG · 幫你早 18 天話你知</div>
           </div>
         </button>
         <button class="scenario" data-scenario="sme_cafe">
           <div class="s-emoji">☕</div>
           <div class="s-info">
-            <div class="s-title">SME · 咖啡店銷量異常</div>
-            <div class="s-sub">法醫式真因鎖定</div>
+            <div class="s-title">SME · 咖啡店生意跌</div>
+            <div class="s-sub">幫你搵出真正原因</div>
           </div>
         </button>
         <button class="scenario" data-scenario="insurance_close">
           <div class="s-emoji">🎯</div>
           <div class="s-info">
             <div class="s-title">保險經紀 · 完美狙擊逼單</div>
-            <div class="s-sub">時序轉折點 T+21</div>
+            <div class="s-sub">時序轉折點 T+21 幫你計到</div>
           </div>
         </button>
         <button class="scenario" data-scenario="sme_beauty">
           <div class="s-emoji">💄</div>
           <div class="s-info">
             <div class="s-title">SME · 美容院避紅海</div>
-            <div class="s-sub">CPM 飆升 +300% 預警</div>
+            <div class="s-sub">CPM 飆升 +300% 幫你醒目</div>
           </div>
         </button>
         <button class="scenario new" data-scenario="fitness">
           <div class="s-emoji">🏋️</div>
           <div class="s-info">
-            <div class="s-title">健身教練 · 會員續會預警 <span class="new-tag">NEW</span></div>
-            <div class="s-sub">流失前 3 週個性化挽留</div>
+            <div class="s-title">健身教練 · 會員唔續會預警 <span class="new-tag">NEW</span></div>
+            <div class="s-sub">流失前 3 週幫你挽留</div>
           </div>
         </button>
         <button class="scenario new" data-scenario="real_estate">
           <div class="s-emoji">🏠</div>
           <div class="s-info">
-            <div class="s-title">地產代理 · 帶看轉化序列 <span class="new-tag">NEW</span></div>
-            <div class="s-sub">最佳 follow-up 時點預測</div>
+            <div class="s-title">地產代理 · 帶客轉化序列 <span class="new-tag">NEW</span></div>
+            <div class="s-sub">最佳 follow-up 時機預測</div>
           </div>
         </button>
         <button class="scenario new" data-scenario="restaurant">
           <div class="s-emoji">🍴</div>
           <div class="s-info">
-            <div class="s-title">餐廳 · 下午茶空台優化 <span class="new-tag">NEW</span></div>
-            <div class="s-sub">翻台率 +47% 動態定價</div>
+            <div class="s-title">餐廳 · 下午茶空位優化 <span class="new-tag">NEW</span></div>
+            <div class="s-sub">幫你搞盡 +47% 翻座率</div>
           </div>
         </button>
       </div>
@@ -94,10 +94,10 @@
     <div class="card engine-card">
       <h3>🧠 張良引擎 · 推理過程</h3>
       <div id="engineTrace" class="trace">
-        <div class="trace-empty">點擊「啟動主動預警」開始</div>
+        <div class="trace-empty">撳「啟動主動提示」開始</div>
       </div>
       <div class="confidence-block" id="confidenceBlock">
-        <div class="conf-label">因果鏈推理信賴度</div>
+        <div class="conf-label">因果鏈信心度</div>
         <svg class="conf-gauge" viewBox="0 0 140 80">
           <defs>
             <linearGradient id="confGrad" x1="0" y1="0" x2="1" y2="0">
@@ -118,7 +118,7 @@
       <h3>📡 張良預測雷達 <span class="live-dot"></span><span class="live-text">LIVE</span></h3>
       <canvas id="forecastChart" width="380" height="160"></canvas>
       <div class="legend">
-        <span class="dot dot-history"></span>歷史軌跡
+        <span class="dot dot-history"></span>過往走勢
         <span class="dot dot-forecast"></span>張良預測
         <span class="dot dot-turn"></span>轉折點
       </div>
@@ -148,25 +148,25 @@
       <div class="chat" id="chat"></div>
 
       <div class="composer">
-        <button class="btn-primary" id="triggerBtn">⚡ 啟動主動預警</button>
-        <button class="btn-secondary" id="resetBtn">↺ 重置</button>
+        <button class="btn-primary" id="triggerBtn">⚡ 啟動主動提示</button>
+        <button class="btn-secondary" id="resetBtn">↺ 重新嚟過</button>
       </div>
     </div>
 
     <div class="phone-caption">
       <strong>前店 (Front-Shop)</strong> · Zero-UI 智能軍師<br/>
-      用戶不需要寫 Prompt — 東風主動敲門。
+      用家唔使寫 Prompt — 東風主動搵你。
     </div>
   </main>
 
   <!-- RIGHT: SEXY DAG console -->
   <aside class="console">
     <h3>🏭 後廠 · 戰略管理控制台</h3>
-    <p class="sub">95% 高頻決策在 WhatsApp · 5% 深度管理在這裡</p>
+    <p class="sub">95% 高頻決策喺 WhatsApp · 5% 深度管理喺呢度</p>
 
     <div class="kpi-grid">
-      <div class="kpi"><div class="k-num" id="kpiClients">128</div><div class="k-lbl">監控客戶數</div></div>
-      <div class="kpi"><div class="k-num" id="kpiSignals">7</div><div class="k-lbl">本週預警</div></div>
+      <div class="kpi"><div class="k-num" id="kpiClients">128</div><div class="k-lbl">監察緊客戶</div></div>
+      <div class="kpi"><div class="k-num" id="kpiSignals">7</div><div class="k-lbl">今週預警</div></div>
       <div class="kpi"><div class="k-num" id="kpiROI">+340%</div><div class="k-lbl">平均 ROI</div></div>
       <div class="kpi"><div class="k-num">2-4w</div><div class="k-lbl">提前預判</div></div>
     </div>
@@ -174,17 +174,17 @@
     <div class="dag-block">
       <div class="dag-head">
         <h4>🔗 因果圖譜 (DAG · do-calculus)</h4>
-        <span class="dag-status" id="dagStatus">待機中</span>
+        <span class="dag-status" id="dagStatus">等候中</span>
       </div>
       <svg id="dagSvg" viewBox="0 0 420 320" class="dag-sexy"></svg>
 
       <div class="counterfactual-block" id="counterfactual">
-        <div class="cf-title">⊘ 反事實檢驗 · 已排除假性相關</div>
+        <div class="cf-title">⊘ 反事實檢驗 · 已排除假相關</div>
         <ul class="cf-list" id="cfList"></ul>
       </div>
     </div>
 
-    <h4>📡 數據源接入 (OAuth Secured)</h4>
+    <h4>📡 資料源接入 (OAuth Secured)</h4>
     <ul class="sources">
       <li><span class="src-dot ok"></span>WhatsApp Business API</li>
       <li><span class="src-dot ok"></span>Meta Ads (IG / FB)</li>
@@ -193,9 +193,9 @@
       <li><span class="src-dot ok"></span>張良預測雷達引擎</li>
     </ul>
 
-    <h4>🎯 一鍵閉環 · 執行日誌</h4>
+    <h4>🎯 一鍵閉環 · 執行記錄</h4>
     <div class="exec-log" id="execLog">
-      <div class="log-item muted">尚未執行任何動作</div>
+      <div class="log-item muted">未有任何動作</div>
     </div>
   </aside>
 

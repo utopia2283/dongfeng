@@ -839,8 +839,8 @@ function addExecLog(text) {
 // ----- Reset -----
 function resetAll() {
   chat.innerHTML = "";
-  trace.innerHTML = `<div class="trace-empty">點擊「啟動主動預警」開始推理...</div>`;
-  setDagStatus("待機中", "");
+  trace.innerHTML = `<div class="trace-empty">撳「啟動主動提示」開始推理...</div>`;
+  setDagStatus("等候中", "");
   // reset confidence gauge
   const arc = $("#confArc"); const val = $("#confValue");
   if (arc) arc.style.strokeDashoffset = 173;
@@ -851,7 +851,7 @@ function resetAll() {
   // welcome bubble
   const welcome = document.createElement("div");
   welcome.className = "bubble bot";
-  welcome.innerHTML = `👋 你好, 我是 <strong>東風 · 張良軍師</strong>。<br/>我正在為你 24/7 監控市場與客戶數據。<br/><br/>當前場景: <strong>${SCENARIOS[currentScenario].name}</strong><div class="meta">${nowTime()}</div>`;
+  welcome.innerHTML = `👋 你好, 我係 <strong>東風 · 張良軍師</strong>。<br/>我幫你 24/7 監察緊客路同市場數據。<br/><br/>而家睇緊: <strong>${SCENARIOS[currentScenario].name}</strong><div class="meta">${nowTime()}</div>`;
   chat.appendChild(welcome);
 
   // reset DAG highlight
