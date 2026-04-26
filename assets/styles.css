@@ -321,6 +321,111 @@ html, body {
 .bubble .a-btn.primary { background: var(--whatsapp); color: white; border-color: var(--whatsapp); }
 .bubble .a-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,0.15); }
 
+/* ---- 查看詳細視圖 (DAG / ROI / Forecast / Explain) ---- */
+
+/* DAG breakdown list (shows in chat bubble after clicking 看詳細因果圖) */
+.dag-breakdown {
+  list-style: none; padding: 0; margin: 8px 0 6px;
+}
+.dag-breakdown li {
+  font-size: 12px; padding: 5px 8px;
+  background: #f7f9fc; border-radius: 6px; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.dag-breakdown .bk-icon { font-size: 16px; }
+.dag-breakdown .bk-type {
+  margin-left: auto;
+  font-size: 10px; padding: 2px 7px; border-radius: 3px;
+  background: #075e54; color: white; font-weight: 600;
+}
+.bk-edges {
+  font-size: 11px; color: #555; margin-top: 6px;
+  background: #f0f0f0; padding: 6px 8px; border-radius: 6px;
+}
+.bk-edges code { background: white; padding: 1px 4px; border-radius: 3px; font-size: 10.5px; }
+.bk-edges .ew { color: #c0531a; font-weight: 700; font-family: monospace; }
+.bk-hint { display: block; font-size: 11px; color: #666; margin-top: 6px; }
+
+/* DAG spotlight: pulse highlight on right console block when clicked */
+.dag-block.dag-spotlight {
+  animation: dag-spotlight 2.4s ease-in-out;
+}
+@keyframes dag-spotlight {
+  0%, 100% { box-shadow: none; }
+  20%, 60% {
+    box-shadow: 0 0 0 3px var(--accent),
+                0 0 40px rgba(255,122,46,0.55);
+    transform: scale(1.012);
+  }
+}
+
+/* ROI bar chart in chat */
+.roi-chart { margin: 8px 0; display: flex; flex-direction: column; gap: 8px; }
+.roi-row { display: flex; flex-direction: column; gap: 3px; }
+.roi-name { font-size: 12px; font-weight: 700; color: #222; }
+.roi-track {
+  height: 24px; background: #f0f0f0; border-radius: 6px; overflow: hidden;
+  position: relative;
+}
+.roi-bar {
+  height: 100%; padding: 0 8px;
+  display: flex; align-items: center; justify-content: flex-end;
+  font-size: 11.5px; font-weight: 800; color: white;
+  border-radius: 6px;
+  animation: roi-grow 0.9s cubic-bezier(.2,.8,.2,1);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+}
+@keyframes roi-grow { from { width: 0 !important; } }
+.roi-note { font-size: 10.5px; color: #777; }
+.roi-recommend {
+  margin-top: 8px; padding: 8px 10px;
+  background: linear-gradient(135deg, #fff4ec, #ffe8d6);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  font-size: 12px; color: #333;
+}
+
+/* Forecast mini view */
+.fc-mini {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #f7f9fc; border-radius: 8px; padding: 10px 14px;
+  margin: 8px 0;
+}
+.fc-row { text-align: center; }
+.fc-label { font-size: 10px; color: #888; letter-spacing: 1px; }
+.fc-value { font-size: 22px; font-weight: 800; font-family: "SF Mono", monospace; }
+.fc-current { color: #ff5a5f; }
+.fc-target  { color: #28d49a; }
+.fc-arrow {
+  font-size: 22px; color: var(--accent);
+  animation: fc-arrow-pulse 1.4s infinite;
+}
+@keyframes fc-arrow-pulse {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50%      { transform: translateX(4px); opacity: 0.6; }
+}
+.fc-confidence {
+  font-size: 11.5px; color: #555;
+  background: #ecf6ff; padding: 6px 10px; border-radius: 5px;
+  margin-bottom: 4px;
+}
+.fc-confidence strong { color: #075e54; }
+
+/* Explain view */
+.explain-list {
+  list-style: none; padding: 0; margin: 8px 0;
+}
+.explain-list li {
+  padding: 6px 8px;
+  background: #f7f9fc; border-radius: 6px; margin-bottom: 4px;
+  font-size: 12px; line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.explain-list .ex-icon {
+  font-size: 18px; flex: 0 0 24px; text-align: center;
+}
+.explain-list strong { color: #075e54; }
+
 /* ---- 微調話術 編輯器 ---- */
 .tweak-options {
   display: flex; flex-direction: column; gap: 6px; margin-top: 8px;

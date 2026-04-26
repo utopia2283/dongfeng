@@ -122,7 +122,7 @@ const SCENARIOS = {
         預估 14 天內訂單回升至 -8%, 21 天反超 +12%。`,
         actions: [
           {label:"⚡ 一鍵執行修復", primary:true, exec:"已生成 3 條 Reels 文案 + 啟動 WhatsApp Broadcast (213 人)"},
-          {label:"📊 看詳細因果圖", exec:"開啟後廠 DAG 詳情"}
+          {label:"📊 看詳細因果圖", view:"dag"}
         ]}
     ]
   },
@@ -175,7 +175,14 @@ const SCENARIOS = {
         ④ <strong>T+21 週四 15:00</strong>: 「X 樓盤 最後 3 個靚坐向獨家盤」`,
         actions: [
           {label:"⚡ 一鍵排程 21 日 sequence", primary:true, exec:"已排程 4 個觸點 (T+0/+7/+14/+21)"},
-          {label:"❓ 為何不能現在推?", exec:"張良引擎: 決策疲勞期推銷 → 客戶 block 率 73%"}
+          {label:"❓ 為何不能現在推?", view:"explain", viewData:{
+            title:"為何現在逼單會失敗?",
+            points:[
+              {icon:"🚫", label:"決策疲勞期", value:"客戶看完 7 套樓, 認知資源已耗盡"},
+              {icon:"📉", label:"逼單成功率", value:"0% (block 率 73%)"},
+              {icon:"⏰", label:"必須等的窗口", value:"T+21 週四 15:00 (峰值 85%)"},
+              {icon:"🧠", label:"心理機制", value:"觀望期 → 比較期 → 決策期, 跳階 = 反感"},
+            ]}}
         ]}
     ]
   },
@@ -227,7 +234,13 @@ const SCENARIOS = {
         ✓ 我已寫好 32 份個性化 WhatsApp 邀請函`,
         actions: [
           {label:"⚡ 一鍵發送 32 份個性化邀請", primary:true, exec:"已發送 32 份個性化 WhatsApp 邀請"},
-          {label:"📈 對比兩種方案 ROI", exec:"紅海 ROI: -32% / 藍海 ROI: +218%"}
+          {label:"📈 對比兩種方案 ROI", view:"roi", viewData:{
+            title:"紅海 vs 藍海 · ROI 對比",
+            options:[
+              {name:"❌ 紅海:母女同行 8 折", roi:-32, color:"#ff5a5f", note:"全行同質, CPM +300%"},
+              {name:"✅ 藍海:新手媽媽自我犒賞", roi:218, color:"#28d49a", note:"私域分群, CAC 同行 1/5"},
+            ],
+            recommend:"立即切藍海, 跳過 21 天紅海血戰"}}
         ]}
     ]
   },
@@ -286,7 +299,13 @@ const SCENARIOS = {
         ③ 預估續會率回升至 <strong>74%</strong>, 客單價 +35%`,
         actions: [
           {label:"⚡ 一鍵發送私訊", primary:true, exec:"已用 Sandra 稱呼發送個性化 WhatsApp"},
-          {label:"📈 看 ROI 對比", exec:"傳統挽留 21% / 偏好對齊 74%"}
+          {label:"📈 看 ROI 對比", view:"roi", viewData:{
+            title:"傳統挽留 vs 偏好對齊 · 續會率",
+            options:[
+              {name:"❌ 傳統挽留:打折/送私教", roi:21, color:"#ff5a5f", note:"通用方案, 90% 沒效"},
+              {name:"✅ 偏好對齊:跑者肌訓課程", roi:74, color:"#28d49a", note:"客單價 +35%"},
+            ],
+            recommend:"以偏好對齊重建客戶連結"}}
         ]}
     ]
   },
@@ -352,7 +371,7 @@ const SCENARIOS = {
         我已為你準備好 5 條素材 (含 Mr. Wong 收藏過的裝修風格)。`,
         actions: [
           {label:"⚡ 一鍵排程 5 日 sequence", primary:true, exec:"已排程 3 個觸點 (T+0/T+4/T+5)"},
-          {label:"📊 看完整 DAG 推理", exec:"打開後廠詳細因果圖譜"}
+          {label:"📊 看完整 DAG 推理", view:"dag"}
         ]}
     ]
   },
@@ -413,7 +432,13 @@ const SCENARIOS = {
         預估 21 天翻台率 <strong>28% → 75%</strong>, 月增收 HK$28,000`,
         actions: [
           {label:"⚡ 一鍵啟動分時方案", primary:true, exec:"動態定價已啟動 + IG Story 廣告 (1.5km Geo-fence)"},
-          {label:"📊 看翻台率預測", exec:"張良雷達: T+21 翻台率 75% (信賴區間 82-92%)"}
+          {label:"📊 看翻台率預測", view:"forecast", viewData:{
+            title:"張良雷達 · 翻台率預測",
+            current:"28%",
+            target:"75%",
+            timeframe:"T+21 天",
+            confidence:"82-92%",
+            note:"動態定價 + Geo 廣告生效後曲線"}}
         ]}
     ]
   },
@@ -582,6 +607,11 @@ function handleAction(a) {
     return openTweakEditor(a.tweak);
   }
 
+  // ---- 查看詳細視圖: DAG / ROI / forecast / explain ----
+  if (a.view) {
+    return openViewBubble(a);
+  }
+
   if (a.exec) {
     addExecLog(a.exec);
     setTimeout(() => {
@@ -592,6 +622,115 @@ function handleAction(a) {
       chat.scrollTop = chat.scrollHeight;
     }, 600);
   }
+}
+
+// ============================================================
+//  查看詳細視圖 · DAG / ROI / Forecast / Explain
+// ============================================================
+function openViewBubble(a) {
+  const typing = addTyping();
+  setTimeout(() => {
+    typing.remove();
+    const bubble = document.createElement("div");
+    bubble.className = "bubble bot";
+    let html = "";
+
+    // ---- DAG view: scroll right console + show node breakdown + replay animation ----
+    if (a.view === "dag") {
+      const dag = SCENARIOS[currentScenario].dag;
+      const dagBlock = document.querySelector(".dag-block");
+      const consoleEl = document.querySelector(".console");
+
+      // smooth scroll the dag block into view (pull right console upward)
+      if (dagBlock && consoleEl) {
+        consoleEl.scrollTo({ top: dagBlock.offsetTop - 16, behavior: "smooth" });
+        // pulse highlight
+        dagBlock.classList.add("dag-spotlight");
+        setTimeout(() => dagBlock.classList.remove("dag-spotlight"), 2400);
+      }
+
+      // re-trigger DAG animation: re-activate all nodes/edges sequentially
+      document.querySelectorAll(".dag-sexy .node-circle").forEach(n => n.classList.remove("active"));
+      document.querySelectorAll(".dag-sexy .edge").forEach(e => e.classList.remove("active"));
+      document.querySelectorAll(".dag-sexy .edge-flow").forEach(e => e.classList.remove("flowing"));
+      document.querySelectorAll(".dag-sexy .edge-weight").forEach(w => w.classList.remove("active"));
+      dagHighlightIdx = 0;
+      // light up all nodes one by one
+      let i = 0;
+      const reHighlight = setInterval(() => {
+        if (i >= dag.nodes.length) { clearInterval(reHighlight); return; }
+        highlightNextDagNode();
+        i++;
+      }, 220);
+
+      const breakdown = dag.nodes.map(n => {
+        const typeName = ({cause:"原因因子", evidence:"證據節點", effect:"影響路徑", alert:"告警節點"})[n.type] || n.type;
+        return `<li><span class="bk-icon">${n.icon}</span><strong>${n.label}</strong><span class="bk-type">${typeName}</span></li>`;
+      }).join("");
+      const edgeList = dag.edges.map(([f, t, w]) => `<code>${f}→${t}</code> <span class="ew">${w.toFixed(2)}</span>`).join(" · ");
+
+      html = `🔬 <strong>後廠 DAG 詳細推理</strong><br/>
+        已將右側因果圖譜<strong>捲動到視野中</strong>並重新播放動畫:<br/>
+        <ul class="dag-breakdown">${breakdown}</ul>
+        <div class="bk-edges"><strong>邊權重:</strong> ${edgeList}</div>
+        <em class="bk-hint">💡 每條邊上的數字 = 因果強度 (0-1) · 橙色流動線 = 即時能量傳導</em>`;
+    }
+
+    // ---- ROI bar chart view ----
+    else if (a.view === "roi") {
+      const d = a.viewData;
+      const maxAbs = Math.max(...d.options.map(o => Math.abs(o.roi))) || 100;
+      const bars = d.options.map(o => {
+        const w = (Math.abs(o.roi) / maxAbs) * 100;
+        const sign = o.roi >= 0 ? "+" : "";
+        return `<div class="roi-row">
+          <div class="roi-name">${o.name}</div>
+          <div class="roi-track">
+            <div class="roi-bar" style="width:${w}%; background:${o.color}">
+              <span class="roi-num">${sign}${o.roi}% ROI</span>
+            </div>
+          </div>
+          <div class="roi-note">${o.note}</div>
+        </div>`;
+      }).join("");
+      html = `📊 <strong>${d.title}</strong>
+        <div class="roi-chart">${bars}</div>
+        <div class="roi-recommend">🎯 <strong>建議:</strong> ${d.recommend}</div>`;
+    }
+
+    // ---- Forecast mini chart view ----
+    else if (a.view === "forecast") {
+      const d = a.viewData;
+      html = `📡 <strong>${d.title}</strong>
+        <div class="fc-mini">
+          <div class="fc-row">
+            <div class="fc-label">當前</div>
+            <div class="fc-value fc-current">${d.current}</div>
+          </div>
+          <div class="fc-arrow">→</div>
+          <div class="fc-row">
+            <div class="fc-label">${d.timeframe}</div>
+            <div class="fc-value fc-target">${d.target}</div>
+          </div>
+        </div>
+        <div class="fc-confidence">📊 信賴區間: <strong>${d.confidence}</strong></div>
+        <em>${d.note}</em>`;
+    }
+
+    // ---- Explain view: bullet points with reasoning ----
+    else if (a.view === "explain") {
+      const d = a.viewData;
+      const items = d.points.map(p =>
+        `<li><span class="ex-icon">${p.icon}</span><strong>${p.label}:</strong> ${p.value}</li>`
+      ).join("");
+      html = `💡 <strong>${d.title}</strong>
+        <ul class="explain-list">${items}</ul>`;
+    }
+
+    bubble.innerHTML = html + `<div class="meta">${nowTime()}  ✓✓</div>`;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+  }, 700);
 }
 
 // ============================================================
