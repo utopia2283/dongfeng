@@ -2,7 +2,7 @@
 
 > 「風起之前，預判先機。」 — Sync Buddy Technology
 
-基於 **DAG 因果推理 + Google TimesFM 高維時序預測** 的主動式 WhatsApp 智能商業決策引擎。
+基於 **DAG 因果推理 + 張良雷達 (高維時序引擎)** 的主動式 WhatsApp 智能商業決策引擎。
 
 ---
 
@@ -35,11 +35,11 @@ dongfeng/
 ├── index.html                   ← 🎯 主 Demo（可直接打開）
 ├── assets/
 │   ├── styles.css
-│   └── app.js                   ← 前端互動 + DAG 視覺化 + TimesFM 預測曲線
+│   └── app.js                   ← 前端互動 + DAG 視覺化 + 張良預測雷達
 │
 ├── backend/                     ← 真實後端 (FastAPI)
 │   ├── main.py                  ← API 入口 / Webhook
-│   ├── timesfm_forecaster.py    ← Google TimesFM 包裝
+│   ├── timesfm_forecaster.py    ← 張良雷達 (預測層)
 │   ├── zhangliang_engine.py     ← 張良引擎（DAG 因果推理核心）
 │   ├── whatsapp_webhook.py      ← Meta WhatsApp Cloud API
 │   ├── scenarios.py             ← RAG 案例庫種子
@@ -74,7 +74,7 @@ dongfeng/
 │  └──────────────┬─────────────────────────┘  │
 │                 │ evidence node              │
 │  ┌──────────────▼─────────────────────────┐  │
-│  │  TimesFM Forecaster                    │  │
+│  │  張良 Forecaster                    │  │
 │  │  Google Foundation Model 200M-500M     │  │
 │  │  Zero-shot 14d 預測 + 轉折點偵測        │  │
 │  └────────────────────────────────────────┘  │
@@ -127,16 +127,16 @@ uvicorn backend.main:app --reload --port 8000
 
 **現階段 (Seed)：**
 - ✅ 4 個實戰場景 demo（保險 × 2 + SME × 2）
-- ✅ TimesFM zero-shot 預測 + 轉折點偵測
+- ✅ 張良雷達 zero-shot 預測 + 轉折點偵測
 - ✅ DAG 因果鏈視覺化 + 混淆變量排除
 - ✅ WhatsApp 一鍵閉環 UI/UX
 - ⚠️ 因果推理目前以「規則 + RAG 案例」近似；尚未接入 dowhy/causalnex 做 do-calculus
-- ⚠️ TimesFM 在 demo 環境若無 GPU/權重 → 自動退回啟發式外推
+- ⚠️ 張良雷達在 demo 環境若無 GPU/權重 → 自動退回啟發式外推
 - ⚠️ Meta API 真實串接需公司 Business Manager 認證
 
 **Seed → Series A 路線圖：**
 1. 接入 dowhy + causalnex 做完整 SCM (Structural Causal Model)
-2. TimesFM fine-tune 灣區私域數據（行業專屬時序模式）
+2. 張良雷達 fine-tune 灣區私域數據（行業專屬時序模式）
 3. 從 4 個場景 → 50+ 場景案例庫，覆蓋 6 大垂直行業
 4. 接入 Claude API 處理開放式諮詢，並持續灌入 RAG 學習
 5. 後廠 Web 控制台 SaaS 化（多租戶、團隊協作、API 授權）

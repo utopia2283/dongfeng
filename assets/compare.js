@@ -37,7 +37,7 @@ const TASKS = {
       ["good", "🧠 張良 DAG 因果鏈:"],
       ["", "  加息週期 → 高淨值資產轉移 → 陳Sir 投資意願偏移"],
       ["", "  排除假性相關 27 條 (季節性/天氣/節假日)"],
-      ["", "📈 TimesFM 預測: 流失機率 <strong>68%</strong>, 提前預判 18 天"],
+      ["", "📈 張良雷達預測: 流失機率 <strong>68%</strong>, 提前預判 18 天"],
       ["good", "🎯 個人化方案 (非通用):"],
       ["", "  T+0  發送《加息環境下儲蓄險 vs 定存對比表》"],
       ["", "  T+7  邀請陳Sir 參加「家族財富傳承」線下小聚"],
@@ -83,7 +83,7 @@ const TASKS = {
       ["", "  ① 啟用 IG Reels 短視頻 (新演算法權重最高)"],
       ["", "  ② WhatsApp Broadcast 213 名熟客 (觸達 100%)"],
       ["", "  ③ HK$200 Lookalike Top 20% 客戶"],
-      ["", "  📈 TimesFM 預測: 21 天反超 <strong>+12%</strong>"],
+      ["", "  📈 張良雷達預測: 21 天反超 <strong>+12%</strong>"],
       ["good", "⚠ 千萬不要打折! 客戶根本沒看見你, 折扣只會加速倒閉。"]
     ],
     verdict: "ChatGPT 直接告訴 Annie 「打折」, 結果是 <em>純血虧</em> — 因為客戶根本沒看見她。Perplexity 給 <em>HBR 教科書</em> 答案, 一樣不解決問題。<strong>東風的法醫式 DAG 推理</strong> 用對照組精準排除天氣與競品, 鎖定真兇是 <strong>FB 演算法改版</strong>, 並給出 21 天反超 +12% 的可執行方案。"
@@ -159,7 +159,7 @@ const TASKS = {
       ["", "  • IG: 陳Sir 樓市新聞停留時間斜率 +63%"],
       ["", "  • 同區租金回報率微幅上揚 (公網)"],
       ["", "  • WhatsApp 對話情緒分析: 決策疲勞 + 觀望"],
-      ["good", "🧠 TimesFM 高維時序預測:"],
+      ["good", "🧠 張良雷達 · 高維時序預測:"],
       ["", "  <strong>現在</strong> 逼單成功率: <strong>0%</strong> (會被 block 73%)"],
       ["", "  <strong>T+7</strong>  保溫期: 5%"],
       ["", "  <strong>T+14</strong> 觀察期: 28%"],
@@ -169,7 +169,7 @@ const TASKS = {
       ["", "  <strong>T+21 週四 15:00 — 「X 樓盤最後 3 個靚坐向」獨家盤</strong>"],
       ["good", "⚡ 排程已寫入 Meta + WhatsApp Business API"]
     ],
-    verdict: "ChatGPT 教你「BANT 框架」 — Match 看完還是不知道現在該不該打。Perplexity 給 Salesforce 教科書答案。<strong>只有東風</strong>用 TimesFM 結合陳Sir 個人 IG 軌跡 + 10 年加息週期, 算出 <em>3 週後週四 15:00</em> 才是 <strong>85% 簽單峰值</strong>。這是公網 AI 永遠做不到的 — 因為它們看不見你的客戶。"
+    verdict: "ChatGPT 教你「BANT 框架」 — Match 看完還是不知道現在該不該打。Perplexity 給 Salesforce 教科書答案。<strong>只有東風</strong>用張良雷達結合陳Sir 個人 IG 軌跡 + 10 年加息週期, 算出 <em>3 週後週四 15:00</em> 才是 <strong>85% 簽單峰值</strong>。這是公網 AI 永遠做不到的 — 因為它們看不見你的客戶。"
   },
 
   // ----------------------------------------------------------
@@ -240,7 +240,7 @@ const TASKS = {
       ["", "  • <strong>網站埋點: 按揭計算器訪問 3 次</strong>"],
       ["", "  • 帶看記錄: 已看 7 套 (已過比較期)"],
       ["", "  • CRM: 客戶心理階段 = 「擁有想像」"],
-      ["good", "🧠 TimesFM 預測簽約意願曲線:"],
+      ["good", "🧠 張良雷達預測簽約意願曲線:"],
       ["", "  T+1: 25% (24h follow-up = 警戒)"],
       ["", "  T+3: 58%"],
       ["", "  <strong>T+5 週四 18:00: 91% ★ 峰值</strong>"],

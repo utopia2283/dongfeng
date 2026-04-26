@@ -43,7 +43,7 @@ const SCENARIOS = {
     },
     trace: [
       ["data",  "→ 接入 WhatsApp / Meta Ads / CRM 數據流", null],
-      ["step",  "[1/5] TimesFM 載入近 90 日 12 維時序", 22],
+      ["step",  "[1/5] 張良雷達載入近 90 日 12 維時序", 22],
       ["step",  "[2/5] 偵測客戶活躍度斜率 < -0.42σ", 41],
       ["step",  "[3/5] DAG do-calculus 反推, 排除假性相關 27 條", 68],
       ["cause", "✓ 真因鎖定: 加息週期 → 投資意願轉移", 84],
@@ -67,7 +67,7 @@ const SCENARIOS = {
         ③ 14 天後再 follow-up — 此時轉折點到, 簽單機率 73%`,
         actions: [
           {label:"⚡ 一鍵執行三步方案", primary:true, exec:"執行 3 步保溫方案 → 已排程 (T+0, T+7, T+14)"},
-          {label:"✏️ 微調話術", exec:null}
+          {label:"✏️ 微調話術", tweak:"insurance"}
         ]}
     ]
   },
@@ -154,7 +154,7 @@ const SCENARIOS = {
     },
     trace: [
       ["data",  "→ 接入樓市新聞 / 客戶閱讀軌跡 / 利率數據", null],
-      ["step",  "[1/5] TimesFM 處理 10 年週期 × 12 維特徵", 32],
+      ["step",  "[1/5] 張良雷達處理 10 年週期 × 12 維特徵", 32],
       ["step",  "[2/5] 偵測 3 週後「租轉買」情緒轉折", 58],
       ["step",  "[3/5] 個體建模: 陳生決策疲勞 + 觀望期", 71],
       ["cause", "✓ 現在逼單 = 反效果, 簽單率 0%", 78],
@@ -166,7 +166,7 @@ const SCENARIOS = {
       {kind:"alert", html:`<span class="tag">🎯 時序狙擊</span>
         <strong>Match,</strong> 你的大客 <strong>陳Sir</strong> 目前處於「決策疲勞 + 觀望期」, 現在逼單成功率 = <strong>0%</strong>。
         <br/><br/>
-        但 TimesFM 雷達預測:<br/>
+        但張良雷達預測:<br/>
         <strong>📅 T+21 天 (週四 15:00)</strong> 將出現「租轉買」情緒轉折點, 簽單意願將達 <strong>85% 峰值</strong>。`},
       {kind:"bot", html:`🛡 <strong>21 日陪跑方案</strong><br/>
         ① <strong>本週</strong>: 按兵不動<br/>
@@ -207,7 +207,7 @@ const SCENARIOS = {
     },
     trace: [
       ["data",  "→ Meta Ads 競價 + 客戶 IG 興趣標籤", null],
-      ["step",  "[1/5] TimesFM 預測「母女同行」CPM 飆 +300%", 32],
+      ["step",  "[1/5] 張良雷達預測「母女同行」CPM 飆 +300%", 32],
       ["step",  "[2/5] NLP 偵測 80% 同行用 AI 寫同樣文案", 55],
       ["step",  "[3/5] 私域分群: 32 名 VIP 關注產後修復", 71],
       ["cause", "✓ 機會: 「新手媽媽自我犒賞」零競爭藍海", 82],
@@ -265,7 +265,7 @@ const SCENARIOS = {
     },
     trace: [
       ["data",  "→ 接入會員 Apple Health + IG/FB 公開興趣 + 上課記錄", null],
-      ["step",  "[1/5] TimesFM 偵測出席斜率 -0.78σ (異常)", 28],
+      ["step",  "[1/5] 張良雷達偵測出席斜率 -0.78σ (異常)", 28],
       ["step",  "[2/5] 排除身體因素 (Apple Health 步數正常)", 52],
       ["step",  "[3/5] 排除天氣 (對照組同期 +5%)", 64],
       ["cause", "✓ 真因: 會員運動偏好從健身轉跑步", 79],
@@ -324,7 +324,7 @@ const SCENARIOS = {
     },
     trace: [
       ["data",  "→ 接入帶看記錄 / IG 收藏 / 按揭計算器追蹤", null],
-      ["step",  "[1/5] TimesFM 預測簽約意願曲線", 31],
+      ["step",  "[1/5] 張良雷達預測簽約意願曲線", 31],
       ["step",  "[2/5] 偵測「擁有想像」信號 (IG 收藏 +210%)", 58],
       ["step",  "[3/5] 排除假信號: 看樓量多 ≠ 興趣高", 71],
       ["cause", "✓ 個人模型: 按揭計算器訪問 3 次 = 強信號", 82],
@@ -343,7 +343,7 @@ const SCENARIOS = {
         <br/>
         <strong>絕對不要明天聯絡!</strong> 通用 24h follow-up 公式對他無效, 反而會把他推走。`},
       {kind:"bot", html:`🎯 <strong>個人化 5 日 sequence</strong><br/>
-        TimesFM 預測簽約峰值在 <strong>T+5 週四 18:00</strong> (預測簽約率 91%)<br/>
+        張良雷達預測簽約峰值在 <strong>T+5 週四 18:00</strong> (預測簽約率 91%)<br/>
         <br/>
         ① <strong>T+0~T+3</strong>: 不打擾, 只發 1 條「同區成交價走勢圖」<br/>
         ② <strong>T+4</strong>: 分享一個「裝修案例」(對應他 IG 偏好)<br/>
@@ -390,7 +390,7 @@ const SCENARIOS = {
     },
     trace: [
       ["data",  "→ 接入 POS 翻台 / IG hashtag / FB 附近用戶定位", null],
-      ["step",  "[1/5] TimesFM 偵測下午茶空檔翻台 -68%", 27],
+      ["step",  "[1/5] 張良雷達偵測下午茶空檔翻台 -68%", 27],
       ["step",  "[2/5] 排除「下午茶就是冷」(對照組 +47%)", 52],
       ["step",  "[3/5] 私域偵測: 你 PT 1.5km 有 4,300 OL", 68],
       ["cause", "✓ 機會: OL 在 IG 看「下午茶 cafe」+180%", 78],
@@ -413,7 +413,7 @@ const SCENARIOS = {
         預估 21 天翻台率 <strong>28% → 75%</strong>, 月增收 HK$28,000`,
         actions: [
           {label:"⚡ 一鍵啟動分時方案", primary:true, exec:"動態定價已啟動 + IG Story 廣告 (1.5km Geo-fence)"},
-          {label:"📊 看翻台率預測", exec:"TimesFM: T+21 翻台率 75% (信賴區間 82-92%)"}
+          {label:"📊 看翻台率預測", exec:"張良雷達: T+21 翻台率 75% (信賴區間 82-92%)"}
         ]}
     ]
   },
@@ -577,6 +577,11 @@ function handleAction(a) {
   chat.appendChild(userBubble);
   chat.scrollTop = chat.scrollHeight;
 
+  // ---- 微調話術: open tone editor ----
+  if (a.tweak) {
+    return openTweakEditor(a.tweak);
+  }
+
   if (a.exec) {
     addExecLog(a.exec);
     setTimeout(() => {
@@ -587,6 +592,97 @@ function handleAction(a) {
       chat.scrollTop = chat.scrollHeight;
     }, 600);
   }
+}
+
+// ============================================================
+//  微調話術 · 3 種語氣版本 編輯器
+// ============================================================
+const TWEAK_PRESETS = {
+  insurance: {
+    intro: "🎨 已用 Claude 為你生成 <strong>3 種語氣版本</strong>, 請選擇:",
+    options: [
+      {tone:"💼 專業正式", text:"陳先生您好,根據近期加息週期, 高息保證利率產品配置正進入最佳區間。本週四下午方便電聯 15 分鐘討論您現有保單的優化方案嗎?"},
+      {tone:"😊 親切閒談", text:"陳Sir, 最近加息消息好多, 週末出來飲茶傾下? 順便睇下你嗰份保單可以點優化, 唔阻你太多時間 ☕"},
+      {tone:"🔥 緊迫稀缺", text:"陳生, 加息環境下, 高保證利率儲蓄方案配額本月只剩 2 個。今晚 9pm 5 分鐘通話可以幫你 lock-in, 過咗就 reset 到下個月。"},
+    ]
+  },
+  default: {
+    intro: "🎨 已生成 3 種語氣版本:",
+    options: [
+      {tone:"💼 專業正式", text:"(專業版本草稿)"},
+      {tone:"😊 親切閒談", text:"(親切版本草稿)"},
+      {tone:"🔥 緊迫稀缺", text:"(緊迫版本草稿)"},
+    ]
+  }
+};
+
+function openTweakEditor(presetKey) {
+  const preset = TWEAK_PRESETS[presetKey] || TWEAK_PRESETS.default;
+  const typing = addTyping();
+  setTimeout(() => {
+    typing.remove();
+    const bubble = document.createElement("div");
+    bubble.className = "bubble bot";
+    let html = `${preset.intro}<div class="tweak-options">`;
+    preset.options.forEach((opt, i) => {
+      html += `<button class="tweak-opt" data-idx="${i}">
+        <div class="t-tone">${opt.tone}</div>
+        <div class="t-preview">${opt.text}</div>
+      </button>`;
+    });
+    html += `</div><div class="meta">${nowTime()}  ✓✓</div>`;
+    bubble.innerHTML = html;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+
+    bubble.querySelectorAll(".tweak-opt").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.dataset.idx);
+        const chosen = preset.options[idx];
+
+        // user picks
+        const userPick = document.createElement("div");
+        userPick.className = "bubble user";
+        userPick.innerHTML = `已選: ${chosen.tone}<div class="meta">${nowTime()}  ✓✓</div>`;
+        chat.appendChild(userPick);
+
+        // bot confirms with full text + send button
+        const typing2 = addTyping();
+        setTimeout(() => {
+          typing2.remove();
+          const final = document.createElement("div");
+          final.className = "bubble bot";
+          final.innerHTML = `<strong>${chosen.tone}版話術預覽:</strong><br/><br/>
+            <div class="tweak-final">「${chosen.text}」</div>
+            <div class="actions-row">
+              <button class="a-btn primary tweak-send">⚡ 發送此版本</button>
+              <button class="a-btn tweak-redo">↺ 重新調整</button>
+            </div>
+            <div class="meta">${nowTime()}  ✓✓</div>`;
+          chat.appendChild(final);
+          chat.scrollTop = chat.scrollHeight;
+
+          final.querySelector(".tweak-send").addEventListener("click", () => {
+            const sent = document.createElement("div");
+            sent.className = "bubble user";
+            sent.innerHTML = `⚡ 發送此版本<div class="meta">${nowTime()}  ✓✓</div>`;
+            chat.appendChild(sent);
+            addExecLog(`已發送「${chosen.tone}」話術 → 陳Sir (WhatsApp)`);
+            setTimeout(() => {
+              const ack = document.createElement("div");
+              ack.className = "bubble bot";
+              ack.innerHTML = `✅ <strong>已發送</strong><br/>「${chosen.tone}」版本已透過 WhatsApp Business API 送達陳Sir。<br/><br/>📡 我會持續追蹤回覆狀態, 並在最佳時點提醒你 follow-up。<div class="meta">${nowTime()}  ✓✓</div>`;
+              chat.appendChild(ack);
+              chat.scrollTop = chat.scrollHeight;
+            }, 600);
+          });
+          final.querySelector(".tweak-redo").addEventListener("click", () => {
+            openTweakEditor(presetKey);
+          });
+        }, 700);
+      });
+    });
+  }, 700);
 }
 
 function addExecLog(text) {
@@ -627,76 +723,181 @@ function resetAll() {
   dagHighlightIdx = 0;
 }
 
-// ----- TimesFM forecast chart -----
+// ============================================================
+//  張良預測雷達 · ANIMATED forecast chart
+//   - L→R 漸進繪製歷史線
+//   - 預測虛線 marching-ants 流動
+//   - 連續垂直 sweep scan line
+//   - 轉折點 radar-ping 雙環脈動
+//   - "now" 點 glow + breathe
+// ============================================================
+let _radarRAF = null;
+let _radarT0 = 0;
+let _radarFc = null;
+
 function drawForecast(fc) {
+  if (_radarRAF) cancelAnimationFrame(_radarRAF);
+  _radarFc = fc;
+  _radarT0 = performance.now();
+  _radarTick();
+}
+
+function _radarTick() {
   const cv = $("#forecastChart");
+  if (!cv || !_radarFc) return;
   const ctx = cv.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const W = cv.clientWidth, H = cv.clientHeight;
-  cv.width = W * dpr; cv.height = H * dpr;
-  ctx.scale(dpr, dpr);
+  if (cv.width !== W * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, W, H);
 
+  const fc = _radarFc;
   const all = [...fc.history, ...fc.forecast];
   const max = Math.max(...all) * 1.1;
   const min = Math.min(...all) * 0.9;
-  const padL = 30, padR = 10, padT = 18, padB = 24;
+  const padL = 30, padR = 10, padT = 22, padB = 26;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
   const stepX = innerW / (all.length - 1);
   const yAt = v => padT + innerH - ((v - min) / (max - min)) * innerH;
   const xAt = i => padL + i * stepX;
 
-  ctx.strokeStyle = "rgba(255,255,255,0.05)";
+  const t = (performance.now() - _radarT0) / 1000;
+  const revealDur = 1.4;
+  const reveal = Math.min(1, t / revealDur);
+  const easeR = 1 - Math.pow(1 - reveal, 3);
+  const fcReveal = Math.max(0, Math.min(1, (t - revealDur) / 0.9));
+
+  // moving sweep band
+  const sweepX = padL + ((t * 90) % (innerW + 60)) - 30;
+  const grad = ctx.createLinearGradient(sweepX - 60, 0, sweepX + 60, 0);
+  grad.addColorStop(0,   "rgba(78,161,255,0)");
+  grad.addColorStop(0.5, "rgba(78,161,255,0.10)");
+  grad.addColorStop(1,   "rgba(78,161,255,0)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(padL, padT, innerW, innerH);
+
+  // grid
+  ctx.strokeStyle = "rgba(255,255,255,0.045)";
   ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
     const y = padT + (innerH / 4) * i;
     ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
   }
 
+  // history line (progressive reveal)
+  const histPts = fc.history.map((v, i) => [xAt(i), yAt(v)]);
+  const revealPts = Math.max(2, Math.floor(histPts.length * easeR));
   ctx.strokeStyle = "#4ea1ff";
   ctx.lineWidth = 2;
+  ctx.shadowColor = "rgba(78,161,255,0.5)";
+  ctx.shadowBlur = 6;
   ctx.beginPath();
-  fc.history.forEach((v, i) => {
-    if (i === 0) ctx.moveTo(xAt(i), yAt(v));
-    else ctx.lineTo(xAt(i), yAt(v));
-  });
-  ctx.stroke();
-
-  const fStart = fc.history.length - 1;
-  ctx.strokeStyle = "#ff7a2e";
-  ctx.setLineDash([5, 4]);
-  ctx.beginPath();
-  ctx.moveTo(xAt(fStart), yAt(fc.history[fc.history.length - 1]));
-  fc.forecast.forEach((v, i) => {
-    ctx.lineTo(xAt(fStart + 1 + i), yAt(v));
-  });
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  ctx.fillStyle = "rgba(255,122,46,0.15)";
-  ctx.beginPath();
-  ctx.moveTo(xAt(fStart), yAt(fc.history[fc.history.length - 1]));
-  fc.forecast.forEach((v, i) => ctx.lineTo(xAt(fStart + 1 + i), yAt(v * 1.1)));
-  for (let i = fc.forecast.length - 1; i >= 0; i--) {
-    ctx.lineTo(xAt(fStart + 1 + i), yAt(fc.forecast[i] * 0.9));
+  for (let i = 0; i < revealPts; i++) {
+    const [x, y] = histPts[i];
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
   }
-  ctx.closePath();
-  ctx.fill();
+  ctx.stroke();
+  ctx.shadowBlur = 0;
 
-  if (fc.turnIndex !== undefined && fc.turnIndex < all.length) {
-    const tx = xAt(fc.turnIndex), ty = yAt(all[fc.turnIndex]);
-    ctx.fillStyle = "#ff5a5f";
-    ctx.beginPath(); ctx.arc(tx, ty, 6, 0, Math.PI*2); ctx.fill();
-    ctx.strokeStyle = "rgba(255,90,95,0.4)"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(tx, ty, 11, 0, Math.PI*2); ctx.stroke();
-    ctx.fillStyle = "#ff5a5f"; ctx.font = "bold 10px monospace";
-    ctx.fillText("轉折點", tx - 16, ty - 14);
+  // history dots
+  ctx.fillStyle = "rgba(78,161,255,0.7)";
+  for (let i = 0; i < revealPts; i++) {
+    const [x, y] = histPts[i];
+    ctx.beginPath(); ctx.arc(x, y, 1.6, 0, Math.PI*2); ctx.fill();
   }
 
-  ctx.fillStyle = "#8aa0c4"; ctx.font = "10px sans-serif";
-  ctx.fillText(fc.yLabel, padL, 12);
-  ctx.fillText("now →", xAt(fStart) - 14, H - 6);
+  if (reveal >= 1) {
+    const fStart = fc.history.length - 1;
+    const breathe = 1 + Math.sin(t * 2) * 0.04;
+    const bandAlpha = 0.10 + Math.sin(t * 2) * 0.04;
+    const fcVisible = Math.max(2, Math.floor(fc.forecast.length * fcReveal) + 1);
+
+    // forecast uncertainty band (breathing)
+    ctx.fillStyle = `rgba(255,122,46,${bandAlpha})`;
+    ctx.beginPath();
+    ctx.moveTo(xAt(fStart), yAt(fc.history[fc.history.length - 1]));
+    for (let i = 0; i < fcVisible; i++) {
+      ctx.lineTo(xAt(fStart + 1 + i), yAt(fc.forecast[i] * 1.12 * breathe));
+    }
+    for (let i = fcVisible - 1; i >= 0; i--) {
+      ctx.lineTo(xAt(fStart + 1 + i), yAt(fc.forecast[i] * (0.88 / breathe)));
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // forecast line — marching ants
+    ctx.strokeStyle = "#ff7a2e";
+    ctx.lineWidth = 2.2;
+    ctx.shadowColor = "rgba(255,122,46,0.6)";
+    ctx.shadowBlur = 8;
+    ctx.setLineDash([6, 4]);
+    ctx.lineDashOffset = -t * 32;
+    ctx.beginPath();
+    ctx.moveTo(xAt(fStart), yAt(fc.history[fc.history.length - 1]));
+    for (let i = 0; i < fcVisible; i++) {
+      ctx.lineTo(xAt(fStart + 1 + i), yAt(fc.forecast[i]));
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.shadowBlur = 0;
+
+    // "now" vertical guide + pulsing dot
+    const nx = xAt(fStart);
+    const ny = yAt(fc.history[fStart]);
+    ctx.strokeStyle = "rgba(78,161,255,0.25)";
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(nx, padT); ctx.lineTo(nx, padT + innerH);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    const pulseR = 4 + Math.sin(t * 4) * 1.5;
+    ctx.fillStyle = "#4ea1ff";
+    ctx.shadowColor = "#4ea1ff"; ctx.shadowBlur = 8 + Math.sin(t * 4) * 4;
+    ctx.beginPath(); ctx.arc(nx, ny, pulseR, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // turn point — radar ping
+    if (fc.turnIndex !== undefined && fc.turnIndex < all.length) {
+      const tx = xAt(fc.turnIndex), ty = yAt(all[fc.turnIndex]);
+      for (let k = 0; k < 2; k++) {
+        const phase = ((t + k * 0.6) % 1.2) / 1.2;
+        const ringR = 8 + phase * 22;
+        const ringAlpha = (1 - phase) * 0.6;
+        ctx.strokeStyle = `rgba(255,90,95,${ringAlpha})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(tx, ty, ringR, 0, Math.PI*2); ctx.stroke();
+      }
+      ctx.fillStyle = "#ff5a5f";
+      ctx.shadowColor = "#ff5a5f"; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.arc(tx, ty, 5, 0, Math.PI*2); ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = "#ff8a8e";
+      ctx.font = "bold 10px -apple-system, monospace";
+      ctx.fillText("⚠ 轉折點", tx - 22, ty - 16);
+    }
+  }
+
+  // labels
+  ctx.fillStyle = "#8aa0c4";
+  ctx.font = "10px sans-serif";
+  ctx.fillText(fc.yLabel, padL, 13);
+  if (reveal >= 1) {
+    const fStart = fc.history.length - 1;
+    ctx.fillText("now", xAt(fStart) - 8, H - 8);
+  }
+
+  // sweep scan line
+  ctx.strokeStyle = "rgba(78,161,255,0.55)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(sweepX, padT); ctx.lineTo(sweepX, padT + innerH);
+  ctx.stroke();
+
+  _radarRAF = requestAnimationFrame(_radarTick);
 }
 
 // ============================================================
