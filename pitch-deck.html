@@ -5,31 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>東風 DONG FENG · AI 商業決策引擎</title>
 <style>
-/* ── DARK THEME VARIABLES ─────────────────────────── */
-:root {
-  --accent: #ff7a2e;
-  --accent-2: #ffb37a;
-  --accent-3: #ffd9b8;
-  --grad: linear-gradient(135deg, #ff7a2e, #ffb37a);
-  --grad-soft: linear-gradient(135deg, rgba(255,122,46,0.15), rgba(255,179,122,0.1));
-  --surface: #0e1624;
-  --surface-2: #16223c;
-  --text-1: #f0f4ff;
-  --text-2: #a8b8d8;
-  --text-3: #6b87a8;
-  --bg: #080d17;
-  --bg-soft: #0b1220;
-  --border: rgba(255,122,46,0.2);
-  --good: #28d49a;
-  --warn: #ffb37a;
-  --bad: #ff5a5f;
-  --blue: #4ea1ff;
+:root{
+  --accent:#ff7a2e;--accent-2:#ffb37a;--accent-3:#ffd9b8;
+  --grad:linear-gradient(135deg,#ff7a2e,#ffb37a);
+  --surface:#0e1624;--surface-2:#16223c;
+  --text-1:#f0f4ff;--text-2:#a8b8d8;--text-3:#6b87a8;
+  --bg:#080d17;--border:rgba(255,122,46,0.2);
+  --good:#28d49a;--blue:#4ea1ff;
 }
-
-/* ── RESET & BASE ─────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;-webkit-text-size-adjust:100%}
-body {
+body{
   background:var(--bg);
   font-family:'PingFang HK','Microsoft JhengHei',system-ui,sans-serif;
   color:var(--text-1);
@@ -37,523 +22,765 @@ body {
   height:100dvh;
   width:100vw;
 }
-
-/* ── DECK CONTAINER ───────────────────────────────── */
-.deck {
-  position:relative;
-  width:100vw;
-  height:100dvh;
-  overflow:hidden;
+.deck{position:relative;width:100vw;height:100dvh;overflow:hidden}
+.slide{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  padding:clamp(44px,6vh,72px) clamp(20px,5vw,80px) clamp(72px,9vh,100px);
+  overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
 }
-
-/* ── SLIDES ───────────────────────────────────────── */
-.slide {
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  padding:clamp(48px,6vw,88px) clamp(24px,6vw,96px) clamp(70px,8vh,100px);
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.4s ease;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
-}
-.slide.is-active{
-  opacity:1;
-  pointer-events:auto;
-}
+.slide.is-active{display:flex}
 .slide::-webkit-scrollbar{width:4px}
 .slide::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-/* ── TYPOGRAPHY SCALE ─────────────────────────────── */
 .gradient-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.kicker{color:var(--text-2);font-size:clamp(11px,1.5vw,14px);letter-spacing:1px;text-transform:uppercase}
-.section-num{font-size:clamp(80px,18vw,220px);font-weight:900;color:rgba(255,122,46,0.08);line-height:1;position:absolute;right:clamp(20px,4vw,72px);bottom:clamp(20px,5vh,40px);z-index:0;letter-spacing:-0.05em;pointer-events:none}
-.num-tag{color:var(--accent);font-size:clamp(10px,1.3vw,12px);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:clamp(8px,1.5vh,12px)}
-.h1{font-size:clamp(36px,6vw,86px);font-weight:900;line-height:1.1;letter-spacing:-0.03em;color:var(--text-1);margin:clamp(12px,2vh,16px) 0}
-.h2{font-size:clamp(24px,4vw,62px);font-weight:800;line-height:1.2;letter-spacing:-0.02em;color:var(--text-1)}
-.lede{color:var(--text-2);font-size:clamp(13px,2vw,16px);line-height:1.6}
-.mt-s{margin-top:clamp(8px,1.5vh,12px)}
-.mt-m{margin-top:clamp(14px,2.5vh,20px)}
-.mt-l{margin-top:clamp(20px,4vh,32px)}
-
-/* ── CARDS ────────────────────────────────────────── */
-.card{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:clamp(14px,2.5vw,20px)}
-.card h4{color:var(--text-1);margin-bottom:clamp(6px,1vh,8px);font-size:clamp(14px,1.8vw,16px)}
-.card p{color:var(--text-2);font-size:clamp(12px,1.5vw,13px);line-height:1.5}
-.metric{text-align:center;padding:clamp(14px,2.5vw,20px)}
-.metric .n{font-size:clamp(32px,7vw,72px);font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.metric .l{color:var(--text-2);font-size:clamp(11px,1.5vw,16px);margin-top:clamp(4px,0.8vh,6px)}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,2vw,16px)}
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(10px,2vw,16px)}
-.grid{gap:clamp(10px,2vw,16px)}
-.row{display:flex;flex-wrap:wrap;gap:clamp(6px,1vw,8px)}
-.pill-accent{background:rgba(255,122,46,0.15);color:var(--accent);border:1px solid rgba(255,122,46,0.3);padding:clamp(4px,0.8vh,6px) clamp(8px,1.5vw,12px);border-radius:20px;font-size:clamp(10px,1.4vw,13px);white-space:nowrap}
-
-/* ── COVER SLIDE ──────────────────────────────────── */
+.kicker{color:var(--text-2);font-size:clamp(10px,1.4vw,13px);letter-spacing:1px;text-transform:uppercase}
+.section-num{font-size:clamp(72px,16vw,200px);font-weight:900;color:rgba(255,122,46,0.08);line-height:1;position:absolute;right:clamp(16px,4vw,60px);bottom:clamp(16px,4vh,40px);z-index:0;pointer-events:none;letter-spacing:-0.05em}
+.num-tag{color:var(--accent);font-size:clamp(9px,1.2vw,11px);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:clamp(6px,1.2vh,10px)}
+.h1{font-size:clamp(32px,5.5vw,80px);font-weight:900;line-height:1.1;letter-spacing:-0.03em;color:var(--text-1);margin:clamp(10px,1.8vh,14px) 0}
+.h2{font-size:clamp(22px,3.8vw,58px);font-weight:800;line-height:1.2;letter-spacing:-0.02em;color:var(--text-1)}
+.lede{color:var(--text-2);font-size:clamp(12px,1.8vw,15px);line-height:1.6}
+.mt-s{margin-top:clamp(6px,1.2vh,10px)}.mt-m{margin-top:clamp(12px,2vh,18px)}.mt-l{margin-top:clamp(16px,3.5vh,28px)}
+.card{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:clamp(12px,2vw,18px)}
+.card h4{color:var(--text-1);margin-bottom:clamp(5px,0.9vh,7px);font-size:clamp(13px,1.7vw,15px)}
+.card p{color:var(--text-2);font-size:clamp(11px,1.4vw,13px);line-height:1.5}
+.metric{text-align:center;padding:clamp(12px,2vw,18px)}
+.metric .n{font-size:clamp(28px,6.5vw,68px);font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.metric .l{color:var(--text-2);font-size:clamp(10px,1.4vw,15px);margin-top:clamp(3px,0.7vh,5px)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.8vw,14px)}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(8px,1.8vw,14px)}
+.grid{gap:clamp(8px,1.8vw,14px)}
+.row{display:flex;flex-wrap:wrap;gap:clamp(5px,1vw,7px)}
+.pill-accent{background:rgba(255,122,46,0.15);color:var(--accent);border:1px solid rgba(255,122,46,0.3);padding:clamp(3px,0.7vh,5px) clamp(6px,1.3vw,10px);border-radius:20px;font-size:clamp(9px,1.3vw,12px);white-space:nowrap}
 .cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(255,122,46,0.08) 0%,transparent 60%),var(--bg);z-index:-1}
-.cover-blob{position:absolute;right:clamp(-80px,-12vw,-100px);top:clamp(-60px,-10vw,-80px);width:clamp(300px,60vw,500px);height:clamp(300px,60vw,500px);border-radius:50%;background:radial-gradient(circle,rgba(255,122,46,0.06) 0%,transparent 70%);pointer-events:none}
-.deck-header{position:absolute;top:clamp(16px,3vh,24px);left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:center;z-index:10}
-.brand{font-size:clamp(14px,2vw,18px);font-weight:800;color:var(--accent);letter-spacing:2px}
-.brand-dot{display:inline-block;width:clamp(6px,0.8vw,8px);height:clamp(6px,0.8vw,8px);border-radius:50%;background:var(--accent);margin-right:clamp(6px,1vw,8px);vertical-align:middle}
-.deck-footer{position:absolute;bottom:clamp(16px,3vh,24px);left:0;right:0;display:flex;justify-content:space-between;font-size:clamp(10px,1.5vw,12px);color:var(--text-3);padding:0 clamp(16px,4vw,48px);z-index:10}
-.footer-logo{height:clamp(14px,2vw,18px);vertical-align:middle;opacity:0.6}
-.cover-pills{position:absolute;bottom:clamp(60px,10vh,80px);left:clamp(16px,6vw,112px);display:flex;flex-wrap:wrap;gap:clamp(8px,1.5vw,12px);align-items:center}
-
-/* ── TABLES ───────────────────────────────────────── */
+.cover-blob{position:absolute;right:clamp(-80px,-10vw,-100px);top:clamp(-60px,-8vw,-80px);width:clamp(280px,55vw,480px);height:clamp(280px,55vw,480px);border-radius:50%;background:radial-gradient(circle,rgba(255,122,46,0.06) 0%,transparent 70%);pointer-events:none}
+.deck-header{position:absolute;top:clamp(14px,2.5vh,22px);left:clamp(14px,3.5vw,44px);right:clamp(14px,3.5vw,44px);display:flex;justify-content:space-between;align-items:center;z-index:20}
+.brand{font-size:clamp(12px,1.8vw,17px);font-weight:800;color:var(--accent);letter-spacing:2px}
+.brand-dot{display:inline-block;width:clamp(5px,0.7vw,7px);height:clamp(5px,0.7vw,7px);border-radius:50%;background:var(--accent);margin-right:clamp(5px,0.8vw,7px);vertical-align:middle}
+.deck-footer{position:absolute;bottom:clamp(14px,2.5vh,22px);left:0;right:0;display:flex;justify-content:space-between;font-size:clamp(9px,1.3vw,11px);color:var(--text-3);padding:0 clamp(14px,3.5vw,44px);z-index:10}
+.cover-pills{position:absolute;bottom:clamp(52px,9vh,72px);left:clamp(14px,5.5vw,100px);display:flex;flex-wrap:wrap;gap:clamp(6px,1.3vw,10px);align-items:center}
+.lang-toggle{
+  position:fixed;top:clamp(14px,2.5vh,22px);right:clamp(14px,3.5vw,44px);
+  display:flex;gap:2px;z-index:100;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:2px;
+}
+.lang-btn{
+  padding:clamp(4px,0.8vh,6px) clamp(10px,1.8vw,14px);
+  border-radius:6px;border:none;cursor:pointer;font-size:clamp(10px,1.4vw,12px);
+  font-weight:600;transition:background 0.2s,color 0.2s;
+  background:transparent;color:var(--text-2);
+}
+.lang-btn.active{background:var(--accent);color:#fff}
 table.comparison{width:100%;border-collapse:collapse}
-table.comparison th{color:var(--accent);font-size:clamp(10px,1.3vw,12px);text-align:center;padding:clamp(8px,1.2vw,10px) clamp(4px,0.8vw,8px);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:1px}
-table.comparison td{padding:clamp(8px,1.5vw,12px) clamp(4px,0.8vw,8px);font-size:clamp(11px,1.4vw,13px);color:var(--text-2);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top}
+table.comparison th{color:var(--accent);font-size:clamp(9px,1.2vw,11px);text-align:center;padding:clamp(6px,1.1vh,9px) clamp(3px,0.7vw,7px);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:1px}
+table.comparison td{padding:clamp(6px,1.2vh,10px) clamp(3px,0.7vw,7px);font-size:clamp(10px,1.3vw,12px);color:var(--text-2);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top}
 table.comparison td:first-child{color:var(--text-1);font-weight:600}
 table.comparison .winner{color:var(--good);font-weight:700}
 table.comparison .loser{color:var(--text-3)}
 .highlight-row{background:rgba(255,122,46,0.05)}
-
-/* ── SLIDE NUMBER ─────────────────────────────────── */
-.slide-number::before{content:attr(data-current);color:var(--accent);font-weight:700}
-.slide-number::after{content:' / 'attr(data-total);color:var(--text-3)}
-
-/* ── MOBILE NAV BUTTONS ───────────────────────────── */
-.nav-btn{
-  position:fixed;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:100;
-  width:clamp(40px,8vw,56px);
-  height:clamp(40px,8vw,56px);
-  border-radius:50%;
-  background:rgba(255,122,46,0.15);
-  border:1px solid rgba(255,122,46,0.4);
-  color:var(--accent);
-  font-size:clamp(16px,3vw,22px);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:background 0.2s,opacity 0.2s;
-  -webkit-tap-highlight-color:transparent;
-  user-select:none;
-}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.05);z-index:200}
+.progress-bar span{display:block;height:100%;background:var(--grad);width:0%;transition:width 0.4s cubic-bezier(0.4,0,0.2,1)}
+.nav-btn{position:fixed;top:50%;transform:translateY(-50%);z-index:100;width:clamp(36px,7vw,50px);height:clamp(36px,7vw,50px);border-radius:50%;background:rgba(255,122,46,0.15);border:1px solid rgba(255,122,46,0.4);color:var(--accent);font-size:clamp(14px,2.8vw,20px);cursor:pointer;display:none;align-items:center;justify-content:center;transition:background 0.2s;-webkit-tap-highlight-color:transparent;user-select:none}
 .nav-btn:active{background:rgba(255,122,46,0.3)}
-.nav-btn.prev{left:clamp(8px,2vw,20px)}
-.nav-btn.next{right:clamp(8px,2vw,20px)}
+.nav-btn.prev{left:clamp(6px,1.8vw,16px)}
+.nav-btn.next{right:clamp(6px,1.8vw,16px)}
 .nav-btn:disabled{opacity:0.2;pointer-events:none}
-.nav-btn .arrow{font-family:system-ui}
-
-/* ── DOTS INDICATOR ───────────────────────────────── */
-.dots{
-  position:fixed;
-  bottom:clamp(50px,8vh,70px);
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:clamp(5px,1vw,8px);
-  z-index:100;
-  align-items:center;
-}
-.dot{
-  width:clamp(6px,1.2vw,8px);
-  height:clamp(6px,1.2vw,8px);
-  border-radius:50%;
-  background:rgba(255,255,255,0.2);
-  transition:background 0.3s,width 0.3s;
-  cursor:pointer;
-}
-.dot.active{background:var(--accent);width:clamp(18px,3vw,24px);border-radius:4px}
-
-/* ── PROGRESS BAR ─────────────────────────────────── */
-.progress-bar{
-  position:fixed;
-  top:0;left:0;right:0;
-  height:3px;
-  background:rgba(255,255,255,0.05);
-  z-index:200;
-}
-.progress-bar span{
-  display:block;
-  height:100%;
-  background:var(--grad);
-  width:0%;
-  transition:width 0.4s cubic-bezier(0.4,0,0.2,1);
-}
-
-/* ── MOBILE HINT ──────────────────────────────────── */
-.mobile-hint{
-  position:fixed;
-  bottom:clamp(50px,8vh,70px);
-  right:clamp(12px,3vw,24px);
-  font-size:clamp(10px,1.5vw,12px);
-  color:var(--text-3);
-  z-index:100;
-  display:none;
-}
-
-/* ── MEDIA QUERIES ────────────────────────────────── */
+.dots{position:fixed;bottom:clamp(46px,7.5vh,66px);left:50%;transform:translateX(-50%);display:flex;gap:clamp(4px,0.9vw,7px);z-index:100;align-items:center}
+.dot{width:clamp(5px,1.1vw,7px);height:clamp(5px,1.1vw,7px);border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s,width 0.3s;cursor:pointer}
+.dot.active{background:var(--accent);width:clamp(16px,2.8vw,22px);border-radius:4px}
+.mobile-hint{position:fixed;bottom:clamp(46px,7.5vh,66px);right:clamp(10px,2.5vw,20px);font-size:clamp(9px,1.3vw,11px);color:var(--text-3);z-index:100;display:none}
 @media(max-width:768px){
-  .slide{padding:clamp(40px,10vw,60px) clamp(16px,4vw,24px) clamp(80px,15vh,100px)}
-  .g3{grid-template-columns:1fr;gap:clamp(8px,2vw,12px)}
-  .g2{grid-template-columns:1fr;gap:clamp(8px,2vw,12px)}
-  .metric .n{font-size:clamp(36px,10vw,48px)}
-  .h1{font-size:clamp(28px,9vw,42px)}
-  .h2{font-size:clamp(20px,7vw,28px)}
-  .section-num{font-size:clamp(60px,20vw,100px)}
-  table.comparison{font-size:clamp(10px,3vw,12px)}
-  .deck-header{top:clamp(12px,3vw,16px);left:clamp(12px,3vw,16px);right:clamp(12px,3vw,16px)}
-  .deck-footer{bottom:clamp(12px,3vw,16px);padding:0 clamp(12px,3vw,16px)}
+  .slide{padding:clamp(36px,9vw,56px) clamp(14px,4vw,20px) clamp(80px,14vh,96px)}
+  .g3{grid-template-columns:1fr}
+  .g2{grid-template-columns:1fr}
+  .metric .n{font-size:clamp(32px,9vw,44px)}
+  .h1{font-size:clamp(26px,8vw,38px)}
+  .h2{font-size:clamp(18px,6.5vw,26px)}
+  .section-num{font-size:clamp(54px,18vw,90px)}
+  table.comparison{font-size:clamp(9px,2.8vw,11px)}
+  .deck-header{top:clamp(10px,2.5vw,14px);left:clamp(10px,2.5vw,14px);right:clamp(10px,2.5vw,14px)}
+  .deck-footer{bottom:clamp(10px,2.5vw,14px);padding:0 clamp(10px,2.5vw,14px)}
   .mobile-hint{display:block}
   .nav-btn{display:flex}
+  .lang-toggle{top:clamp(10px,2.5vw,14px);right:clamp(50px,12vw,70px)}
 }
-
 @media(min-width:769px){
-  .nav-btn{display:none}
+  .lang-toggle{display:flex}
 }
-
 @media(max-width:480px){
-  .cover-pills{flex-direction:column;align-items:flex-start;gap:6px}
-  .card{padding:clamp(12px,3vw,14px)}
+  .cover-pills{flex-direction:column;align-items:flex-start;gap:5px}
+  .card{padding:clamp(10px,3vw,12px)}
 }
-
-/* ── ANIMATIONS ───────────────────────────────────── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.anim-fade-up{animation:fadeUp 0.6s cubic-bezier(0.4,0,0.2,1) both}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px rgba(255,122,46,0.4))}50%{filter:drop-shadow(0 0 20px rgba(255,122,46,0.8))}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.anim-fade-up{animation:fadeUp 0.55s cubic-bezier(0.4,0,0.2,1) both}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,122,46,0.4))}50%{filter:drop-shadow(0 0 18px rgba(255,122,46,0.8))}}
 .anim-glow{animation:glow 3s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
 .anim-pulse{animation:pulse 2s ease-in-out infinite}
-@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
-.anim-slide-left{animation:slideInLeft 0.5s cubic-bezier(0.4,0,0.2,1) both}
-@keyframes scaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
-.anim-scale-in{animation:scaleIn 0.5s cubic-bezier(0.22,1,0.36,1) both}
 </style>
 </head>
 <body>
 
-<!-- Progress bar -->
 <div class="progress-bar"><span></span></div>
 
-<!-- Navigation buttons (mobile) -->
-<button class="nav-btn prev" id="prevBtn" aria-label="上一頁"><span class="arrow">‹</span></button>
-<button class="nav-btn next" id="nextBtn" aria-label="下一頁"><span class="arrow">›</span></button>
-
-<!-- Dots indicator -->
+<button class="nav-btn prev" id="prevBtn" aria-label="上一頁"><span>‹</span></button>
+<button class="nav-btn next" id="nextBtn" aria-label="下一頁"><span>›</span></button>
 <div class="dots" id="dots"></div>
+<div class="mobile-hint">滑動或點箭頭切換</div>
 
-<!-- Mobile hint -->
-<div class="mobile-hint">滑動或點擊箭頭切換</div>
+<!-- Language Toggle -->
+<div class="lang-toggle">
+  <button class="lang-btn active" id="langZH">中文</button>
+  <button class="lang-btn" id="langEN">EN</button>
+</div>
 
 <div class="deck">
 
-  <!-- 1. Cover -->
-  <section class="slide is-active" data-title="Cover">
-    <div class="cover-bg"></div>
-    <div class="cover-blob"></div>
-    <div class="deck-header">
-      <div><span class="brand-dot"></span><span class="brand">東風 DONG FENG</span></div>
-      <div style="color:var(--text-3);font-size:clamp(11px,1.5vw,13px)">張良引擎 · 因果 AI 決策雷達</div>
-    </div>
-    <p class="kicker" style="margin-top:clamp(32px,6vh,48px)">Investor Deck · 2026</p>
-    <h1 class="h1 anim-fade-up" style="margin-top:clamp(8px,2vh,12px)">
-      風起之前<br><span class="gradient-text">預判先機</span>
-    </h1>
-    <p class="lede" style="margin-top:clamp(16px,3vh,24px);max-width:60ch">
-      香港中小企的 AI 商業決策引擎——主動感知信號、因果推理、WhatsApp Zero-UI 觸及教練/地產/餐廳/保險/美容五大行業
-    </p>
-    <div class="cover-pills">
-      <span class="pill-accent">因果 AI 推理</span>
-      <span class="pill-accent">WhatsApp Zero-UI</span>
-      <span class="pill-accent">TimesFM 時序預測</span>
-      <span class="pill-accent">灣區實戰案例庫 RAG</span>
-    </div>
-    <div class="deck-footer">
-      <span>SyncBuddy Technology · HK$2M Seed · HK$12M 估值</span>
-      <span class="slide-number" data-current="1" data-total="10"></span>
-    </div>
-  </section>
+  <!-- ══════════════ SLIDE 1: COVER ══════════════ -->
+  <section class="slide is-active" data-title="Cover" data-slide="1">
 
-  <!-- 2. Problem -->
-  <section class="slide" data-title="Problem">
-    <span class="section-num">01</span>
-    <p class="num-tag">PROBLEM 痛點</p>
-    <h2 class="h2 mt-s">香港中小企老闆<br>每日靠估靠估做決策</h2>
-    <div class="grid g3 mt-l">
-      <div class="card"><h4>📉 信號散晒</h4><p>Facebook、Instagram、WhatsApp、CRM——數據散晒，冇統一睇法</p></div>
-      <div class="card"><h4>⏰ 幾時跟進靠估</h4><p>幾時追客？幾時谷活動？幾時做優惠？95% 靠「feel」</p></div>
-      <div class="card"><h4>🤖 AI 工具又複雜</h4><p>老闆要係答案，唔係要學點樣問問題</p></div>
-    </div>
-    <div class="grid g3 mt-l">
-      <div class="card"><h4>💸 機會走咗先知</h4><p>母親節紅海、保險客走咗先知——永遠慢半拍</p></div>
-      <div class="card"><h4>🌊 唔知同行做緊乜</h4><p>冇 benchmark，唔知邊招掂</p></div>
-      <div class="card"><h4>📊 開咗個Account但係唔識用</h4><p>Google Analytics、Meta Business、CRM——開咗都係睇唔明</p></div>
-    </div>
-  </section>
-
-  <!-- 3. Solution -->
-  <section class="slide" data-title="Solution">
-    <span class="section-num">02</span>
-    <p class="num-tag">SOLUTION 解決方案</p>
-    <h2 class="h2 mt-s">東風：<span class="gradient-text">教練 + 雷達 + 槍</span><br>三合一 AI 決策幫手</h2>
-    <p class="lede mt-m">唔係另一個 Chatbot——係會主動出擊的商業決策引擎。張良引擎因果推理 + 張良雷達時序預測 + WhatsApp Zero-UI 觸及</p>
-    <div class="row mt-l">
-      <span class="pill-accent">🎯 因果推理引擎（張良引擎）</span>
-      <span class="pill-accent">📡 時序預測雷達（張良雷達）</span>
-      <span class="pill-accent">💬 WhatsApp 主動推送</span>
-      <span class="pill-accent">🔄灣區實戰案例 RAG</span>
-    </div>
-    <div class="grid g3 mt-l">
-      <div class="card" style="border-left:3px solid #ff7a2e"><h4>教練模式</h4><p>主動話你知「依家做乜」——唔係問你問題，直接俾行動建議</p></div>
-      <div class="card" style="border-left:3px solid #4ea1ff"><h4>雷達模式</h4><p>7×24 小時睇住信號，提前 N 日預警——出事之前就通知你</p></div>
-      <div class="card" style="border-left:3px solid #28d49a"><h4>槓桿模式</h4><p>因果鏈話你知邊個掂、邊個要 cut——對症下藥唔做無用功</p></div>
-    </div>
-  </section>
-
-  <!-- 4. Product Demo -->
-  <section class="slide" data-title="Product">
-    <span class="section-num">03</span>
-    <p class="num-tag">PRODUCT 產品</p>
-    <h2 class="h2 mt-s">WhatsApp 即開即用——<br>唔洗學的 AI 教練</h2>
-    <div class="grid g2 mt-l">
-      <div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <p style="color:#ff7a2e;font-size:clamp(11px,1.5vw,12px);font-weight:700;margin-bottom:clamp(6px,1vh,8px)">📱 場景：保險經紀</p>
-          <p style="color:var(--text-1);font-size:clamp(13px,1.8vw,14px);font-weight:600;margin-bottom:clamp(4px,0.8vh,6px)">陳Sir 大客戶流失預警</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">「IG 收藏出現定存利率」+ 「WhatsApp 已讀不回 13 小時」+ 「HKD Prime 上調 0.5%」= 流失機率 68%，提前 18 日預警</p>
-          <div style="margin-top:clamp(8px,1.5vh,10px);padding:clamp(6px,1vw,8px) clamp(8px,1.5vw,12px);background:rgba(40,212,154,0.1);border-radius:8px;color:#28d49a;font-size:clamp(11px,1.4vw,12px)">✓ 已執行：發送《加息環境下儲蓄險 vs 定存對比表》</div>
-        </div>
-        <div class="card">
-          <p style="color:#ffb37a;font-size:clamp(11px,1.5vw,12px);font-weight:700;margin-bottom:clamp(6px,1vh,8px)">🏋️ 場景：健身教練</p>
-          <p style="color:var(--text-1);font-size:clamp(13px,1.8vw,14px);font-weight:600;margin-bottom:clamp(4px,0.8vh,6px)">Sandra 會員續會預警</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">IG 軌跡顯示跑步內容 +210%、健身內容 -30% → 偏好遷移，續會率 21% → 自動化挽留序列觸發</p>
-        </div>
+    <!-- ZH -->
+    <div class="lang-zh">
+      <div class="cover-bg"></div>
+      <div class="cover-blob"></div>
+      <div class="deck-header">
+        <div><span class="brand-dot"></span><span class="brand">東風 DONG FENG</span></div>
+        <div style="color:var(--text-3);font-size:clamp(10px,1.4vw,12px)">張良引擎 · 因果 AI 決策雷達</div>
       </div>
-      <div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <p style="color:#4ea1ff;font-size:clamp(11px,1.5vw,12px);font-weight:700;margin-bottom:clamp(6px,1vh,8px)">🏠 場景：地產代理</p>
-          <p style="color:var(--text-1);font-size:clamp(13px,1.8vw,14px);font-weight:600;margin-bottom:clamp(4px,0.8vh,6px)">Mr. Wong 簽約峰值預測</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">IG 收藏 + 按揭計算器 ×3 → T+5 週四 18:00 為簽約峰值，預測成功率 91%</p>
-          <div style="margin-top:clamp(8px,1.5vh,10px);padding:clamp(6px,1vw,8px) clamp(8px,1.5vw,12px);background:rgba(78,161,255,0.1);border-radius:8px;color:#4ea1ff;font-size:clamp(11px,1.4vw,12px)">📍 建議：週四 15:00 最後跟進，18:00 前到場</div>
-        </div>
-        <div class="card">
-          <p style="color:#28d49a;font-size:clamp(11px,1.5vw,12px);font-weight:700;margin-bottom:clamp(6px,1vh,8px)">☕ 場景：餐廳</p>
-          <p style="color:var(--text-1);font-size:clamp(13px,1.8vw,14px);font-weight:600;margin-bottom:clamp(4px,0.8vh,6px)">Ivy 茶餐廳翻台優化</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">地理圍欄 4,300 OL 目標用戶、1.5km 範圍 → 動態定價 + 排隊預測 → 翻台率 28% → 75%</p>
-        </div>
+      <p class="kicker" style="margin-top:clamp(28px,5.5vh,44px)">Investor Deck · 2026</p>
+      <h1 class="h1 anim-fade-up" style="margin-top:clamp(6px,1.5vh,10px)">
+        風起之前<br><span class="gradient-text">預判先機</span>
+      </h1>
+      <p class="lede" style="margin-top:clamp(12px,2.5vh,20px);max-width:58ch">
+        香港中小企的 AI 商業決策引擎——主動感知信號、因果推理、WhatsApp Zero-UI 觸及教練/地產/餐廳/保險/美容五大行業
+      </p>
+      <div class="cover-pills">
+        <span class="pill-accent">因果 AI 推理</span>
+        <span class="pill-accent">WhatsApp Zero-UI</span>
+        <span class="pill-accent">TimesFM 時序預測</span>
+        <span class="pill-accent">灣區實戰案例庫 RAG</span>
+      </div>
+      <div class="deck-footer">
+        <span>SyncBuddy Technology · HK$2M Seed · HK$12M 估值</span>
+        <span class="slide-number" data-current="1" data-total="10"></span>
+      </div>
+    </div>
+
+    <!-- EN -->
+    <div class="lang-en" style="display:none">
+      <div class="cover-bg"></div>
+      <div class="cover-blob"></div>
+      <div class="deck-header">
+        <div><span class="brand-dot"></span><span class="brand">東風 DONG FENG</span></div>
+        <div style="color:var(--text-3);font-size:clamp(10px,1.4vw,12px)">Zhang Liang Engine · Causal AI Decision Radar</div>
+      </div>
+      <p class="kicker" style="margin-top:clamp(28px,5.5vh,44px)">Investor Deck · 2026</p>
+      <h1 class="h1 anim-fade-up" style="margin-top:clamp(6px,1.5vh,10px)">
+        Before the Wind Rises<br><span class="gradient-text">Predict the Trend</span>
+      </h1>
+      <p class="lede" style="margin-top:clamp(12px,2.5vh,20px);max-width:58ch">
+        AI Business Decision Engine for Hong Kong SMEs — Proactive signal detection, causal reasoning, WhatsApp Zero-UI delivery across 5 verticals: Insurance, Real Estate, F&amp;B, Fitness, Beauty
+      </p>
+      <div class="cover-pills">
+        <span class="pill-accent">Causal AI Reasoning</span>
+        <span class="pill-accent">WhatsApp Zero-UI</span>
+        <span class="pill-accent">TimesFM Forecasting</span>
+        <span class="pill-accent">Bay Area RAG Casebase</span>
+      </div>
+      <div class="deck-footer">
+        <span>SyncBuddy Technology · HK$2M Seed · HK$12M Valuation</span>
+        <span class="slide-number" data-current="1" data-total="10"></span>
       </div>
     </div>
   </section>
 
-  <!-- 5. Technology -->
-  <section class="slide" data-title="Technology">
-    <span class="section-num">04</span>
-    <p class="num-tag">TECHNOLOGY 技術架構</p>
-    <h2 class="h2 mt-s">張良引擎核心：<br><span class="gradient-text">因果 AI 推理</span></h2>
-    <div class="grid g2 mt-l">
-      <div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <h4 style="color:#ff7a2e;margin-bottom:clamp(8px,1.5vh,10px)">🧠 因果 DAG 圖譜</h4>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px);margin-bottom:clamp(6px,1vh,10px)">Do-Calculus 反事實推理：判斷「如果唔做 X，Y 會點」</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">排除干擾變量、鎖定真正因果鏈——唔係靠估，係有數有據</p>
-        </div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <h4 style="color:#4ea1ff;margin-bottom:clamp(8px,1.5vh,10px)">📡 張良雷達（TimesFM）</h4>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px);margin-bottom:clamp(6px,1vh,10px)">Google 高維時序預測引擎，Zero-Shot 無需訓練</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">對微、小企常見的稀疏數據同樣有效——7×24 小時信號監控</p>
-        </div>
-        <div class="card">
-          <h4 style="color:#28d49a;margin-bottom:clamp(8px,1.5vh,10px)">🔄 灣區實戰案例庫 RAG</h4>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px);margin-bottom:clamp(6px,1vh,10px)">灣區創業者實戰經驗做基礎知識庫</p>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">本地化、接地氣的策略建議，來自真實香港 / 灣區中小企案例</p>
-        </div>
+  <!-- ══════════════ SLIDE 2: PROBLEM ══════════════ -->
+  <section class="slide" data-title="Problem" data-slide="2">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">01</span>
+      <p class="num-tag">PROBLEM 痛點</p>
+      <h2 class="h2 mt-s">香港中小企老闆<br>每日靠估靠估做決策</h2>
+      <div class="grid g3 mt-l">
+        <div class="card"><h4>📉 信號散晒</h4><p>Facebook、Instagram、WhatsApp、CRM——數據散晒，冇統一睇法</p></div>
+        <div class="card"><h4>⏰ 幾時跟進靠估</h4><p>幾時追客？幾時谷活動？幾時做優惠？95% 靠 feel</p></div>
+        <div class="card"><h4>🤖 AI 工具又複雜</h4><p>老闆要係答案，唔係要學點樣問問題</p></div>
       </div>
-      <div>
-        <div class="card" style="height:100%">
-          <h4 style="color:#ffb37a;margin-bottom:clamp(8px,1.5vh,12px)">📊 東風因果推理流程</h4>
-          <div style="display:flex;flex-direction:column;gap:clamp(8px,1.5vh,10px)">
-            <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,10px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(10px,1.3vw,11px);font-weight:700;padding:clamp(3px,0.6vh,4px) clamp(7px,1.2vw,10px);border-radius:20px;flex-shrink:0">1</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">多源信號攝取（FB/IG/WhatsApp/CRM）</span></div>
-            <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,10px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(10px,1.3vw,11px);font-weight:700;padding:clamp(3px,0.6vh,4px) clamp(7px,1.2vw,10px);border-radius:20px;flex-shrink:0">2</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">TimesFM 時序異常檢測</span></div>
-            <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,10px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(10px,1.3vw,11px);font-weight:700;padding:clamp(3px,0.6vh,4px) clamp(7px,1.2vw,10px);border-radius:20px;flex-shrink:0">3</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">DAG 因果圖構建 + Do-Calculus</span></div>
-            <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,10px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(10px,1.3vw,11px);font-weight:700;padding:clamp(3px,0.6vh,4px) clamp(7px,1.2vw,10px);border-radius:20px;flex-shrink:0">4</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">Counterfactual 排除冇用的策略</span></div>
-            <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,10px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(10px,1.3vw,11px);font-weight:700;padding:clamp(3px,0.6vh,4px) clamp(7px,1.2vw,10px);border-radius:20px;flex-shrink:0">5</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">RAG 灣區實戰案例匹配</span></div>
-            <div style="display:flex;align-items:center;gap:clamp(8px,1.5vw,10px)"><span style="background:#4ea1ff;color:#fff;font-size:clamp(10px,1.3vw,11px);font-weight:700;padding:clamp(3px,0.6vh,4px) clamp(7px,1.2vw,10px);border-radius:20px;flex-shrink:0">6</span><span style="color:#4ea1ff;font-size:clamp(12px,1.5vw,13px);font-weight:600">WhatsApp Zero-UI 主動觸達</span></div>
+      <div class="grid g3 mt-l">
+        <div class="card"><h4>💸 機會走咗先知</h4><p>母親節紅海、保險客走咗先知——永遠慢半拍</p></div>
+        <div class="card"><h4>🌊 唔知同行做緊乜</h4><p>冇 benchmark，唔知邊招掂</p></div>
+        <div class="card"><h4>📊 開咗個Account但係唔識用</h4><p>Google Analytics、Meta Business、CRM——開咗都係睇唔明</p></div>
+      </div>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">01</span>
+      <p class="num-tag">PROBLEM</p>
+      <h2 class="h2 mt-s">Hong Kong SME Owners<br>Guessing Their Way Through Every Day</h2>
+      <div class="grid g3 mt-l">
+        <div class="card"><h4>📉 Signals Everywhere</h4><p>Facebook, Instagram, WhatsApp, CRM — data scattered, no unified view</p></div>
+        <div class="card"><h4>⏰ Timing Is a Guess</h4><p>When to follow up? When to push campaigns? When to discount? 95% based on "feel"</p></div>
+        <div class="card"><h4>🤖 AI Tools Are Too Complex</h4><p>Owners want answers, not to learn Prompt Engineering</p></div>
+      </div>
+      <div class="grid g3 mt-l">
+        <div class="card"><h4>💸 Missed Opportunities</h4><p>Mother's Day red oceans, insurance churn — always half a beat behind</p></div>
+        <div class="card"><h4>🌊 No Competitive Intel</h4><p>No benchmark, no idea what actually works</p></div>
+        <div class="card"><h4>📊 Tools Set Up But Unused</h4><p>Google Analytics, Meta Business, CRM — accounts open, insights nowhere</p></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 3: SOLUTION ══════════════ -->
+  <section class="slide" data-title="Solution" data-slide="3">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">02</span>
+      <p class="num-tag">SOLUTION 解決方案</p>
+      <h2 class="h2 mt-s">東風：<span class="gradient-text">教練 + 雷達 + 槍</span><br>三合一 AI 決策幫手</h2>
+      <p class="lede mt-m">唔係另一個 Chatbot——係會主動出擊的商業決策引擎。張良引擎因果推理 + 張良雷達時序預測 + WhatsApp Zero-UI 觸及</p>
+      <div class="row mt-l">
+        <span class="pill-accent">🎯 因果推理引擎（張良引擎）</span>
+        <span class="pill-accent">📡 時序預測雷達（張良雷達）</span>
+        <span class="pill-accent">💬 WhatsApp 主動推送</span>
+        <span class="pill-accent">🔄灣區實戰案例 RAG</span>
+      </div>
+      <div class="grid g3 mt-l">
+        <div class="card" style="border-left:3px solid #ff7a2e"><h4>教練模式</h4><p>主動話你知「依家做乜」——唔係問你問題，直接俾行動建議</p></div>
+        <div class="card" style="border-left:3px solid #4ea1ff"><h4>雷達模式</h4><p>7×24 小時睇住信號，提前 N 日預警——出事之前就通知你</p></div>
+        <div class="card" style="border-left:3px solid #28d49a"><h4>槓桿模式</h4><p>因果鏈話你知邊個掂、邊個要 cut——對症下藥唔做無用功</p></div>
+      </div>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">02</span>
+      <p class="num-tag">SOLUTION</p>
+      <h2 class="h2 mt-s">DONG FENG: <span class="gradient-text">Coach + Radar + Gun</span><br>3-in-1 AI Decision Partner</h2>
+      <p class="lede mt-m">Not another Chatbot — a proactive business decision engine. Zhang Liang causal reasoning + TimesFM forecasting + WhatsApp Zero-UI delivery</p>
+      <div class="row mt-l">
+        <span class="pill-accent">🎯 Causal Reasoning Engine</span>
+        <span class="pill-accent">📡 TimesFM Forecasting Radar</span>
+        <span class="pill-accent">💬 WhatsApp Proactive Push</span>
+        <span class="pill-accent">🔄 Bay Area RAG Casebase</span>
+      </div>
+      <div class="grid g3 mt-l">
+        <div class="card" style="border-left:3px solid #ff7a2e"><h4>Coach Mode</h4><p>Proactively tells you what to do — no questions asked, just action recommendations</p></div>
+        <div class="card" style="border-left:3px solid #4ea1ff"><h4>Radar Mode</h4><p>7×24 signal monitoring, N days ahead warning — before problems happen</p></div>
+        <div class="card" style="border-left:3px solid #28d49a"><h4>Leverage Mode</h4><p>Causal chains show what works, what to cut — precision, no wasted effort</p></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 4: PRODUCT ══════════════ -->
+  <section class="slide" data-title="Product" data-slide="4">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">03</span>
+      <p class="num-tag">PRODUCT 產品</p>
+      <h2 class="h2 mt-s">WhatsApp 即開即用——<br>唔洗學的 AI 教練</h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <p style="color:#ff7a2e;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">📱 場景：保險經紀</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">陳Sir 大客戶流失預警</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">「IG 收藏出現定存利率」+ 「WhatsApp 已讀不回 13 小時」+ 「HKD Prime 上調 0.5%」= 流失機率 68%，提前 18 日預警</p>
+            <div style="margin-top:clamp(6px,1.2vh,9px);padding:clamp(5px,0.9vh,7px) clamp(6px,1.3vw,10px);background:rgba(40,212,154,0.1);border-radius:8px;color:#28d49a;font-size:clamp(10px,1.3vw,11px)">✓ 已執行：發送《加息環境下儲蓄險 vs 定存對比表》</div>
           </div>
-          <div style="margin-top:clamp(12px,2vh,16px);padding:clamp(8px,1.5vh,10px);background:rgba(40,212,154,0.08);border-radius:8px;border-left:3px solid #28d49a">
-            <p style="color:#28d49a;font-size:clamp(11px,1.4vw,12px);font-weight:600">平均 ROI：+340%</p>
-            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(3px,0.6vh,4px)">行业基准 8.2x · 客戶閉環週期 18 天</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Market -->
-  <section class="slide" data-title="Market">
-    <span class="section-num">05</span>
-    <p class="num-tag">MARKET 市場</p>
-    <h2 class="h2 mt-s">香港中小企：被 AI 工具遺忘的<br><span class="gradient-text">340 萬人</span></h2>
-    <div class="grid g3 mt-l">
-      <div class="metric"><div class="n">340K</div><div class="l">香港中小企（員工 &lt;50）</div></div>
-      <div class="metric"><div class="n">92%</div><div class="l">從未使用任何 AI 工具做決策</div></div>
-      <div class="metric"><div class="n">HK$48B</div><div class="l">商業決策支援工具 TAM（香港）</div></div>
-    </div>
-    <div class="grid g3 mt-l">
-      <div class="card"><h4>🛡️ 保險經紀</h4><p>香港持牌保險代理 12 萬人，大客戶管理是核心剛需</p></div>
-      <div class="card"><h4>🏠 地產代理</h4><p>地產營業員 4 萬人，帶看轉化是最大痛點</p></div>
-      <div class="card"><h4>☕ F&amp;B 餐廳</h4><p>香港餐廳 1.7 萬間，翻台率決定生死</p></div>
-    </div>
-    <div class="grid g3 mt-l" style="margin-top:clamp(6px,1vh,8px)">
-      <div class="card"><h4>💄 美容院 / 美容業</h4><p>母親節 / 聖誕檔期競爭激烈，紅海預警剛需</p></div>
-      <div class="card"><h4>🏋️ 健身教練</h4><p>續會率 21% 行業平均，自動化挽留價值高</p></div>
-      <div class="card"><h4>🏪 零售 / 電商</h4><p>促銷時點預測、庫存優化——下一個擴展方向</p></div>
-    </div>
-  </section>
-
-  <!-- 7. Competition -->
-  <section class="slide" data-title="Competition">
-    <span class="section-num">06</span>
-    <p class="num-tag">COMPETITION 競爭分析</p>
-    <h2 class="h2 mt-s">東風 vs ChatGPT vs Perplexity<br>為什麼<span class="gradient-text">我們不一樣</span></h2>
-    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch" class="mt-l">
-      <table class="comparison">
-        <thead>
-          <tr><th style="text-align:left">維度</th><th>東風 ✨</th><th>ChatGPT</th><th>Perplexity</th></tr>
-        </thead>
-        <tbody>
-          <tr class="highlight-row"><td>核心能力</td><td class="winner">因果 AI 推理 + 時序預測</td><td class="loser">通用對話 + 文字生成</td><td class="loser">互聯網搜尋 + 事實問答</td></tr>
-          <tr><td>商業垂直場景</td><td class="winner">5 大行業實戰案例 RAG</td><td class="loser">通用，無本地化案例</td><td class="loser">通用，無商業垂直優化</td></tr>
-          <tr class="highlight-row"><td>觸及方式</td><td class="winner">WhatsApp Zero-UI · 主動推送</td><td class="loser">被動等問</td><td class="loser">被動自己搵</td></tr>
-          <tr><td>預測時序能力</td><td class="winner">TimesFM Zero-Shot 時序引擎</td><td class="loser">無</td><td class="loser">無</td></tr>
-          <tr class="highlight-row"><td>因果推理</td><td class="winner">DAG + Do-Calculus + Counterfactual</td><td class="loser">Prompt 模擬，無真正因果</td><td class="loser">Prompt 模擬，無真正因果</td></tr>
-          <tr><td>中小企適用程度</td><td class="winner">唔洗學，WhatsApp 即開</td><td class="loser">要學點問</td><td class="loser">要知點問</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="margin-top:clamp(14px,2.5vh,20px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">東風的核心差異：<strong style="color:var(--accent)">唔係另一個 AI 傾偈機械人——係會主動出擊、幫老闆賺錢的商業決策教練</strong></p>
-  </section>
-
-  <!-- 8. Business Model -->
-  <section class="slide" data-title="Business Model">
-    <span class="section-num">07</span>
-    <p class="num-tag">BUSINESS MODEL 商業模式</p>
-    <h2 class="h2 mt-s">SaaS 訂閱 + 成效收費<br>兩種方法變現</h2>
-    <div class="grid g2 mt-l">
-      <div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <h4 style="color:#ff7a2e">💰 訂閱收入</h4>
-          <div style="margin-top:clamp(8px,1.5vh,12px)">
-            <div style="display:flex;justify-content:space-between;padding:clamp(6px,1vh,8px) 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">Pro 版（單商戶）</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">HK$980 / 月</span></div>
-            <div style="display:flex;justify-content:space-between;padding:clamp(6px,1vh,8px) 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">Team 版（3-10 用戶）</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">HK$1,980 / 月</span></div>
-            <div style="display:flex;justify-content:space-between;padding:clamp(6px,1vh,8px) 0"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">Enterprise（定制）</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">另議</span></div>
+          <div class="card">
+            <p style="color:#ffb37a;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">🏋️ 場景：健身教練</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">Sandra 會員續會預警</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">IG 軌跡顯示跑步內容 +210%、健身內容 -30% → 偏好遷移，續會率 21% → 自動化挽留序列觸發</p>
           </div>
         </div>
-        <div class="card">
-          <h4 style="color:#4ea1ff">📈 成效收費（下一階段）</h4>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px);margin-top:clamp(6px,1vh,8px)">當客人跟東風建議賺到錢，我哋收增量收入分成（通常 5-15%）</p>
-        </div>
-      </div>
-      <div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <h4 style="color:#28d49a;margin-bottom:clamp(8px,1.5vh,12px)">🎯 已驗證指標</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.5vw,12px)">
-            <div style="text-align:center;padding:clamp(8px,1.5vh,12px);background:rgba(40,212,154,0.08);border-radius:8px"><div style="font-size:clamp(20px,4vw,28px);font-weight:800;color:#28d49a">340%</div><div style="font-size:clamp(10px,1.3vw,11px);color:var(--text-2);margin-top:clamp(3px,0.6vh,4px)">平均 ROI</div></div>
-            <div style="text-align:center;padding:clamp(8px,1.5vh,12px);background:rgba(78,161,255,0.08);border-radius:8px"><div style="font-size:clamp(20px,4vw,28px);font-weight:800;color:#4ea1ff">18天</div><div style="font-size:clamp(10px,1.3vw,11px);color:var(--text-2);margin-top:clamp(3px,0.6vh,4px)">閉環週期</div></div>
-            <div style="text-align:center;padding:clamp(8px,1.5vh,12px);background:rgba(255,122,46,0.08);border-radius:8px"><div style="font-size:clamp(20px,4vw,28px);font-weight:800;color:#ff7a2e">128</div><div style="font-size:clamp(10px,1.3vw,11px);color:var(--text-2);margin-top:clamp(3px,0.6vh,4px)">監控客戶數</div></div>
-            <div style="text-align:center;padding:clamp(8px,1.5vh,12px);background:rgba(255,179,122,0.08);border-radius:8px"><div style="font-size:clamp(20px,4vw,28px);font-weight:800;color:#ffb37a">78%</div><div style="font-size:clamp(10px,1.3vw,11px);color:var(--text-2);margin-top:clamp(3px,0.6vh,4px)">客戶有反應</div></div>
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <p style="color:#4ea1ff;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">🏠 場景：地產代理</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">Mr. Wong 簽約峰值預測</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">IG 收藏 + 按揭計算器 ×3 → T+5 週四 18:00 為簽約峰值，預測成功率 91%</p>
+            <div style="margin-top:clamp(6px,1.2vh,9px);padding:clamp(5px,0.9vh,7px) clamp(6px,1.3vw,10px);background:rgba(78,161,255,0.1);border-radius:8px;color:#4ea1ff;font-size:clamp(10px,1.3vw,11px)">📍 建議：週四 15:00 最後跟進，18:00 前到場</div>
           </div>
-        </div>
-        <div class="card">
-          <h4 style="color:#ffb37a;margin-bottom:clamp(6px,1vh,8px)">🗺️ 擴張路徑</h4>
-          <p style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">香港 → 灣區（深圳/廣州） → 東南亞華人市場</p>
-          <p style="color:var(--text-3);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(4px,0.8vh,6px)">粵語 + 普通話雙語，灣區文化認同</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. Traction & Roadmap -->
-  <section class="slide" data-title="Traction">
-    <span class="section-num">08</span>
-    <p class="num-tag">TRACTION &amp; ROADMAP 進展</p>
-    <h2 class="h2 mt-s">已啟動：MVP 投資者 Demo<br><span class="gradient-text">準備進入 Beta</span></h2>
-    <div class="grid g2 mt-l">
-      <div>
-        <div class="card" style="margin-bottom:clamp(10px,2vw,16px)">
-          <h4 style="color:#ff7a2e;margin-bottom:clamp(8px,1.5vh,12px)">✅ 已完成</h4>
-          <div style="display:flex;flex-direction:column;gap:clamp(6px,1vh,8px)">
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-1);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">✓</span> MVP 功能完整（因果引擎 + 時序雷達 + WhatsApp 觸達）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-1);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">✓</span> 7 個行業場景 Demo 完成</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-1);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">✓</span> 3-way Comparison vs ChatGPT/Perplexity 完成</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-1);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">✓</span> 後廠 SaaS 控制台 Demo 完成</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-1);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">✓</span> TimesFM 因果引擎整合完成</div>
-          </div>
-        </div>
-        <div class="card">
-          <h4 style="color:#4ea1ff;margin-bottom:clamp(8px,1.5vh,12px)">📅 Q2 2026 目標</h4>
-          <div style="display:flex;flex-direction:column;gap:clamp(6px,1vh,8px)">
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#4ea1ff">→</span> 種子輪 HK$2M close（目標 2026 Q2）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#4ea1ff">→</span> 3-5 間 Beta 企業客戶（免費）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#4ea1ff">→</span> WhatsApp Business Cloud API 正式版</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#4ea1ff">→</span> 灣區 RAG 案例庫 2.0</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="card">
-          <h4 style="color:#28d49a;margin-bottom:clamp(8px,1.5vh,12px)">💡 願景：東風 2.0</h4>
-          <div style="display:flex;flex-direction:column;gap:clamp(6px,1vh,8px)">
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">★</span> 多租戶 SaaS 平台（2026 Q3）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">★</span> OAuth 數據源全面接入（FB/IG/CRM）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">★</span> 灣區複製（深圳/廣州）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">★</span> 東南亞華人市場（新加坡/馬來西亞）</div>
-            <div style="display:flex;align-items:center;gap:clamp(6px,1vw,8px);color:var(--text-2);font-size:clamp(12px,1.5vw,13px)"><span style="color:#28d49a">★</span> A 輪 HK$15M（預計 2027 Q1）</div>
+          <div class="card">
+            <p style="color:#28d49a;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">☕ 場景：餐廳</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">Ivy 茶餐廳翻台優化</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">地理圍欄 4,300 OL 目標用戶、1.5km 範圍 → 動態定價 + 排隊預測 → 翻台率 28% → 75%</p>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">03</span>
+      <p class="num-tag">PRODUCT</p>
+      <h2 class="h2 mt-s">WhatsApp — Open &amp; Use<br>Zero-Learning AI Coach</h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <p style="color:#ff7a2e;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">📱 Scenario: Insurance Broker</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">陳Sir — Major Client Churn Alert</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">"IG saved fixed deposit rates" + "WhatsApp unread 13hrs" + "HKD Prime +0.5%" = 68% churn risk, 18 days early warning</p>
+            <div style="margin-top:clamp(6px,1.2vh,9px);padding:clamp(5px,0.9vh,7px) clamp(6px,1.3vw,10px);background:rgba(40,212,154,0.1);border-radius:8px;color:#28d49a;font-size:clamp(10px,1.3vw,11px)">✓ Sent: Savings Insurance vs Fixed Deposit Comparison</div>
+          </div>
+          <div class="card">
+            <p style="color:#ffb37a;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">🏋️ Scenario: Fitness Coach</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">Sandra — Membership Renewal Alert</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">IG: running +210%, fitness -30% → preference shift, renewal rate 21% → automated retention sequence triggered</p>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <p style="color:#4ea1ff;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">🏠 Scenario: Real Estate Agent</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">Mr. Wong — Signing Peak Prediction</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">IG saves + mortgage calculator ×3 → T+5 Thu 18:00 peak signing, 91% success rate</p>
+            <div style="margin-top:clamp(6px,1.2vh,9px);padding:clamp(5px,0.9vh,7px) clamp(6px,1.3vw,10px);background:rgba(78,161,255,0.1);border-radius:8px;color:#4ea1ff;font-size:clamp(10px,1.3vw,11px)">📍 Recommend: Last follow-up Thu 15:00, on-site by 18:00</div>
+          </div>
+          <div class="card">
+            <p style="color:#28d49a;font-size:clamp(10px,1.4vw,12px);font-weight:700;margin-bottom:clamp(5px,0.9vh,7px)">☕ Scenario: Restaurant</p>
+            <p style="color:var(--text-1);font-size:clamp(12px,1.7vw,14px);font-weight:600;margin-bottom:clamp(3px,0.7vh,5px)">Ivy — Cha Chaan Tang Table Turn Optimization</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Geofence 4,300 OL target users, 1.5km → dynamic pricing + queue prediction → table turnover 28% → 75%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
-  <!-- 10. The Ask -->
-  <section class="slide" data-title="The Ask">
-    <span class="section-num">09</span>
-    <p class="num-tag">THE ASK 融資需求</p>
-    <h2 class="h2 mt-s">HK$2M 種子輪<br><span class="gradient-text">構建香港最大中小企 AI 決策網絡</span></h2>
-    <div class="grid g3 mt-l">
-      <div class="card" style="text-align:center;border-top:3px solid #ff7a2e">
-        <h4 style="color:#ff7a2e;font-size:clamp(12px,1.6vw,14px);margin-bottom:clamp(8px,1.5vh,12px)">估值</h4>
-        <div style="font-size:clamp(24px,5vw,36px);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">HK$12M</div>
-        <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(4px,0.8vh,6px)">Pre-money Valuation</p>
-      </div>
-      <div class="card" style="text-align:center;border-top:3px solid #4ea1ff">
-        <h4 style="color:#4ea1ff;font-size:clamp(12px,1.6vw,14px);margin-bottom:clamp(8px,1.5vh,12px)">融资额</h4>
-        <div style="font-size:clamp(24px,5vw,36px);font-weight:800;color:#4ea1ff">HK$2M</div>
-        <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(4px,0.8vh,6px)">Seed Round</p>
-      </div>
-      <div class="card" style="text-align:center;border-top:3px solid #28d49a">
-        <h4 style="color:#28d49a;font-size:clamp(12px,1.6vw,14px);margin-bottom:clamp(8px,1.5vh,12px)">稀釋</h4>
-        <div style="font-size:clamp(24px,5vw,36px);font-weight:800;color:#28d49a">14.3%</div>
-        <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(4px,0.8vh,6px)">Post-money 16.7%</p>
-      </div>
-    </div>
-    <div class="grid g2 mt-l">
-      <div class="card">
-        <h4 style="color:#ff7a2e;margin-bottom:clamp(8px,1.5vh,10px)">💡 資金用途</h4>
-        <div style="display:flex;flex-direction:column;gap:clamp(6px,1vh,8px)">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">產品開發（因果引擎 + RAG）</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">HK$800K</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">市場拓展（香港中小企）</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">HK$600K</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">Beta 客戶獲取</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">HK$400K</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(12px,1.5vw,13px)">灣區市場研究</span><span style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px);font-weight:700">HK$200K</span></div>
+  <!-- ══════════════ SLIDE 5: TECHNOLOGY ══════════════ -->
+  <section class="slide" data-title="Technology" data-slide="5">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">04</span>
+      <p class="num-tag">TECHNOLOGY 技術架構</p>
+      <h2 class="h2 mt-s">張良引擎核心：<br><span class="gradient-text">因果 AI 推理</span></h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#ff7a2e;margin-bottom:clamp(6px,1.2vh,9px)">🧠 因果 DAG 圖譜</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-bottom:clamp(5px,0.9vh,8px)">Do-Calculus 反事實推理：判斷「如果唔做 X，Y 會點」</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">排除干擾變量、鎖定真正因果鏈——唔係靠估，係有數有據</p>
+          </div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#4ea1ff;margin-bottom:clamp(6px,1.2vh,9px)">📡 張良雷達（TimesFM）</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-bottom:clamp(5px,0.9vh,8px)">Google 高維時序預測引擎，Zero-Shot 無需訓練</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">對稀疏數據同樣有效——7×24 小時信號監控</p>
+          </div>
+          <div class="card">
+            <h4 style="color:#28d49a;margin-bottom:clamp(6px,1.2vh,9px)">🔄 灣區實戰案例庫 RAG</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-bottom:clamp(5px,0.9vh,8px)">灣區創業者實戰經驗做基礎知識庫</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">本地化、接地氣的策略建議，來自真實香港 / 灣區中小企案例</p>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="height:100%">
+            <h4 style="color:#ffb37a;margin-bottom:clamp(7px,1.4vh,11px)">📊 東風因果推理流程</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(7px,1.3vh,9px)">
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">1</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">多源信號攝取（FB/IG/WhatsApp/CRM）</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">2</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">TimesFM 時序異常檢測</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">3</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">DAG 因果圖構建 + Do-Calculus</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">4</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">Counterfactual 排除冇用的策略</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">5</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">RAG 灣區實戰案例匹配</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#4ea1ff;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">6</span><span style="color:#4ea1ff;font-size:clamp(11px,1.4vw,12px);font-weight:600">WhatsApp Zero-UI 主動觸及</span></div>
+            </div>
+            <div style="margin-top:clamp(10px,2vh,14px);padding:clamp(7px,1.3vh,9px);background:rgba(40,212,154,0.08);border-radius:8px;border-left:3px solid #28d49a">
+              <p style="color:#28d49a;font-size:clamp(10px,1.3vw,12px);font-weight:600">平均 ROI：+340%</p>
+              <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,12px);margin-top:clamp(2px,0.5vh,3px)">行業基準 8.2x · 客戶閉環週期 18 日</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="card" style="background:rgba(255,122,46,0.06);border-color:rgba(255,122,46,0.3)">
-        <h4 style="color:#ff7a2e;margin-bottom:clamp(8px,1.5vh,10px)">🤝 我們在找</h4>
-        <div style="display:flex;flex-direction:column;gap:clamp(6px,1vh,8px)">
-          <p style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">• 對 Hong Kong / 灣區 AI 赛道有認識的天使 / VC</p>
-          <p style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">• 有中小企客路的合作夥伴</p>
-          <p style="color:var(--text-1);font-size:clamp(12px,1.5vw,13px)">• 熟悉保險 / 地產 / F&amp;B 行業的導師</p>
-          <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(6px,1vh,8px)">聯絡：match@syncbuddy.ai</p>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">04</span>
+      <p class="num-tag">TECHNOLOGY</p>
+      <h2 class="h2 mt-s">Zhang Liang Engine Core:<br><span class="gradient-text">Causal AI Reasoning</span></h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#ff7a2e;margin-bottom:clamp(6px,1.2vh,9px)">🧠 Causal DAG Framework</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-bottom:clamp(5px,0.9vh,8px)">Do-Calculus counterfactual reasoning: "If we don't do X, what happens to Y?"</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Eliminate confounders, lock true causal chains — not correlation, causation</p>
+          </div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#4ea1ff;margin-bottom:clamp(6px,1.2vh,9px)">📡 Zhang Liang Radar (TimesFM)</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-bottom:clamp(5px,0.9vh,8px)">Google high-dimensional time-series engine, Zero-Shot, no training needed</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Works even with sparse SME data — 7×24 signal monitoring</p>
+          </div>
+          <div class="card">
+            <h4 style="color:#28d49a;margin-bottom:clamp(6px,1.2vh,9px)">🔄 Bay Area RAG Casebase</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-bottom:clamp(5px,0.9vh,8px)">Bay Area entrepreneurs' battle-tested experience as knowledge base</p>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Localized, grounded strategies from real HK / Bay Area SME cases</p>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="height:100%">
+            <h4 style="color:#ffb37a;margin-bottom:clamp(7px,1.4vh,11px)">📊 Dong Feng Reasoning Pipeline</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(7px,1.3vh,9px)">
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">1</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">Multi-source signal ingestion (FB/IG/WhatsApp/CRM)</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">2</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">TimesFM anomaly detection</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">3</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">DAG construction + Do-Calculus</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">4</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">Counterfactual — eliminate ineffective strategies</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#ff7a2e;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">5</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">RAG Bay Area case matching</span></div>
+              <div style="display:flex;align-items:center;gap:clamp(7px,1.3vw,9px)"><span style="background:#4ea1ff;color:#fff;font-size:clamp(9px,1.2vw,11px);font-weight:700;padding:clamp(2px,0.5vh,3px) clamp(6px,1.1vw,9px);border-radius:20px;flex-shrink:0">6</span><span style="color:#4ea1ff;font-size:clamp(11px,1.4vw,12px);font-weight:600">WhatsApp Zero-UI proactive reach</span></div>
+            </div>
+            <div style="margin-top:clamp(10px,2vh,14px);padding:clamp(7px,1.3vh,9px);background:rgba(40,212,154,0.08);border-radius:8px;border-left:3px solid #28d49a">
+              <p style="color:#28d49a;font-size:clamp(10px,1.3vw,12px);font-weight:600">Avg ROI：+340%</p>
+              <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,12px);margin-top:clamp(2px,0.5vh,3px)">Industry benchmark 8.2x · Client闭环周期 18 days</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 6: MARKET ══════════════ -->
+  <section class="slide" data-title="Market" data-slide="6">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">05</span>
+      <p class="num-tag">MARKET 市場</p>
+      <h2 class="h2 mt-s">香港中小企：被 AI 工具遺忘的<br><span class="gradient-text">340 萬人</span></h2>
+      <div class="grid g3 mt-l">
+        <div class="metric"><div class="n">340K</div><div class="l">香港中小企（員工 &lt;50）</div></div>
+        <div class="metric"><div class="n">92%</div><div class="l">從未使用任何 AI 工具做決策</div></div>
+        <div class="metric"><div class="n">HK$48B</div><div class="l">商業決策支援工具 TAM（香港）</div></div>
+      </div>
+      <div class="grid g3 mt-l">
+        <div class="card"><h4>🛡️ 保險經紀</h4><p>香港持牌保險代理 12 萬人，大客戶管理是核心剛需</p></div>
+        <div class="card"><h4>🏠 地產代理</h4><p>地產營業員 4 萬人，帶看轉化是最大痛點</p></div>
+        <div class="card"><h4>☕ F&amp;B 餐廳</h4><p>香港餐廳 1.7 萬間，翻台率決定生死</p></div>
+      </div>
+      <div class="grid g3 mt-l" style="margin-top:clamp(5px,1vh,7px)">
+        <div class="card"><h4>💄 美容院 / 美容業</h4><p>母親節 / 聖誕檔期競爭激烈，紅海預警剛需</p></div>
+        <div class="card"><h4>🏋️ 健身教練</h4><p>續會率 21% 行業平均，自動化挽留價值高</p></div>
+        <div class="card"><h4>🏪 零售 / 電商</h4><p>促銷時點預測、庫存優化——下一個擴展方向</p></div>
+      </div>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">05</span>
+      <p class="num-tag">MARKET</p>
+      <h2 class="h2 mt-s">Hong Kong SMEs: The<br><span class="gradient-text">340,000</span> Left Behind by AI</h2>
+      <div class="grid g3 mt-l">
+        <div class="metric"><div class="n">340K</div><div class="l">Hong Kong SMEs (staff &lt;50)</div></div>
+        <div class="metric"><div class="n">92%</div><div class="l">Never used any AI tool for decisions</div></div>
+        <div class="metric"><div class="n">HK$48B</div><div class="l">Business Decision Tools TAM (HK)</div></div>
+      </div>
+      <div class="grid g3 mt-l">
+        <div class="card"><h4>🛡️ Insurance Brokers</h4><p>120K licensed insurance agents in HK — key account management is core need</p></div>
+        <div class="card"><h4>🏠 Real Estate Agents</h4><p>40K agents — property viewing conversion is the biggest pain point</p></div>
+        <div class="card"><h4>☕ F&amp;B Restaurants</h4><p>17K restaurants in HK — table turnover determines survival</p></div>
+      </div>
+      <div class="grid g3 mt-l" style="margin-top:clamp(5px,1vh,7px)">
+        <div class="card"><h4>💄 Beauty / Salon</h4><p>Mother's Day / Christmas red ocean competition — early warning is essential</p></div>
+        <div class="card"><h4>🏋️ Fitness Coaches</h4><p>21% renewal rate industry average — automated retention is high value</p></div>
+        <div class="card"><h4>🏪 Retail / E-Commerce</h4><p>Promo timing, inventory optimization — next expansion vertical</p></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 7: COMPETITION ══════════════ -->
+  <section class="slide" data-title="Competition" data-slide="7">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">06</span>
+      <p class="num-tag">COMPETITION 競爭分析</p>
+      <h2 class="h2 mt-s">東風 vs ChatGPT vs Perplexity<br>為什麼<span class="gradient-text">我哋唔同</span></h2>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch" class="mt-l">
+        <table class="comparison">
+          <thead><tr><th style="text-align:left">維度</th><th>東風 ✨</th><th>ChatGPT</th><th>Perplexity</th></tr></thead>
+          <tbody>
+            <tr class="highlight-row"><td>核心能力</td><td class="winner">因果 AI 推理 + 時序預測</td><td class="loser">通用對話 + 文字生成</td><td class="loser">互聯網搜尋 + 事實問答</td></tr>
+            <tr><td>商業垂直場景</td><td class="winner">5 大行業實戰案例 RAG</td><td class="loser">通用，冇本地化案例</td><td class="loser">通用，冇商業垂直優化</td></tr>
+            <tr class="highlight-row"><td>觸及方式</td><td class="winner">WhatsApp Zero-UI · 主動推送</td><td class="loser">被動等問</td><td class="loser">被動自己搵</td></tr>
+            <tr><td>預測時序能力</td><td class="winner">TimesFM Zero-Shot 時序引擎</td><td class="loser">冇</td><td class="loser">冇</td></tr>
+            <tr class="highlight-row"><td>因果推理</td><td class="winner">DAG + Do-Calculus + Counterfactual</td><td class="loser">Prompt 模擬，冇真正因果</td><td class="loser">Prompt 模擬，冇真正因果</td></tr>
+            <tr><td>中小企適用程度</td><td class="winner">唔洗學，WhatsApp 即開</td><td class="loser">要學點問</td><td class="loser">要知點問</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:clamp(12px,2.2vh,18px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">東風的核心差異：<strong style="color:var(--accent)">唔係另一個 AI 傾偈機械人——我係會主動出擊、幫老闆賺錢的商業決策教練</strong></p>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">06</span>
+      <p class="num-tag">COMPETITION</p>
+      <h2 class="h2 mt-s">Dong Feng vs ChatGPT vs Perplexity<br>Why <span class="gradient-text">We're Different</span></h2>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch" class="mt-l">
+        <table class="comparison">
+          <thead><tr><th style="text-align:left">Dimension</th><th>Dong Feng ✨</th><th>ChatGPT</th><th>Perplexity</th></tr></thead>
+          <tbody>
+            <tr class="highlight-row"><td>Core Capability</td><td class="winner">Causal AI + Time-Series Forecasting</td><td class="loser">General Chat + Text Generation</td><td class="loser">Web Search + Q&amp;A</td></tr>
+            <tr><td>Vertical Business Scenarios</td><td class="winner">5 Industries RAG Casebase</td><td class="loser">General, no localized cases</td><td class="loser">General, no vertical optimization</td></tr>
+            <tr class="highlight-row"><td>Delivery Method</td><td class="winner">WhatsApp Zero-UI · Proactive Push</td><td class="loser">Passive Q&amp;A</td><td class="loser">Passive Search</td></tr>
+            <tr><td>Time-Series Forecasting</td><td class="winner">TimesFM Zero-Shot Engine</td><td class="loser">None</td><td class="loser">None</td></tr>
+            <tr class="highlight-row"><td>Causal Reasoning</td><td class="winner">DAG + Do-Calculus + Counterfactual</td><td class="loser">Prompt simulation, no real causation</td><td class="loser">Prompt simulation, no real causation</td></tr>
+            <tr><td>SME Fit</td><td class="winner">Zero learning curve, WhatsApp</td><td class="loser">Needs Prompt skills</td><td class="loser">Needs question ability</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:clamp(12px,2.2vh,18px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Core differentiation：<strong style="color:var(--accent)">Not another AI chatbot — a proactive business decision coach that helps owners make money</strong></p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 8: BUSINESS MODEL ══════════════ -->
+  <section class="slide" data-title="Business Model" data-slide="8">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">07</span>
+      <p class="num-tag">BUSINESS MODEL 商業模式</p>
+      <h2 class="h2 mt-s">SaaS 訂閱 + 成效收費<br>兩種方法變現</h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#ff7a2e">💰 訂閱收入</h4>
+            <div style="margin-top:clamp(7px,1.3vh,10px)">
+              <div style="display:flex;justify-content:space-between;padding:clamp(5px,1vh,7px) 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Pro 版（單商戶）</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$980 / 月</span></div>
+              <div style="display:flex;justify-content:space-between;padding:clamp(5px,1vh,7px) 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Team 版（3-10 用戶）</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$1,980 / 月</span></div>
+              <div style="display:flex;justify-content:space-between;padding:clamp(5px,1vh,7px) 0"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Enterprise（定制）</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">另議</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="color:#4ea1ff">📈 成效收費（下一階段）</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(5px,0.9vh,7px)">當客人跟東風建議賺到錢，我哋收增量收入分成（通常 5-15%）</p>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#28d49a;margin-bottom:clamp(7px,1.3vh,10px)">🎯 已驗證指標</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1.3vw,10px)">
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(40,212,154,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#28d49a">340%</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">平均 ROI</div></div>
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(78,161,255,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#4ea1ff">18日</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">閉環週期</div></div>
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(255,122,46,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#ff7a2e">128</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">監控客戶數</div></div>
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(255,179,122,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#ffb37a">78%</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">客人有反應</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="color:#ffb37a;margin-bottom:clamp(5px,0.9vh,7px)">🗺️ 擴張路徑</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">香港 → 灣區（深圳/廣州） → 東南亞華人市場</p>
+            <p style="color:var(--text-3);font-size:clamp(10px,1.2vw,11px);margin-top:clamp(3px,0.6vh,5px)">粵語 + 普通話雙語，灣區文化認同</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">07</span>
+      <p class="num-tag">BUSINESS MODEL</p>
+      <h2 class="h2 mt-s">SaaS Subscription +<br>Performance-Based Revenue</h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#ff7a2e">💰 Subscription Revenue</h4>
+            <div style="margin-top:clamp(7px,1.3vh,10px)">
+              <div style="display:flex;justify-content:space-between;padding:clamp(5px,1vh,7px) 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Pro (Single Merchant)</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$980 / mo</span></div>
+              <div style="display:flex;justify-content:space-between;padding:clamp(5px,1vh,7px) 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Team (3-10 users)</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$1,980 / mo</span></div>
+              <div style="display:flex;justify-content:space-between;padding:clamp(5px,1vh,7px) 0"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Enterprise (Custom)</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">Talk to us</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="color:#4ea1ff">📈 Performance Fee (Next Phase)</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px);margin-top:clamp(5px,0.9vh,7px)">When clients earn from Dong Feng recommendations, we take a cut of the增量 revenue (typically 5-15%)</p>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#28d49a;margin-bottom:clamp(7px,1.3vh,10px)">🎯 Validated Metrics</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1.3vw,10px)">
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(40,212,154,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#28d49a">340%</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">Avg ROI</div></div>
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(78,161,255,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#4ea1ff">18 days</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">闭环周期</div></div>
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(255,122,46,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#ff7a2e">128</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">Clients Monitored</div></div>
+              <div style="text-align:center;padding:clamp(7px,1.3vh,10px);background:rgba(255,179,122,0.08);border-radius:8px"><div style="font-size:clamp(18px,3.8vw,26px);font-weight:800;color:#ffb37a">78%</div><div style="font-size:clamp(9px,1.2vw,11px);color:var(--text-2);margin-top:clamp(2px,0.5vh,3px)">Response Rate</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="color:#ffb37a;margin-bottom:clamp(5px,0.9vh,7px)">🗺️ Expansion Path</h4>
+            <p style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">HK → Bay Area (Shenzhen/GZ) → SE Asia Chinese Markets</p>
+            <p style="color:var(--text-3);font-size:clamp(10px,1.2vw,11px);margin-top:clamp(3px,0.6vh,5px)">Cantonese + Mandarin bilingual, Bay Area cultural fit</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 9: TRACTION ══════════════ -->
+  <section class="slide" data-title="Traction" data-slide="9">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">08</span>
+      <p class="num-tag">TRACTION &amp; ROADMAP 進展</p>
+      <h2 class="h2 mt-s">已啟動：MVP 投資者 Demo<br><span class="gradient-text">準備進入 Beta</span></h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#ff7a2e;margin-bottom:clamp(7px,1.3vh,10px)">✅ 已完成</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> MVP 功能完整（因果引擎 + 時序雷達 + WhatsApp 觸及）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> 7 個行業場景 Demo 完成</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> 3-way Comparison vs ChatGPT/Perplexity 完成</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> 後廠 SaaS 控制台 Demo 完成</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> TimesFM 因果引擎整合完成</div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="color:#4ea1ff;margin-bottom:clamp(7px,1.3vh,10px)">📅 Q2 2026 目標</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> 種子輪 HK$2M close（目標 2026 Q2）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> 3-5 間 Beta 企業客戶（免費）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> WhatsApp Business Cloud API 正式版</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> 灣區 RAG 案例庫 2.0</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h4 style="color:#28d49a;margin-bottom:clamp(7px,1.3vh,10px)">💡 願景：東風 2.0</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> 多租戶 SaaS 平台（2026 Q3）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> OAuth 數據源全面接入（FB/IG/CRM）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> 灣區複製（深圳/廣州）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> 東南亞華人市場（新加坡/馬來西亞）</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> A 輪 HK$15M（預計 2027 Q1）</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">08</span>
+      <p class="num-tag">TRACTION &amp; ROADMAP</p>
+      <h2 class="h2 mt-s">Launched: MVP Investor Demo<br><span class="gradient-text">Entering Beta Soon</span></h2>
+      <div class="grid g2 mt-l">
+        <div>
+          <div class="card" style="margin-bottom:clamp(8px,1.8vw,14px)">
+            <h4 style="color:#ff7a2e;margin-bottom:clamp(7px,1.3vh,10px)">✅ Completed</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> Full MVP (causal engine + radar + WhatsApp delivery)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> 7 vertical scenario Demos completed</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> 3-way Comparison vs ChatGPT/Perplexity</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> Back-office SaaS Console Demo completed</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-1);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">✓</span> TimesFM Causal Engine integration complete</div>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="color:#4ea1ff;margin-bottom:clamp(7px,1.3vh,10px)">📅 Q2 2026 Goals</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> Seed HK$2M close (target Q2 2026)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> 3-5 Beta enterprise clients (free)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> WhatsApp Business Cloud API production</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#4ea1ff">→</span> Bay Area RAG Casebase 2.0</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h4 style="color:#28d49a;margin-bottom:clamp(7px,1.3vh,10px)">💡 Vision: Dong Feng 2.0</h4>
+            <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> Multi-tenant SaaS platform (Q3 2026)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> Full OAuth data sources (FB/IG/CRM)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> Bay Area replication (Shenzhen/GZ)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> SE Asia Chinese markets (SG/MY)</div>
+              <div style="display:flex;align-items:center;gap:clamp(5px,1vw,7px);color:var(--text-2);font-size:clamp(11px,1.4vw,12px)"><span style="color:#28d49a">★</span> Series A HK$15M (est. Q1 2027)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ SLIDE 10: THE ASK ══════════════ -->
+  <section class="slide" data-title="The Ask" data-slide="10">
+
+    <div class="lang-zh" style="display:none">
+      <span class="section-num">09</span>
+      <p class="num-tag">THE ASK 融資需求</p>
+      <h2 class="h2 mt-s">HK$2M 種子輪<br><span class="gradient-text">構建香港最大中小企 AI 決策網絡</span></h2>
+      <div class="grid g3 mt-l">
+        <div class="card" style="text-align:center;border-top:3px solid #ff7a2e">
+          <h4 style="color:#ff7a2e;font-size:clamp(11px,1.5vw,13px);margin-bottom:clamp(7px,1.3vh,10px)">估值</h4>
+          <div style="font-size:clamp(22px,4.5vw,34px);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">HK$12M</div>
+          <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,11px);margin-top:clamp(3px,0.6vh,5px)">Pre-money Valuation</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid #4ea1ff">
+          <h4 style="color:#4ea1ff;font-size:clamp(11px,1.5vw,13px);margin-bottom:clamp(7px,1.3vh,10px)">融资额</h4>
+          <div style="font-size:clamp(22px,4.5vw,34px);font-weight:800;color:#4ea1ff">HK$2M</div>
+          <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,11px);margin-top:clamp(3px,0.6vh,5px)">Seed Round</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid #28d49a">
+          <h4 style="color:#28d49a;font-size:clamp(11px,1.5vw,13px);margin-bottom:clamp(7px,1.3vh,10px)">稀釋</h4>
+          <div style="font-size:clamp(22px,4.5vw,34px);font-weight:800;color:#28d49a">14.3%</div>
+          <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,11px);margin-top:clamp(3px,0.6vh,5px)">Post-money 16.7%</p>
+        </div>
+      </div>
+      <div class="grid g2 mt-l">
+        <div class="card">
+          <h4 style="color:#ff7a2e;margin-bottom:clamp(7px,1.3vh,10px)">💡 資金用途</h4>
+          <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">產品開發（因果引擎 + RAG）</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$800K</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">市場拓展（香港中小企）</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$600K</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Beta 客戶獲取</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$400K</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">灣區市場研究</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$200K</span></div>
+          </div>
+        </div>
+        <div class="card" style="background:rgba(255,122,46,0.06);border-color:rgba(255,122,46,0.3)">
+          <h4 style="color:#ff7a2e;margin-bottom:clamp(7px,1.3vh,10px)">🤝 我們在找</h4>
+          <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+            <p style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">• 對 Hong Kong / 灣區 AI 赛道有認識的天使 / VC</p>
+            <p style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">• 有中小企客路的合作夥伴</p>
+            <p style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">• 熟悉保險 / 地產 / F&amp;B 行業的導師</p>
+            <p style="color:var(--text-2);font-size:clamp(10px,1.2vw,11px);margin-top:clamp(5px,1vh,7px)">聯絡：match@syncbuddy.ai</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-en" style="display:none">
+      <span class="section-num">09</span>
+      <p class="num-tag">THE ASK</p>
+      <h2 class="h2 mt-s">HK$2M Seed Round<br><span class="gradient-text">Building HK's Largest SME AI Decision Network</span></h2>
+      <div class="grid g3 mt-l">
+        <div class="card" style="text-align:center;border-top:3px solid #ff7a2e">
+          <h4 style="color:#ff7a2e;font-size:clamp(11px,1.5vw,13px);margin-bottom:clamp(7px,1.3vh,10px)">Valuation</h4>
+          <div style="font-size:clamp(22px,4.5vw,34px);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">HK$12M</div>
+          <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,11px);margin-top:clamp(3px,0.6vh,5px)">Pre-money Valuation</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid #4ea1ff">
+          <h4 style="color:#4ea1ff;font-size:clamp(11px,1.5vw,13px);margin-bottom:clamp(7px,1.3vh,10px)">Raise</h4>
+          <div style="font-size:clamp(22px,4.5vw,34px);font-weight:800;color:#4ea1ff">HK$2M</div>
+          <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,11px);margin-top:clamp(3px,0.6vh,5px)">Seed Round</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid #28d49a">
+          <h4 style="color:#28d49a;font-size:clamp(11px,1.5vw,13px);margin-bottom:clamp(7px,1.3vh,10px)">Dilution</h4>
+          <div style="font-size:clamp(22px,4.5vw,34px);font-weight:800;color:#28d49a">14.3%</div>
+          <p style="color:var(--text-2);font-size:clamp(10px,1.3vw,11px);margin-top:clamp(3px,0.6vh,5px)">Post-money 16.7%</p>
+        </div>
+      </div>
+      <div class="grid g2 mt-l">
+        <div class="card">
+          <h4 style="color:#ff7a2e;margin-bottom:clamp(7px,1.3vh,10px)">💡 Use of Funds</h4>
+          <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Product Dev (Causal Engine + RAG)</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$800K</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Market Expansion (HK SMEs)</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$600K</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Beta Client Acquisition</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$400K</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-2);font-size:clamp(11px,1.4vw,12px)">Bay Area Market Research</span><span style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px);font-weight:700">HK$200K</span></div>
+          </div>
+        </div>
+        <div class="card" style="background:rgba(255,122,46,0.06);border-color:rgba(255,122,46,0.3)">
+          <h4 style="color:#ff7a2e;margin-bottom:clamp(7px,1.3vh,10px)">🤝 What We're Looking For</h4>
+          <div style="display:flex;flex-direction:column;gap:clamp(5px,1vh,7px)">
+            <p style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">• Angels/VCs with HK / Bay Area AI expertise</p>
+            <p style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">• Partners with SME client access</p>
+            <p style="color:var(--text-1);font-size:clamp(11px,1.4vw,12px)">• Mentors in Insurance / Real Estate / F&amp;B</p>
+            <p style="color:var(--text-2);font-size:clamp(10px,1.2vw,11px);margin-top:clamp(5px,1vh,7px)">Contact：match@syncbuddy.ai</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
 </div>
@@ -564,8 +791,24 @@ table.comparison .loser{color:var(--text-3)}
   const slides = Array.from(deck.querySelectorAll('.slide'));
   const total = slides.length;
   let idx = 0;
+  let currentLang = 'zh';
 
-  // Build dots
+  // Language toggle
+  const langZH = document.getElementById('langZH');
+  const langEN = document.getElementById('langEN');
+
+  function setLang(lang) {
+    currentLang = lang;
+    langZH.classList.toggle('active', lang === 'zh');
+    langEN.classList.toggle('active', lang === 'en');
+    document.querySelectorAll('.lang-zh').forEach(el => el.style.display = lang === 'zh' ? 'block' : 'none');
+    document.querySelectorAll('.lang-en').forEach(el => el.style.display = lang === 'en' ? 'block' : 'none');
+  }
+
+  langZH.addEventListener('click', () => setLang('zh'));
+  langEN.addEventListener('click', () => setLang('en'));
+
+  // Dots
   const dotsEl = document.getElementById('dots');
   slides.forEach((_, i) => {
     const d = document.createElement('div');
@@ -575,52 +818,40 @@ table.comparison .loser{color:var(--text-3)}
   });
   const dots = Array.from(dotsEl.querySelectorAll('.dot'));
 
-  // Build progress bar
   const barFill = document.querySelector('.progress-bar span');
-
-  // Nav buttons
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
 
   function go(n) {
     n = Math.max(0, Math.min(total - 1, n));
-    slides.forEach((s, i) => {
-      s.classList.toggle('is-active', i === n);
-    });
+    slides.forEach((s, i) => s.classList.toggle('is-active', i === n));
     dots.forEach((d, i) => d.classList.toggle('active', i === n));
     idx = n;
     barFill.style.width = ((n + 1) / total * 100) + '%';
-
     const numEl = document.querySelector('.slide-number');
-    if (numEl) {
-      numEl.setAttribute('data-current', n + 1);
-      numEl.setAttribute('data-total', total);
-    }
-
+    if (numEl) { numEl.setAttribute('data-current', n + 1); numEl.setAttribute('data-total', total); }
     prevBtn.disabled = idx === 0;
     nextBtn.disabled = idx === total - 1;
   }
 
-  // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { go(idx + 1); e.preventDefault(); }
     if (e.key === 'ArrowLeft' || e.key === 'Backspace') { go(idx - 1); e.preventDefault(); }
   });
 
-  // Touch swipe
   let touchStartX = 0;
   document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
   document.addEventListener('touchend', e => {
     const dx = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(dx) > 50) { go(dx > 0 ? idx + 1 : idx - 1); }
+    if (Math.abs(dx) > 50) go(dx > 0 ? idx + 1 : idx - 1);
   }, { passive: true });
 
-  // Buttons
   prevBtn.addEventListener('click', () => go(idx - 1));
   nextBtn.addEventListener('click', () => go(idx + 1));
 
   // Init
   go(0);
+  setLang('zh');
 })();
 </script>
 </body>
